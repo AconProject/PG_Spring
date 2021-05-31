@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GameMapper">
+
+	<select id="newGameListSelect" resultType="GameDTO">
+		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
+		FROM game
+		WHERE rownum &lt; 11
+		ORDER BY gameReleasedDate DESC
+	</select>
+
+	<select id="recommendGameListSelect" parameterType="int" resultType="GameDTO">
+		SELECT game.gameNo, game.gameName, game.gameImage,
+		game.gamePrice, game.gameContent, game.gameContent, game.gameGenre, '('||to_char(game.gameReleasedDate,'yyyy')||')' as gameReleasedDate, game.gameCategory
+		FROM game, rate
+		WHERE game.gameNo = rate.gameNo
+		AND rownum &lt; #{limit}
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+	</select>
+
+	<select id="recommendUserTagGameListSelect" parameterType="string" resultType="GameDTO">
+		SELECT game.gameNo, game.gameName, game.gameImage,
+		game.gamePrice, game.gameContent, game.gameContent, game.gameGenre, '('||to_char(game.gameReleasedDate,'yyyy')||')' as gameReleasedDate, game.gameCategory
+		FROM game, rate
+		WHERE game.gameNo = rate.gameNo
+		AND REGEXP_LIKE (game.gameGenre, (SELECT NVL(REPLACE(mbrGenre, ',', '|'), '*')
+		FROM member
+		WHERE mbrId = #{mbrId}
+		))
+		AND rownum &lt; 11
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+	</select>
+
+	<select id="tagGameListSelect" resultType="GameDTO">
+		SELECT game.gameNo, game.gameName, game.gameImage,
+		game.gamePrice, game.gameContent, game.gameContent, game.gameGenre, '('||to_char(game.gameReleasedDate,'yyyy')||')' as gameReleasedDate, game.gameCategory
+		FROM game, rate
+		WHERE game.gameNo = rate.gameNo
+		AND REGEXP_LIKE
+		  <foreach collection="list" item="item"
+	        open="(game.gameGenre, (select genre.gameCategory from genre where genreId = "
+	        close="))"
+	        separator=")||'|'||(select genre.gameCategory from genre where genreId = ">
+            #{item}
+        </foreach>
+		AND rownum &lt; 6
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+	</select>
+
+	<select id="detailGameSelect" resultType="GameDTO">
+		SELECT *
+		FROM game
+		WHERE gameNo = #{gameNo}
+	</select>
+
+	<select id="tagGameListChoice" resultType="GameDTO">
+		SELECT gameCategory
+		FROM genre
+	</select>
+
+	<!--연관 게임 리스트 -->
+	<select id="relatedGameList" resultType="GameDTO">
+		SELECT *
+		FROM game,rate
+		WHERE game.gameNo = rate.gameNo
+		AND game.gameCategory = #{gameCategory}
+		ORDER BY rate.gameScore desc, game.gameReleasedDate desc
+	</select>
+	
+	<!-- 태그 상세 페이지 -->
+	<select id="tagDetailSelect" parameterType="string" resultType="GameDTO">
+	select gameNo,gameName,gameImage,gameGenre,to_char(gameReleasedDate, 'YYYY-MM-DD') as gameReleasedDate
+	from game
+	where gameCategory = #{gameCategory}
+	</select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RateMapper">
+	
+	<select id="rateRecommendSelect" resultType="double">
+		SELECT rate.gameScore
+		FROM game, rate
+		WHERE game.gameNo = rate.gameNo
+		AND rownum &lt; 6
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+	</select>
+	
+	<select id="rateTagSelect" resultType="double">
+		SELECT rate.gameScore
+		FROM game, rate
+		WHERE game.gameNo = rate.gameNo
+		AND REGEXP_LIKE
+		  <foreach collection="list" item="item"
+	        open="(game.gameGenre, (select genre.gameCategory from genre where genreId = "
+	        close="))"
+	        separator=")||'|'||(select genre.gameCategory from genre where genreId = ">
+            #{item}
+        </foreach>
+		AND rownum &lt; 6
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+	</select>
+
+	
+	
+	<select id="getGameScore" parameterType="string" resultType="RateDTO">
+		SELECT *
+		FROM rate
+		WHERE gameNo = #{gameNo}
+	</select>
+	
+</mapper>
