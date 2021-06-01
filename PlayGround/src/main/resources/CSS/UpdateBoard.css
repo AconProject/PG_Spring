@@ -1,0 +1,130 @@
+@charset "EUC-KR";
+/* °øÅë ºÎºÐ
+------------------------------- */
+
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: "³ª´®°íµñ", NanumGothic, "¸¼Àº°íµñ", MalgunGothic, sans-serif;
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+	color: black;
+}
+
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+
+/* HEADER
+------------------------------- */
+
+header {
+	background: rgb(171, 219, 252);
+}
+
+.logo {
+    width: 210px;
+    margin-top: 14px;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+}
+
+.nav li {
+    margin-left: 36px;
+}
+/* MAIN
+------------------------------- */
+.main-contents {
+	margin: 100px auto;
+}
+
+.main-contents .container {
+	display: flex;
+	justify-content: space-between;
+}
+
+hr {
+	background-color: black;
+	height: 2px;
+}
+#boardCategory {
+	font-size:17px;
+	width: 200px;
+	margin-top: 30px;
+	margin-right: 40px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-align: center;
+}
+
+#boardName {
+	font-size:17px;
+	margin-top:30px;
+	width: 845px;
+	height: 40px;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-indent: 15px;
+}
+
+#boardContent {
+	width: 1075px;
+	height:500px;
+	margin-top: 30px;
+	padding: 15px 10px;
+	font-size: 17px;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-indent: 15px;
+}
+
+#boardupdate, #boarddelete {
+	width: 120px;
+	height:40px;
+	margin-top: 20px;
+	float:right;
+	padding: 5px;
+	font-size: 18px;
+	border: none;
+	border-radius: 10px;
+	background-color: #a3daff;
+	color: white;
+}
+
+#boarddelete {
+	margin-right:20px;
+}
+/* FOOTER
+------------------------------- */
+
+footer {
+    background: rgb(171, 219, 252);
+    text-align: center;
+    padding: 26px 0;
+}
+
+footer p {
+    font-size: 0.875rem;
+}
+
