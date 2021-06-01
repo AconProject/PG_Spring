@@ -20,9 +20,9 @@
 	<mvc:view-controller path="/newsList" view-name="newsList" />
 
 	<!--외부 파일 -->
-	<mvc:resources location="/WEB-INF/views/images/" mapping="/images/**" />
-	<mvc:resources location="/WEB-INF/views/css/" mapping="/css/**" />
-	<mvc:resources location="/WEB-INF/views/js/" mapping="/js/**" />
+	<mvc:resources location="/WEB-INF/views/Image/" mapping="/Image/**" />
+	<mvc:resources location="/WEB-INF/views/CSS/" mapping="/CSS/**" />
+	<mvc:resources location="/WEB-INF/views/JS/" mapping="/JS/**" />
 
 	<!--인터셉터 부분 -->
 	<mvc:interceptors>

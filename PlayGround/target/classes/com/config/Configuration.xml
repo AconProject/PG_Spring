@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+   <properties resource="com/config/jdbc.properties" />
+   
+   <typeAliases>
+    	<typeAlias type="com.dto.MemberDTO" alias="MemberDTO"/>
+     	<typeAlias type="com.dto.GameDTO" alias="GameDTO"/>
+     	<typeAlias type="com.dto.BoardDTO" alias="BoardDTO"/>
+     	<typeAlias type="com.dto.NewsDTO" alias="NewsDTO"/>
+     	<typeAlias type="com.dto.ReplyDTO" alias="ReplyDTO"/>
+     	<typeAlias type="com.dto.GenreDTO" alias="GenreDTO"/>
+     	<typeAlias type="com.dto.LikeDTO" alias="LikeDTO"/>
+     	<typeAlias type="com.dto.RateDTO" alias="RateDTO"/>
+     	<typeAlias type="com.dto.ReviewDTO" alias="ReviewDTO"/>
+     	<typeAlias type="com.dto.NewsDTO" alias="NewsDTO"/>
+
+     	
+   </typeAliases>
+   
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${xxx}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/config/MemberMapper.xml" />
+		<mapper resource="com/config/GameMapper.xml" />
+		<mapper resource="com/config/BoardMapper.xml"/>
+		<mapper resource="com/config/RateMapper.xml"/>
+		<mapper resource="com/config/NewsMapper.xml"/>
+		<mapper resource="com/config/ReplyMapper.xml"/>
+		<mapper resource="com/config/GenreMapper.xml"/>
+		<mapper resource="com/config/RateMapper.xml"/>
+		<mapper resource="com/config/ReviewMapper.xml"/>		
+		<mapper resource="com/config/LikeMapper.xml"/>
+	</mappers>
+</configuration>
+
+
+
