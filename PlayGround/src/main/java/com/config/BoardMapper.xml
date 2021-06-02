@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY boardCount DESC, boardLiked DESC
 	</select>
 	
-	<select id="boardSelect" parameterType="string" resultType="BoardDTO">
+	<select id="boardListSelect" parameterType="string" resultType="BoardDTO">
 		SELECT *
 		FROM board
 		WHERE boardCategory = #{boardCategory}
@@ -118,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     WHERE boardId = #{boardId}
 	</update>
 	
-	<select id="boardDetailSelect" parameterType="int" resultType="boardDTO">
+	<select id="boardRead" parameterType="int" resultType="boardDTO">
 		SELECT *
 		FROM board
 		WHERE boardId = #{boardId}
