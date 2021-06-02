@@ -14,7 +14,7 @@
 <%
    }else{
 %>    
-<a href="LoginServlet">로그인</a>
+<a href="LoginForm">로그인</a>
 <a href="MemberUIServlet">회원가입</a>
 
 <%
