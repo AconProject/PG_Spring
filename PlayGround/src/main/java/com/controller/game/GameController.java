@@ -22,26 +22,27 @@ public class GameController {
 	GameService gService;
 
 	
-	@GetMapping("/gameCategoy/{gameCategory}")
-	public List<GameDTO> gameMainTopList(@PathVariable String gameCategory,
+	@GetMapping("/category/{category}") // app/game/category/new | recommend
+	public List<GameDTO> gameMainTopList(@PathVariable String category,
 										HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		List<GameDTO> gameList = null;
-		if (gameCategory == null || gameCategory.contentEquals("new"))
+		if (category == null || category.contentEquals("new"))
 			gameList = gService.newGameListSelect();
-		else if (login == null && gameCategory.contentEquals("recommend"))
+		else if (login == null && category.contentEquals("recommend"))
 			gameList = gService.recommendGameListSelect(11);
-		else if (login != null && gameCategory.contentEquals("recommend"))
+		else if (login != null && category.contentEquals("recommend"))
 			gameList = gService.recommendUserTagListSelect(login.getMbrId());
+		System.out.println(gameList);
 		return gameList;
 	}
 	
 	
-	@GetMapping("/tag/{tags}")
+	@GetMapping("/tag/{tags}") // app/game/tag/tags
 	public List<GameDTO> gameMainMidList(@PathVariable String tags) {
 		System.out.println(tags);
 		List<GameDTO> gameList = null;
-		if (tags == null)
+		if (tags.contentEquals("noTag"))
 			gameList = gService.recommendGameListSelect(6);
 		else {
 			String[] tag_array = tags.split(",");
