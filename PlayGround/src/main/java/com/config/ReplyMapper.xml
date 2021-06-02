@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     WHERE boardId = #{replyId}
 	</update>
 	
-	<select id="replyListSelect" parameterType="int" resultType="ReplyDTO">
+	<select id="replyRead" parameterType="int" resultType="ReplyDTO">
 		SELECT replyId, boardId, mbrId, mbrName, replyContent, replyLiked, replyDate
 		FROM reply
 		WHERE boardId = #{boardId}
