@@ -18,19 +18,25 @@ import com.service.MemberService;
 public class LoginController {
 	@Autowired
 	MemberService service;
-
+	
+	@RequestMapping(value = "/loginCheck/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:../"; 
+	}
+	
 	@RequestMapping(value = "/login")
 	public String login(@RequestParam HashMap<String, String> map, Model model, HttpSession session) {
-		System.out.println(map);
-		MemberDTO dto = service.login(map); 
-		System.out.println(dto);
-
-		if (dto != null) {// 로그인 된경우
+		System.out.println("map의 값: "+map);
+		MemberDTO dto = service.login(map);
+		System.out.println("로그인 성공 여부"+dto);
+		if(dto!= null ) {
 			session.setAttribute("login", dto);
-			return "main"; // main.jsp
-		} else {// 로그인 안된 경우
+			return "Main";
+		}else {
 			model.addAttribute("mesg", "아이디 또는 비번이 잘못되었습니다.");
-			return "loginForm"; // loginForm.jsp
+			return "loginForm";
 		}
+		
 	}
 }
