@@ -38,7 +38,7 @@
 				<ul class="nav">
 					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
 					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
-					<li><a href="${pageContext.request.contextPath}/LoginServlet">로그인</a></li>
+					<li><a href="LoginForm">로그인</a></li>
 					<li><a href="${pageContext.request.contextPath}/MemberUIServlet">회원가입</a></li>
 				</ul>
 			</nav>
