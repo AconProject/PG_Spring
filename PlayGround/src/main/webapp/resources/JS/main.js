@@ -83,10 +83,9 @@ function jsonParserForMiddle(data){
 /* 중단 태그 파싱 후 출력 */
 function jsonParserForTags(data){
 	for (let i=0; i<data.length; i++){
-		let jsonObj = JSON.parse(data[i]);
 		insertElement('p', 'tagScroll',
 			'<input type="checkbox" name="tag" value="' +
-			jsonObj.genreId + '">' + jsonObj.gameCategory, 'class', 'tag');
+			data[i].genreId + '">' + data[i].gameCategory, 'class', 'tag');
 	}
 }
 
@@ -120,7 +119,6 @@ function getNewGame(){
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			jsonParserForTop(data);
 		})
 		.catch(err => {
@@ -158,7 +156,7 @@ function getRecommendedGame(){
 
 /* 중단 태그 불러오기 및 태그 클릭 이벤트 등록 */
 function getTag(){
-	fetch('GenreListServlet')
+	fetch('genre/genreList')
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForTags(data);
@@ -177,7 +175,6 @@ function getTagGame(){
 	fetch('game/tag/noTag')
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			jsonParserForMiddle(data);
 		})
 		.catch(err => {
@@ -236,7 +233,6 @@ function getRecommendedPost(){
 	fetch('board/gameInfoCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			jsonParserForBoard(data, 'boardPost');
 		})
 		.catch(err => {
@@ -275,7 +271,6 @@ function getRecommendedQnA(){
 	fetch('board/qnaCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			jsonParserForBoard(data, 'boardQnA');
 		})
 		.catch(err => {
@@ -314,7 +309,6 @@ function getNews(){
 	fetch('news/newsList')
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			jsonParserForNews(data);
 		})
 		.catch(err => {
