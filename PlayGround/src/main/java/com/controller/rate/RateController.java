@@ -21,7 +21,7 @@ public class RateController {
 	public List<Double> rateMainMidList(@PathVariable String tags) {
 		System.out.println(tags);
 		List<Double> rateList = null;
-		if (tags == null)
+		if (tags.contentEquals("noTag"))
 			rateList = rService.rateRecommendSelect();
 		else {
 			String[] tag_array = tags.split(",");
