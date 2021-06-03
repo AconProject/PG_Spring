@@ -78,7 +78,7 @@ function jsonParserForMiddle(data){
 		insertElement('td', 'midTr'+i, '<a href="GameDetailServlet?gameNo='
 			+ data[i].gameNo + '">' + data[i].gameName+data[i].gameReleasedDate + '</a>');
 	}
-}       
+}
 
 /* 중단 태그 파싱 후 출력 */
 function jsonParserForTags(data){
@@ -176,6 +176,16 @@ function getTagGame(){
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForMiddle(data);
+			
+			fetch('rate/tag/noTag')
+				.then(res => res.json())
+				.then(data => {
+					for (let i=0; i<data.length; i++)
+						insertElement('td', 'midTr'+i, '<div class="score"><span>' + data[i]+'</span></div>');
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		})
 		.catch(err => {
 			console.log(err);
@@ -184,11 +194,21 @@ function getTagGame(){
 
 /* 중단 태그별 게임 불러오기 (태그 클릭) */
 function getTagGameEvent(tagId){
-	fetch('game/tag/'+tagId)
+	fetch('game/tag/' + tagId)
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('.midTable tr');
 			jsonParserForMiddle(data);
+
+			fetch('rate/tag/' + tagId)
+				.then(res => res.json())
+				.then(data => {
+					for (let i=0; i<data.length; i++)
+						insertElement('td', 'midTr'+i, '<div class="score"><span>' + data[i]+'</span></div>');
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		})
 		.catch(err => {
 			console.log(err);
