@@ -42,6 +42,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/memberAdd")
 	public String memberAdd(MemberDTO m,Model model) {
+		System.out.println("회원가입 페이지로 이동 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		service.memberAdd(m);
 		model.addAttribute("success", "회원가입성공");
 		return "Main";
