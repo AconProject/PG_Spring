@@ -13,21 +13,20 @@ window.onload = function(){
 
 /*  수정 전 게시글 데이터 파싱 후 출력 */
 function jsonParserForBoardContents(data){
-	let jsonObj = JSON.parse(data[0]);
-	document.getElementById('boardName').setAttribute('value', jsonObj.boardName);
-	document.getElementById('boardContent').setAttribute('value', jsonObj.boardContent);
+	document.getElementById('boardName').setAttribute('value', data.boardName);
+	document.getElementById('boardContent').setAttribute('value', data.boardContent);
 	
 	let selectedCategory =
-		document.querySelector('option[value = "' + jsonObj.boardCategory + '"]');
+		document.querySelector('option[value = "' + data.boardCategory + '"]');
 	selectedCategory.setAttribute('selected', 'selected');
 }
 
 /* 수정 전 게시글 내용 불러오기 */
 function getBoardContents(){
-	fetch('../BoardDetailServlet?boardId=' + boardId)
+	fetch('board/read/' + boardId)
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForBoardContents(data);
+			jsonParserForBoardContents(data[0]);
 		})
 		.catch(err => {
 			console.log(err);
