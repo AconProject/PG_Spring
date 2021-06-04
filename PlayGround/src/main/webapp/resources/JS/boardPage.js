@@ -22,54 +22,52 @@ function insertElement(childTag, parentId, content, attr, attrVal){
 	parentEle.appendChild(newEle);
 }
 
+/* 타임스탬프 -> 날짜 변환 */
+function convertDate(timeStamp){
+	let rawDate = '';
+	let date = '';
+	rawDate = new Date(timeStamp);
+	date += rawDate.getFullYear() + '.' +
+			(rawDate.getMonth()+1) + '.' +
+			rawDate.getDate();
+	return date;
+}
+
+/****************************** json parser **********************************/
+
 /* 게시글 데이터 파싱 후 출력 */
 function jsonParserForBoardContents(data){
-	let jsonObj = JSON.parse(data[0]);
 	let conmmentNum = data.length - 1;
+	let boardDate = convertDate(data.boardDate);
 
 	let html =
-		'카테고리 - ' + jsonObj.boardCategory + '<br>' +
-		'제목 - ' + jsonObj.boardName + '<br>' +
-		'작성자 - ' + jsonObj.mbrName + '<br>' +
-		'날짜 - ' + jsonObj.boardDate + '<br>' +
-		'조회수 - ' + jsonObj.boardCount + '<br>' +
-		'추천수 - ' + jsonObj.boardLiked + '<br>' +
+		'카테고리 - ' + data.boardCategory + '<br>' +
+		'제목 - ' + data.boardName + '<br>' +
+		'작성자 - ' + data.mbrName + '<br>' +
+		'날짜 - ' + boardDate + '<br>' +
+		'조회수 - ' + data.boardCount + '<br>' +
+		'추천수 - ' + data.boardLiked + '<br>' +
 		'댓글수 - ' + conmmentNum + '<br>' +
-		'내용 - ' + jsonObj.boardContent + '<br>';
+		'내용 - ' + data.boardContent + '<br>';
 	
 	document.getElementById('boardContents').innerHTML = html;
 
-	checkMemberId(jsonObj.mbrId);
+	checkMemberId(data.mbrId);
 }
 
 /* 게시글 댓글 파싱 후 출력 */
 function jsonParserForBoardReply(data){
 	let html = '';
 	for (let i=1; i<data.length; i++){
-		let jsonObj = JSON.parse(data[i]);
 		
 		html +=
-		'닉넴 - ' + jsonObj.mbrName + '<br>' +
-		'댓글 - ' + jsonObj.replyContent + '<br>' +
-		'날짜 - ' + jsonObj.replyDate + '<br>' +
-		'추천수 - ' + jsonObj.replyLiked + '<br>' +
+		'닉넴 - ' + data[i].mbrName + '<br>' +
+		'댓글 - ' + data[i].replyContent + '<br>' +
+		'날짜 - ' + data[i].replyDate + '<br>' +
+		'추천수 - ' + data[i].replyLiked + '<br>' +
 		'------------------------------<br>';
 	}
 	document.getElementById('boardComments').innerHTML = html;
-}
-
-/* 게시글 내용 불러오기 */
-function getBoardContents(){
-	fetch('../BoardDetailServlet?boardId=' + boardId)
-		.then(res => res.json())
-		.then(data => {
-			jsonParserForBoardContents(data);
-			if (data.length > 1)
-				jsonParserForBoardReply(data);
-		})
-		.catch(err => {
-			console.log(err);
-		});
 }
 
 /* 글 작성자만 수정/삭제 버튼 표시 */
@@ -83,4 +81,20 @@ function checkMemberId(writerId){
 			location.href = 'updateBoard.jsp?boardId=' + boardId;
 		}, false);
 	}
+}
+
+/********************************* ajax *************************************/
+
+/* 게시글 내용 불러오기 */
+function getBoardContents(){
+	fetch('board/read/' + boardId)
+		.then(res => res.json())
+		.then(data => {
+			jsonParserForBoardContents(data[0]);
+			if (data.length > 1)
+				jsonParserForBoardReply(data);
+		})
+		.catch(err => {
+			console.log(err);
+		});
 }

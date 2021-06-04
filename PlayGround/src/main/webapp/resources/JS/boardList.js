@@ -3,7 +3,7 @@ window.onload = function(){
 	let writeBtn = document.getElementById('write');
 	if (writeBtn) {
 		writeBtn.addEventListener('click', function(){
-			location.href = '../Board/writeBoard.jsp';
+			location.href = 'writeBoard.jsp';
 		}, false);
 	}
 
@@ -37,6 +37,19 @@ function removeAllElements(query){
 	for (let i=0; i<removeEles.length; i++)
 		removeEles[i].parentNode.removeChild(removeEles[i]);
 }
+
+/* 타임스탬프 -> 날짜 변환 */
+function convertDate(timeStamp){
+	let rawDate = '';
+	let date = '';
+	rawDate = new Date(timeStamp);
+	date += rawDate.getFullYear() + '.' +
+			(rawDate.getMonth()+1) + '.' +
+			rawDate.getDate();
+	return date;
+}
+
+/************************** paging & json parser ******************************/
 
 /* 페이징 처리 */
 function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage){
@@ -94,16 +107,17 @@ function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage){
 
 /* 게시판 데이터 파싱 후 출력 */
 function jsonParserForBoards(data, start, end){
+	let boardDate = '';
 	for (let i=start; i<data.length && i<end; i++){
-		let jsonObj = JSON.parse(data[i]);
+		boardDate = convertDate(data[i].boardDate);
 		insertElement('tr', 'boardList', '', 'id', 'board'+i);
-		insertElement('td', 'board'+i, jsonObj.boardCategory);
-		insertElement('td', 'board'+i, '<a href="boardPage.jsp?boardId=' + jsonObj.boardId
-			+ '">' + jsonObj.boardName + '</a>');
-		insertElement('td', 'board'+i, jsonObj.mbrName);
-		insertElement('td', 'board'+i, jsonObj.boardDate);
-		insertElement('td', 'board'+i, jsonObj.boardCount);
-		insertElement('td', 'board'+i, jsonObj.boardLiked);
+		insertElement('td', 'board'+i, data[i].boardCategory);
+		insertElement('td', 'board'+i, '<a href="boardPage.jsp?boardId=' + data[i].boardId
+			+ '">' + data[i].boardName + '</a>');
+		insertElement('td', 'board'+i, data[i].mbrName);
+		insertElement('td', 'board'+i, boardDate);
+		insertElement('td', 'board'+i, data[i].boardCount);
+		insertElement('td', 'board'+i, data[i].boardLiked);
 	}
 }
 
@@ -115,9 +129,11 @@ function prepareForPaging(data){
 	paging(data, totalData, maxDataPerPage, maxPagePerWindow, 1);
 }
 
+/********************************** ajax *************************************/
+
 /* 게시판 글 목록 불러오기 (첫 로딩)*/
 function getBoardList(){
-	fetch('../BoardListServlet?boardKind=boardList&&boardCategory=all')
+	fetch('board/boardList/all')
 		.then(res => res.json())
 		.then(data => {
 			prepareForPaging(data);
@@ -131,7 +147,7 @@ function getBoardList(){
 function getChangedBoardList(){
 	let boardCategory = document.getElementById('boardCategory').value;
 
-	fetch('../BoardListServlet?boardKind=boardList&&boardCategory=' + boardCategory)
+	fetch('board/boardList/' + boardCategory)
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');
@@ -148,8 +164,7 @@ function getBoardSearchList(){
 	let searchText = document.getElementById('searchText').value;
 	let boardCategory = document.getElementById('boardCategory').value;
 
-	fetch('../BoardListServlet?boardKind=boardSearchList&&searchCategory='
-		+ searchCategory + '&&searchWord=' + searchText + '&&boardCategory=' + boardCategory)
+	fetch('board/search/' + boardCategory + '/' + searchText + '/' + searchCategory)
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');

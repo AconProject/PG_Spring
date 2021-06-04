@@ -34,6 +34,7 @@ function insertElement(childTag, parentId, content, attr, attrVal){
 	parentEle.appendChild(newEle);
 }
 
+/* 타임스탬프 -> 날짜 변환 */
 function convertDate(timeStamp){
 	let rawDate = '';
 	let date = '';
@@ -44,7 +45,7 @@ function convertDate(timeStamp){
 	return date;
 }
 
-/************************** json parser ******************************/
+/******************************* json parser **********************************/
 
 /* 상단에 표시할 게임데이터 파싱 후 출력 */
 function jsonParserForTop(data){
@@ -112,7 +113,7 @@ function jsonParserForNews(data){
 	}
 }
 
-/************************** ajax ******************************/
+/********************************** ajax *************************************/
 
 /* 상단 최신게임 불러오기 (페이지 첫 로딩) */
 function getNewGame(){

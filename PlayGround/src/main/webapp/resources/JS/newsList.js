@@ -19,6 +19,19 @@ function removeAllElements(query){
 		removeEles[i].parentNode.removeChild(removeEles[i]);
 }
 
+/* 타임스탬프 -> 날짜 변환 */
+function convertDate(timeStamp){
+	let rawDate = '';
+	let date = '';
+	rawDate = new Date(timeStamp);
+	date += rawDate.getFullYear() + '.' +
+			(rawDate.getMonth()+1) + '.' +
+			rawDate.getDate();
+	return date;
+}
+
+/************************** paging & json parser ******************************/
+
 /* 페이징 처리 */
 function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage){
 	let totalPage = Math.ceil(totalData / maxDataPerPage); // 총 페이지수
@@ -75,12 +88,13 @@ function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage){
 
 /* 게시판 데이터 파싱 후 출력 */
 function jsonParserForNews(data, start, end){
+	let newsDate = '';
 	for (let i=start; i<data.length && i<end; i++){
-		let jsonObj = JSON.parse(data[i]);
+		newsDate = convertDate(data[i].newsDate);
 		insertElement('tr', 'newsList', '', 'id', 'news'+i);
-		insertElement('td', 'news'+i, '<a href="' + jsonObj.newsUrl + '">'
-			+ jsonObj.newsTitle + '</a>');
-		insertElement('td', 'news'+i, jsonObj.newsDate);
+		insertElement('td', 'news'+i, '<a href="' + data[i].newsUrl + '">'
+			+ data[i].newsTitle + '</a>');
+		insertElement('td', 'news'+i, newsDate);
 	}
 }
 
@@ -92,9 +106,11 @@ function processNewsData(data){
 	paging(data, totalData, maxDataPerPage, maxPagePerWindow, 1);
 }
 
+/********************************** ajax *************************************/
+
 /* 뉴스 목록 불러오기 */
 function getNewsList(){
-	fetch('../NewsListMainServlet')
+	fetch('news/newsList')
 		.then(res => res.json())
 		.then(data => {
 			processNewsData(data);
