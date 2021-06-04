@@ -13,14 +13,13 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 @Override
 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
-	System.out.println("preHandle================");
 	HttpSession session = request.getSession();
 	if(session.getAttribute("login") == null) {   //로그인 안된 경우
 		response.sendRedirect("../loginForm");//servlet-context.xml 
 		//<mvc:view-controller path="/loginForm" view-name="loginForm"/><!-- loginForm .jsp-->
 		return false;  //주의
 	}else {   //로그인 된 경우 
-		System.out.println("로그인 완료 ===============================================");
+		System.out.println("로그인이 확인되었습니다.");
 		return true; //주의
 	}
 }

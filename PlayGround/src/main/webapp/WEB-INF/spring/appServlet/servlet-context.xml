@@ -9,10 +9,12 @@
 	<mvc:view-controller path="/MemberForm" view-name="MemberForm" />
 	<mvc:view-controller path="/LoginForm" view-name="LoginForm" />
 	<mvc:view-controller path="/MyPage" view-name="MyPage" />
+	<mvc:view-controller path="/MyPage2" view-name="MyPage2" />
+	
 	<mvc:view-controller path="/Main" view-name="Main" />
 	<mvc:view-controller path="/FindIdPw" view-name="FindIdPw" />
 	
-	<mvc:view-controller path="/memberUpdate" view-name="memberUpdate" />
+	<mvc:view-controller path="/Member/memberUpdate" view-name="memberUpdate" />
 	<mvc:view-controller path="/memberDelete" view-name="memberDelete" />
 			
 	<mvc:view-controller path="/boardList" view-name="boardList" />
