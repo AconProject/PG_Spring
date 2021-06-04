@@ -14,8 +14,9 @@
 	<mvc:view-controller path="/Main" view-name="Main" />
 	<mvc:view-controller path="/FindIdPw" view-name="FindIdPw" />
 	
-	<mvc:view-controller path="/Member/memberUpdate" view-name="memberUpdate" />
-	<mvc:view-controller path="/memberDelete" view-name="memberDelete" />
+	<mvc:view-controller path="/memberUpdate" view-name="Member/memberUpdate" />
+<!-- 	<mvc:view-controller path="/Member/memberUpdate" view-name="memberUpdate" />
+ -->	<mvc:view-controller path="/memberDelete" view-name="memberDelete" />
 			
 	<mvc:view-controller path="/boardList" view-name="boardList" />
 	<mvc:view-controller path="/boardPage" view-name="boardPage" />
