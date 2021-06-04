@@ -33,11 +33,9 @@ public class MemberController {
 		dto= service.mypage(userid);
 		return "redirect:../memberUpdate";	
 	}
-
+	
 	@RequestMapping(value="/loginCheck/memberUpdate")
 	public String memberUpdate(MemberDTO m) {
-		System.out.println("memberUpdate====="+ m);
-		System.out.println("update하는중입니다@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		service.memberUpdate(m);
 		return "redirect:../";
 	}
