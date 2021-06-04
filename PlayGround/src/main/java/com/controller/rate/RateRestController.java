@@ -13,7 +13,7 @@ import com.service.RateService;
 
 @RestController
 @RequestMapping("/rate")
-public class RateController {
+public class RateRestController {
 	@Autowired
 	RateService rService;
 	
