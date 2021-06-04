@@ -26,7 +26,7 @@
 					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
 					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
 					<li><a href="${pageContext.request.contextPath}/MyPageServlet">마이페이지</a></li>
-					<li><a href="${pageContext.request.contextPath}/LogoutServlet">로그아웃</a></li>
+					<li><a href="loginCheck/logout">로그아웃</a></li>
 				</ul>
 			</nav>
 			<%
