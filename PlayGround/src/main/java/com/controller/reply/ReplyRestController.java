@@ -22,7 +22,7 @@ import com.service.ReplyService;
 
 @RestController
 @RequestMapping("/reply")
-public class ReplyController {
+public class ReplyRestController {
 	@Autowired
 	ReplyService rService;
 	@Autowired

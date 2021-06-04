@@ -78,7 +78,7 @@ function checkMemberId(writerId){
 		insertElement('button', 'deleteForm', '글 삭제', 'type', 'submit');
 		
 		document.getElementById('update').addEventListener('click', function(){
-			location.href = 'updateBoard.jsp?boardId=' + boardId;
+			location.href = 'board/write/' + boardId;
 		}, false);
 	}
 }
