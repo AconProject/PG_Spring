@@ -90,7 +90,7 @@
 
 <!--나오는 값: 아이디,비빌번호, 비밀번호 확인, 닉네임, 이메일 , 가입일자 (안보이는 값으로)   -->
 
-<form action="MemberAddServlet" method="post" class="addForm" id="addForm">
+<form action="memberAdd" method="post" class="addForm" id="addForm">
 	<a href="${pageContext.request.contextPath}/Main.jsp"><img src="${pageContext.request.contextPath}/Image/logo.png"></a>
 	<h2>회원가입</h2>
 	<div class="contentform">
