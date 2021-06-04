@@ -23,6 +23,7 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
+
 					<li><a href="board/list">게시판</a></li>
 					<li><a href="news/list">뉴스 및 소식</a></li>
 					<li><a href="${pageContext.request.contextPath}/MyPageServlet">마이페이지</a></li>

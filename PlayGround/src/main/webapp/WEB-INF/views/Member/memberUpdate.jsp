@@ -106,7 +106,7 @@
 		<!-- 상단 -->
         <section class="main-contents">
         
-			<form action="../MemberUpdateServlet" name="updateForm" method="post">
+			<form action="loginCheck/memberUpdate" name="updateForm" method="post">
 			
 				<div class="member">아이디 &nbsp;&nbsp;&nbsp; <%=mbrId%>
 				<input type="hidden" class="mbrinfo" value="<%=mbrId%>" name="mbrId" id="mbrId" style="border:none;">
