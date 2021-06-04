@@ -17,7 +17,7 @@ import com.service.GameService;
 
 @RestController
 @RequestMapping("/game")
-public class GameController {
+public class GameRestController {
 	@Autowired
 	GameService gService;
 
