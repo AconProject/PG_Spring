@@ -20,6 +20,16 @@
 		<!-- 게시글 내용 -->
 		<section>
 			<div id="boardContents"></div>
+			<div id="updateBtn"></div>
+			<form action="../BoardModifyServlet" id="deleteForm">
+				<input type="hidden" name="boardId" id="boardId">
+				<input type="hidden" name="boardKind" value="boardDelete">
+			</form>
+		</section>
+
+		<!-- 댓글 -->
+		<section>
+			<div id="boardComments"></div>
 
 			<%
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
@@ -32,20 +42,12 @@
 				let loginId = loginJSON.mbrId;
 				document.getElementById('loginId').setAttribute('value', loginId);
 			</script>
+			<div><%= loginJSON.mbrName; %></div>
+			<input type="text" id="comment">
+			<button id="submitComment">댓글 작성</button>
 			<%
   			}
 			%>
-
-			<div id="updateBtn"></div>
-			<form action="../BoardModifyServlet" id="deleteForm">
-				<input type="hidden" name="boardId" id="boardId">
-				<input type="hidden" name="boardKind" value="boardDelete">
-			</form>
-		</section>
-
-		<!-- 댓글 -->
-		<section>
-			<div id="boardComments"></div>
 		</section>
 	</div>
 
