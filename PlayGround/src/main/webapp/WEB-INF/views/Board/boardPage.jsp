@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/JS/boardPage.js?v=<%=System.currentTimeMillis() %>"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=<%=System.currentTimeMillis() %>" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -20,6 +20,15 @@
 		<!-- 게시글 내용 -->
 		<section>
 			<div id="boardContents"></div>
+			<div id="updateBtn"></div>
+			<form action="board/delete/" id="deleteForm">
+				<input type="hidden" name="boardId" id="boardId">
+			</form>
+		</section>
+
+		<!-- 댓글 -->
+		<section>
+			<div id="boardComments"></div>
 
 			<%
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
@@ -32,20 +41,12 @@
 				let loginId = loginJSON.mbrId;
 				document.getElementById('loginId').setAttribute('value', loginId);
 			</script>
+			<div><%= loginJSON.mbrName; %></div>
+			<input type="text" id="comment">
+			<button id="submitComment">댓글 작성</button>
 			<%
   			}
 			%>
-
-			<div id="updateBtn"></div>
-			<form action="../BoardModifyServlet" id="deleteForm">
-				<input type="hidden" name="boardId" id="boardId">
-				<input type="hidden" name="boardKind" value="boardDelete">
-			</form>
-		</section>
-
-		<!-- 댓글 -->
-		<section>
-			<div id="boardComments"></div>
 		</section>
 	</div>
 

@@ -1,4 +1,4 @@
-package com.controller.genre;
+package com.controller.news;
 
 import java.util.List;
 
@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dto.GenreDTO;
-import com.service.GenreService;
+import com.dto.NewsDTO;
+import com.service.NewsService;
 
 @RestController
-@RequestMapping("/genre")
-public class GenreController {
+@RequestMapping("/news/")
+public class NewsRestController {
 	@Autowired
-	GenreService gService;
+	NewsService nService;
 	
-	@GetMapping("/genreList")
-	public List<GenreDTO> genreList() {
-		return gService.genreList();
+	@GetMapping("/newsList")
+	public List<NewsDTO> newsMainList() {
+		return nService.newsSelect();
 	}
 }

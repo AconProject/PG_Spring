@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/JS/updateBoard.js?v=<%=System.currentTimeMillis() %>"></script>
+	<script src="<c:url value="/resources/JS/updateBoard.js?v=<%=System.currentTimeMillis() %>" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->

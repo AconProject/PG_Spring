@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Write Board</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../CSS/WriteBoard.css" rel="stylesheet">
+<link href="<c:url value="/resources/CSS/WriteBoard.css?v=<%=System.currentTimeMillis() %>" />" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"

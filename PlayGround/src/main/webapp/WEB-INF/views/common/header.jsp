@@ -10,7 +10,7 @@
 		<div class="wrapper">
 		
 			<h1>
-				<a href="../Main.jsp"><img class="logo" src="resources/Image/logo.png" alt="로고 이미지"></a>
+				<a href="./"><img class="logo" src="<c:url value="/resources/Image/logo.png" />" alt="로고 이미지"></a>
 			</h1>
 			
 			<%
@@ -23,10 +23,11 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
-					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
-					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
-					<li><a href="loginCheck/myPage">마이페이지</a></li>
-					<li><a href="loginCheck/logout">로그아웃</a></li>
+
+					<li><a href="board/list">게시판</a></li>
+					<li><a href="news/list">뉴스 및 소식</a></li>
+					<li><a href="${pageContext.request.contextPath}/MyPageServlet">마이페이지</a></li>
+					<li><a href="${pageContext.request.contextPath}/LogoutServlet">로그아웃</a></li>
 				</ul>
 			</nav>
 			<%
@@ -36,8 +37,8 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
-					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
-					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
+					<li><a href="board/list">게시판</a></li>
+					<li><a href="news/list">뉴스 및 소식</a></li>
 					<li><a href="LoginForm">로그인</a></li>
 					<li><a href="${pageContext.request.contextPath}/MemberUIServlet">회원가입</a></li>
 				</ul>
