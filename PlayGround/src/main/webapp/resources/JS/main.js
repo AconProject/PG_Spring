@@ -95,7 +95,7 @@ function jsonParserForBoard(data, boardCategory){
 	let boardDate = '';
 	for (let i=0; i<data.length; i++){
 		boardDate = convertDate(data[i].boardDate);
-		insertElement('li', boardCategory, '<a href="BoardDetailServlet?boardId='
+		insertElement('li', boardCategory, '<a href="board/page/'
 			+ data[i].boardId + '">' + data[i].boardName + '</a><div><span>'
 			+ boardDate + '</span>&nbsp<img class="icon" src="resources/Image/eye.png">&nbsp<span>'
 			+ data[i].boardCount + '</span>&nbsp<img class="icon" src="resources/Image/thumb.png">&nbsp<span>'

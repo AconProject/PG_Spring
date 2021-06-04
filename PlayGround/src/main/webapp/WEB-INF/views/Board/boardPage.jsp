@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/JS/boardPage.js?v=<%=System.currentTimeMillis() %>"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=<%=System.currentTimeMillis() %>" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -21,9 +21,8 @@
 		<section>
 			<div id="boardContents"></div>
 			<div id="updateBtn"></div>
-			<form action="../BoardModifyServlet" id="deleteForm">
+			<form action="board/delete/" id="deleteForm">
 				<input type="hidden" name="boardId" id="boardId">
-				<input type="hidden" name="boardKind" value="boardDelete">
 			</form>
 		</section>
 
