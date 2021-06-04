@@ -3,7 +3,7 @@ window.onload = function(){
 	let writeBtn = document.getElementById('write');
 	if (writeBtn) {
 		writeBtn.addEventListener('click', function(){
-			location.href = 'writeBoard.jsp';
+			location.href = 'board/write';
 		}, false);
 	}
 
@@ -112,7 +112,7 @@ function jsonParserForBoards(data, start, end){
 		boardDate = convertDate(data[i].boardDate);
 		insertElement('tr', 'boardList', '', 'id', 'board'+i);
 		insertElement('td', 'board'+i, data[i].boardCategory);
-		insertElement('td', 'board'+i, '<a href="boardPage.jsp?boardId=' + data[i].boardId
+		insertElement('td', 'board'+i, '<a href="board/page/' + data[i].boardId
 			+ '">' + data[i].boardName + '</a>');
 		insertElement('td', 'board'+i, data[i].mbrName);
 		insertElement('td', 'board'+i, boardDate);
