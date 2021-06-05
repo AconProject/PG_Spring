@@ -1,3 +1,7 @@
 *.class
 MANIFEST.MF
 pom.properties
+.metadata
+
+#server(PlayGround/Servers/)
+PlayGround/Servers/
