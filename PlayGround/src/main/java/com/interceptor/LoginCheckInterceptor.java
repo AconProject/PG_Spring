@@ -15,7 +15,7 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
 		throws Exception {
 	HttpSession session = request.getSession();
 	if(session.getAttribute("login") == null) {   //로그인 안된 경우
-		response.sendRedirect("../loginForm");//servlet-context.xml 
+		response.sendRedirect("../LoginForm");//servlet-context.xml 
 		//<mvc:view-controller path="/loginForm" view-name="loginForm"/><!-- loginForm .jsp-->
 		return false;  //주의
 	}else {   //로그인 된 경우 
