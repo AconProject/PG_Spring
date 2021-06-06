@@ -23,21 +23,22 @@ public class MemberController {
 		MemberDTO dto = (MemberDTO) session.getAttribute("login");
 		String userid = dto.getMbrId();
 		dto = service.mypage(userid);
-		session.setAttribute("login", dto); // 해당라인없으면, 변경되는 값이 저장되지 않음.
+		System.out.println("회원정보 출력: " +dto);
 		return "redirect:../MyPage";
 	}
 
 	@RequestMapping(value = "/loginCheck/updatePage")
-	public String updatePage(HttpSession session) {
-		MemberDTO dto = (MemberDTO) session.getAttribute("login");
-		String userid = dto.getMbrId();
-		dto = service.mypage(userid);
+	public String updatePage() {
 		return "redirect:../memberUpdate";
 	}
 
 	@RequestMapping(value = "/loginCheck/memberUpdate")
-	public String memberUpdate(MemberDTO m) {
-		service.memberUpdate(m);
+	public String memberUpdate(HttpSession session,MemberDTO dto) {
+		MemberDTO beforeChange = (MemberDTO) session.getAttribute("login");
+		System.out.println("회원정보 변경전 출력: " +beforeChange);
+		service.memberUpdate(dto);
+		session.setAttribute("login", dto); 
+		System.out.println("회원정보 변경후 출력: " +dto);
 		return "redirect:../";
 	}
 
