@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link href="<c:url value="/resources/CSS/BoardList.css?v=<%=System.currentTimeMillis() %>" />" rel="stylesheet">
+	<link href="<c:url value="/resources/CSS/BoardList.css?v=<%=System.currentTimeMillis() %>" />" rel="stylesheet">
 	<script src="<c:url value="/resources/JS/boardList.js?v=<%=System.currentTimeMillis() %>" />"></script>
 </head>
 <body>
