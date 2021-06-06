@@ -24,10 +24,10 @@
 				<div class="empty"></div>
 				<ul class="nav">
 
-					<li><a href="board/list">게시판</a></li>
-					<li><a href="news/list">뉴스 및 소식</a></li>
-					<li><a href="loginCheck/myPage">마이페이지</a></li>
-					<li><a href="loginCheck/logout">로그아웃</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/board/list">게시판</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/news/list">뉴스 및 소식</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/loginCheck/myPage">마이페이지</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/loginCheck/logout">로그아웃</a></li>
 				</ul>
 			</nav>
 			<%
@@ -37,8 +37,8 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
-					<li><a href="board/list">게시판</a></li>
-					<li><a href="news/list">뉴스 및 소식</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/board/list">게시판</a></li>
+					<li><a href="${reqeust.getContextPath()}/app/news/list">뉴스 및 소식</a></li>
 					<li><a href="LoginForm">로그인</a></li>
 					<li><a href="MemberForm">회원가입</a></li>
 				</ul>
