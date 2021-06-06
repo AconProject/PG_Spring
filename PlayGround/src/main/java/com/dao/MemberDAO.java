@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +45,20 @@ public class MemberDAO {
 		return n;
 	}
 
-	public String pwSearch(MemberDTO dto) {
-		String userpw = template.selectOne("MemberMapper.pwSearch", dto);
-		return userpw;
-	}
+	
 
 	public int memberDelete(HashMap<String, String> map) {
 		int result = template.delete("MemberMapper.memberDelete", map);
 		return result;
 	}
+
+	public String idSearch(Map<String, String> map) {
+		String mbrId= template.selectOne("MemberMapper.idSearch",map);
+		return mbrId;
+	}
+	public String pwSearch(Map<String, String> map) {
+		String mbrPw= template.selectOne("MemberMapper.pwSearch",map);
+		return mbrPw;
+	}
+	
 }

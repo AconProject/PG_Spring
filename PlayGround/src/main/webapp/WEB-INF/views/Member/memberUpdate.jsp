@@ -93,7 +93,6 @@
 	    String mbrRegdate = dto.getMbrRegdate();
 	    
 	    System.out.println("memberUpdate.jsp: "+dto.toString());
-	    System.out.println("memberUpdate.jsp(mbrId): "+mbrId);
 	%>
 	<!-- 메인화면 컨텐츠-->
 	<!-- 안의 내용은 데이터 받아오면 변경 예정 -->
