@@ -46,8 +46,7 @@ public class MemberService {
 	}// end idCheck
 
 
-
-	public int memberDelete(HashMap<String, String> map) {
+	public int memberDelete(Map<String, String> map) {
 		int result = dao.memberDelete(map);
 		return result;
 	}// end memberDelete

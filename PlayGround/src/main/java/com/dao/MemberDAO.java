@@ -46,8 +46,8 @@ public class MemberDAO {
 	}
 
 	
-
-	public int memberDelete(HashMap<String, String> map) {
+	public int memberDelete(Map<String, String> map) {
+		System.out.println("DAO에서 찍어보는 MAP: "+map);
 		int result = template.delete("MemberMapper.memberDelete", map);
 		return result;
 	}
@@ -60,5 +60,7 @@ public class MemberDAO {
 		String mbrPw= template.selectOne("MemberMapper.pwSearch",map);
 		return mbrPw;
 	}
+
+
 	
 }
