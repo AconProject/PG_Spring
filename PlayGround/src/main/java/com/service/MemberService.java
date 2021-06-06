@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,13 +45,23 @@ public class MemberService {
 		return dto;
 	}// end idCheck
 
-	public String pwSearch(MemberDTO dto) {
-		String userid = dao.pwSearch(dto);
-		return userid;
-	}
+
 
 	public int memberDelete(HashMap<String, String> map) {
 		int result = dao.memberDelete(map);
 		return result;
 	}// end memberDelete
+
+	public String idSearch(Map<String, String> map) {
+		String mbrId =dao.idSearch(map);
+		return mbrId;
+	}//end idSearch
+	public String pwSearch(Map<String, String> map) {
+		String mbrPw =dao.pwSearch(map);
+		return mbrPw;
+	}//end idSearch
+
+
+
+	
 }// end class
