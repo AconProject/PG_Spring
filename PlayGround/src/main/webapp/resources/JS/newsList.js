@@ -110,7 +110,7 @@ function processNewsData(data){
 
 /* 뉴스 목록 불러오기 */
 function getNewsList(){
-	fetch('news/newsList')
+	fetch('newsList')
 		.then(res => res.json())
 		.then(data => {
 			processNewsData(data);

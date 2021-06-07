@@ -1,6 +1,4 @@
 <%@page import="com.dto.MemberDTO"%>
-<%@page import="com.google.gson.*"%>
-<%@page import="org.json.simple.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,7 +8,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js" />"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=1" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -33,16 +31,17 @@
 
 			<%
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
-			Gson gson = new GsonBuilder().create();
+			//Gson gson = new GsonBuilder().create();
 
 			if(dto != null){
+				String loginId = dto.getMbrId();
+				String loginName = dto.getMbrName();
 			%>
 			<script>
-				let loginJSON = <%= gson.toJson(dto) %>;
-				let loginId = loginJSON.mbrId;
+				let loginId = <%= loginId %>;
 				document.getElementById('loginId').setAttribute('value', loginId);
 			</script>
-			<div><%= loginJSON.mbrName; %></div>
+			<div><%= loginName %></div>
 			<input type="text" id="comment">
 			<button id="submitComment">댓글 작성</button>
 			<%

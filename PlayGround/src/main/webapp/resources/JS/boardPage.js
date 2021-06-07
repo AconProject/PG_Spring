@@ -4,7 +4,7 @@ window.onload = function(){
 
 	// boardId 값 가져오기
 	boardId = location.href.substr(
-		location.href.lastIndexOf('=') + 1
+		location.href.lastIndexOf('/') + 1
 	);
 	
 	document.getElementById('boardId').setAttribute('value', boardId);
@@ -87,7 +87,7 @@ function checkMemberId(writerId){
 
 /* 게시글 내용 불러오기 */
 function getBoardContents(){
-	fetch('board/read/' + boardId)
+	fetch('boards/' + boardId)
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForBoardContents(data[0]);
