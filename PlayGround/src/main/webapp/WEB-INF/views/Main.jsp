@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:if test="${!empty success }">
+	<script>
+	alert('${success}');
+	</script>
+</c:if>
+
+<c:if test="${!empty deleteResult }">
+	<script>
+		alert('${deleteResult}');
+	</script>
+</c:if>
+
+<c:if test="${!empty mesg }">
+	<script>
+		alert('${mesg}');
+	</script>
+</c:if>
+
+	
 <!DOCTYPE html>
 <HTML>
 <head>
@@ -9,18 +30,7 @@
 <meta name="description" content="PlayGround" />
 <meta name="author" content="TeamTwo" />
 
-<%
-	String mesg = (String) session.getAttribute("memberAdd");
-	if (mesg != null) {
-%>
-<script type="text/javascript">
-     alert('<%=mesg%>');
-</script>
-<%
-	session.removeAttribute("memberAdd");
 
-	}
-%>
 </head>
 <body>
 	

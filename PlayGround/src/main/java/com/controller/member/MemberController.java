@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.MemberDTO;
 import com.service.MemberService;
@@ -17,6 +18,17 @@ import com.service.MemberService;
 public class MemberController {
 	@Autowired
 	MemberService service;
+	
+	@RequestMapping(value = "/idDuplicateCheck", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String idDuplicatedCheck(@RequestParam("id") String mbrId) {
+		MemberDTO dto= service.mypage(mbrId);
+		String mesg="아이디 사용가능";
+		if(dto != null) {
+			mesg="아이디 중복";
+		}
+		return mesg;
+	}
 
 	@RequestMapping(value = "/loginCheck/myPage")
 	public String myPage(HttpSession session) {
@@ -26,12 +38,36 @@ public class MemberController {
 		System.out.println("회원정보 출력: " +dto);
 		return "redirect:../MyPage";
 	}
-
+///이동 부분
 	@RequestMapping(value = "/loginCheck/updatePage")
 	public String updatePage() {
 		return "redirect:../memberUpdate";
 	}
-
+	
+	@RequestMapping(value = "/loginCheck/deletePage")
+	public String deletePage() {
+		return "redirect:../memberDelete";
+	}
+	
+	@RequestMapping(value = "/Member/tagPage")
+	public String tagPage() {
+		System.out.println("TagPage 이동@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return "redirect:../tagPage";
+	}
+	
+	
+////수행 부분
+	@RequestMapping(value = "/memberAdd")
+	public String memberAdd(MemberDTO m, Model model) {
+		int result=service.memberAdd(m);
+		if (result == 1) {
+			model.addAttribute("success", "환영합니다. 회원가입성공하셨습니다");
+		} else {
+			model.addAttribute("mesg", "이용 불가. 입력하신 정보를 다시 확인해 주십시오");
+		}
+		return "Main";
+	}
+	
 	@RequestMapping(value = "/loginCheck/memberUpdate")
 	public String memberUpdate(HttpSession session,MemberDTO dto) {
 		MemberDTO beforeChange = (MemberDTO) session.getAttribute("login");
@@ -41,14 +77,22 @@ public class MemberController {
 		System.out.println("회원정보 변경후 출력: " +dto);
 		return "redirect:../";
 	}
-
-	@RequestMapping(value = "/memberAdd")
-	public String memberAdd(MemberDTO m, Model model) {
-		System.out.println("회원가입 페이지로 이동 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		service.memberAdd(m);
-		model.addAttribute("success", "회원가입성공");
+	
+	@RequestMapping(value = "/loginCheck/memberDelete")
+	public String memberDelete(@RequestParam Map<String, String> map, Model model,HttpSession session) {
+		System.out.println(">>mbrId값: " + map.get("mbrId") + "\t" + "mbrPw값: " + map.get("mbrPw"));
+		int result = service.memberDelete(map);
+		session.invalidate();
+		System.out.println("Delete 결과: "+result);
+		if (result == 1) {
+			model.addAttribute("deleteResult", "성공적으로 회원 탈퇴를 하셨습니다. ");
+		} else {
+			model.addAttribute("mesg", "이용 불가. 입력하신 정보를 다시 확인해 주십시오");
+		}
 		return "Main";
 	}
+
+
 
 	@RequestMapping(value = "/MemberIdSearch", produces = "text/plain;charset=UTF-8")
 	public String MemberIdSearch(@RequestParam Map<String, String> map, Model model) {
