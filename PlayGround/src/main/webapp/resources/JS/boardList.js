@@ -3,7 +3,7 @@ window.onload = function(){
 	let writeBtn = document.getElementById('write');
 	if (writeBtn) {
 		writeBtn.addEventListener('click', function(){
-			location.href = 'board/write';
+			location.href = 'board/write/insert';
 		}, false);
 	}
 
@@ -133,7 +133,7 @@ function prepareForPaging(data){
 
 /* 게시판 글 목록 불러오기 (첫 로딩)*/
 function getBoardList(){
-	fetch('board/boardList/all')
+	fetch('boardList/all')
 		.then(res => res.json())
 		.then(data => {
 			prepareForPaging(data);

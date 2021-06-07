@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=<%=System.currentTimeMillis() %>" />"></script>
+	<script src="<c:url value="/resources/JS/writeBoard.js" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->

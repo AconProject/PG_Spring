@@ -1,14 +1,15 @@
 <%@page import="com.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="<c:url value="/resources/CSS/BoardList.css?v=<%=System.currentTimeMillis() %>" />" rel="stylesheet">
-	<script src="<c:url value="/resources/JS/boardList.js?v=<%=System.currentTimeMillis() %>" />"></script>
+	<link href="<c:url value="/resources/CSS/BoardList.css" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/boardList.js" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -45,7 +46,7 @@
 				<option value="writer">작성자</option>
 			</select>
 			<input type="text" id="searchText">
-			<button id="search"><img src="resources/Image/search.png" alt="검색"></button>
+			<button id="search"><img src="<c:url value="/resources/Image/search.png" />" alt="검색"></button>
 		</div>
 
 		<%
