@@ -22,7 +22,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write/{boardId}")
-	public String writeBoard(@PathVariable int boardId, Model m) {
+	public String writeBoard(@PathVariable String boardId, Model m) {
 		m.addAttribute("boardId", boardId);
 		return "Board/writeBoard";
 	}

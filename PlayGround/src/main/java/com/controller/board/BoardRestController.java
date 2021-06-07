@@ -32,10 +32,6 @@ public class BoardRestController {
 	@Autowired
 	LikeService lService;
 	
-	@GetMapping("/boardList")
-	public RedirectView boardList(HttpServletResponse response) {
-		return new RedirectView("Board/boardList");
-	}
 	
 	@GetMapping("/gameInfoCategory/{gameInfoCategory}")
 	public List<BoardDTO> gameInfoMainList(@PathVariable String gameInfoCategory) {
@@ -59,14 +55,14 @@ public class BoardRestController {
 		return boardList;
 	}
 	
-	@GetMapping("/read/{boardId}")
+	@GetMapping("/boards/{boardId}")
 	public BoardDTO boardRead(@PathVariable int boardId) {
 		BoardDTO board = bService.boardRead(boardId);
 		System.out.println(board);
 		return board;
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/boards")
 	public int boardInsert(@RequestBody BoardDTO board) {
 		System.out.println(board);
 		int boardId = bService.getBoardId();
@@ -78,7 +74,7 @@ public class BoardRestController {
 			return -1;
 	}
 	
-	@PatchMapping("/update")
+	@PatchMapping("/boards")
 	public int boardUpdate(@RequestBody BoardDTO board) {
 		System.out.println(board);
 		int result = bService.boardUpdate(board);
@@ -87,7 +83,7 @@ public class BoardRestController {
 		return result;
 	}
 	
-	@DeleteMapping("/delete/{boardId}")
+	@DeleteMapping("/boards/{boardId}")
 	public int boardDelete(@PathVariable int boardId) {
 		int result = bService.boardDelete(boardId);
 		if (result == 0) 
@@ -101,13 +97,13 @@ public class BoardRestController {
 		return boardList;
 	}
 	
-	@GetMapping("/search/{boardCategory}/{searchWord}/{searchCategory}")
+	@GetMapping("/boardCategory/{boardCategory}/words/{searchWord}/searchCategory/{searchCategory}")
 	public List<BoardDTO> boardSearchList(@PathVariable HashMap<String, String> searchMap) {
 		List<BoardDTO> boardList = bService.boardSearchList(searchMap);
 		return boardList;
 	}
 	
-	@PatchMapping("/like/{boardLike}/{boardId}")
+	@PatchMapping("boards/{boardId}/like/{boardLike}")
 	public int boardLike(@PathVariable int boardLike, @PathVariable int boardId,
 							 HttpSession session) {
 		System.out.println("현재 좋아요 개수 : " + boardLike);
