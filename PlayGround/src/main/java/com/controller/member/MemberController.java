@@ -49,6 +49,12 @@ public class MemberController {
 		return "redirect:../memberDelete";
 	}
 	
+	@RequestMapping(value = "/Member/tagPage")
+	public String tagPage() {
+		System.out.println("TagPage 이동@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return "redirect:../tagPage";
+	}
+	
 	
 ////수행 부분
 	@RequestMapping(value = "/memberAdd")

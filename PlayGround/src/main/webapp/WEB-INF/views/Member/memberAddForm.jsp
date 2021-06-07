@@ -76,7 +76,7 @@
 	function tag() {
 		console.log("tagPage!!");
 		tagPage = window
-				.open("${pageContext.request.contextPath}/Member/tagPage.jsp",
+				.open("Member/tagPage",
 						"",
 						"width=200,height=300,left=700,top=650,scrollbars=1,location=no,resizable=no");
 	}
@@ -114,7 +114,7 @@
 
 		<div class="row">
 			<span class="title" id="tagname">태그</span>
-			<button name="mbrGenre" id="tagbtn" onclick="tag(); return false;">Tag</button>
+			<button name="mbrGenre" id="tagbtn" onclick="tag()">Tag</button>
 			<input type="text" name="mbrGenre" id="mbrGenre" class="content">
 		</div>
 
