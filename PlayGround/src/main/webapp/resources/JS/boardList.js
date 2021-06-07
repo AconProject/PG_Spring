@@ -3,7 +3,7 @@ window.onload = function(){
 	let writeBtn = document.getElementById('write');
 	if (writeBtn) {
 		writeBtn.addEventListener('click', function(){
-			location.href = 'board/write';
+			location.href = 'write/insert';
 		}, false);
 	}
 
@@ -112,7 +112,7 @@ function jsonParserForBoards(data, start, end){
 		boardDate = convertDate(data[i].boardDate);
 		insertElement('tr', 'boardList', '', 'id', 'board'+i);
 		insertElement('td', 'board'+i, data[i].boardCategory);
-		insertElement('td', 'board'+i, '<a href="board/page/' + data[i].boardId
+		insertElement('td', 'board'+i, '<a href="page/' + data[i].boardId
 			+ '">' + data[i].boardName + '</a>');
 		insertElement('td', 'board'+i, data[i].mbrName);
 		insertElement('td', 'board'+i, boardDate);
@@ -133,7 +133,7 @@ function prepareForPaging(data){
 
 /* 게시판 글 목록 불러오기 (첫 로딩)*/
 function getBoardList(){
-	fetch('board/boardList/all')
+	fetch('boardList/all')
 		.then(res => res.json())
 		.then(data => {
 			prepareForPaging(data);
@@ -147,7 +147,7 @@ function getBoardList(){
 function getChangedBoardList(){
 	let boardCategory = document.getElementById('boardCategory').value;
 
-	fetch('board/boardList/' + boardCategory)
+	fetch('boardList/' + boardCategory)
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');
@@ -164,7 +164,7 @@ function getBoardSearchList(){
 	let searchText = document.getElementById('searchText').value;
 	let boardCategory = document.getElementById('boardCategory').value;
 
-	fetch('board/search/' + boardCategory + '/' + searchText + '/' + searchCategory)
+	fetch('boardCategory/' + boardCategory + '/words/' + searchText + '/searchCategory/' + searchCategory)
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');
