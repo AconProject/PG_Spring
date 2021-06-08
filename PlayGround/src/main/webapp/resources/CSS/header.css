@@ -3,24 +3,24 @@
 ------------------------------- */
 
 header {
-	background: rgb(171, 219, 252);
+  background: rgb(171, 219, 252);
 }
 
 .logo {
-    width: 210px;
-    margin-top: 14px;
+  width: 210px;
+  margin-top: 14px;
 }
 
 nav {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav {
-    display: flex;
-    list-style: none;
+  display: flex;
+  list-style: none;
 }
 
 .nav li {
-    margin-left: 36px;
+  margin-left: 36px;
 }
