@@ -40,10 +40,10 @@ function removeAllElements(query) {
 
 /* 타임스탬프 -> 날짜 변환 */
 function convertDate(timeStamp) {
-	let rawDate = '';
-	let date = '';
+	let rawDate;
+	let date;
 	rawDate = new Date(timeStamp);
-	date += rawDate.getFullYear() + '.' +
+	date = rawDate.getFullYear() + '.' +
 		(rawDate.getMonth() + 1) + '.' +
 		rawDate.getDate();
 	return date;
@@ -107,7 +107,7 @@ function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage) 
 
 /* 게시판 데이터 파싱 후 출력 */
 function jsonParserForBoards(data, start, end) {
-	let boardDate = '';
+	let boardDate;
 	for (let i = start; i < data.length && i < end; i++) {
 		boardDate = convertDate(data[i].boardDate);
 		insertElement('tr', 'boardList', '', 'id', 'board' + i);

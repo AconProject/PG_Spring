@@ -1,4 +1,4 @@
-let boardId = '';
+let boardId;
 
 window.onload = function () {
 
@@ -24,10 +24,10 @@ function insertElement(childTag, parentId, content, attr, attrVal) {
 
 /* 타임스탬프 -> 날짜 변환 */
 function convertDate(timeStamp) {
-	let rawDate = '';
-	let date = '';
+	let rawDate;
+	let date;
 	rawDate = new Date(timeStamp);
-	date += rawDate.getFullYear() + '.' +
+	date = rawDate.getFullYear() + '.' +
 		(rawDate.getMonth() + 1) + '.' +
 		rawDate.getDate();
 	return date;
@@ -56,17 +56,19 @@ function jsonParserForBoardContents(data) {
 /* 게시글 댓글 파싱 후 출력 */
 function jsonParserForBoardReply(data) {
 	let conmmentNum = data.length - 1;
+	let replyDate;
 
 	let html = '';
 	for (let i = 1; i < data.length; i++) {
 
+		replyDate = convertDate(data[i].replyDate);
 		html +=
+			'------------------------------<br>' +
 			'댓글수 - ' + conmmentNum + '<br>' +
 			'닉넴 - ' + data[i].mbrName + '<br>' +
 			'댓글 - ' + data[i].replyContent + '<br>' +
-			'날짜 - ' + data[i].replyDate + '<br>' +
-			'추천수 - ' + data[i].replyLiked + '<br>' +
-			'------------------------------<br>';
+			'날짜 - ' + replyDate + '<br>' +
+			'추천수 - ' + data[i].replyLiked + '<br>';
 	}
 	document.getElementById('boardComments').innerHTML = html;
 }
@@ -95,11 +97,10 @@ function getBoardContents() {
 		})
 		.then(
 			fetch('../../reply/read/' + boardId)
-				.then(res => {console.log(res.text());})
-				// .then(res => res.json())
-				// .then(data => {
-				// 	jsonParserForBoardReply(data);
-				// })
+				.then(res => res.json())
+				.then(data => {
+					jsonParserForBoardReply(data);
+				})
 		)
 		.catch(err => {
 			console.log(err);
