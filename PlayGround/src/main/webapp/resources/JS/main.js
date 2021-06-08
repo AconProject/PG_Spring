@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
 
 	// 화면에 표시할 데이터 불러오기
 	getNewGame();
@@ -18,14 +18,14 @@ window.onload = function(){
 };
 
 /* 모든 요소 삭제 (데이터 갱신 시 기존 데이터 삭제 위함) */
-function removeAllElements(query){
+function removeAllElements(query) {
 	let removeEles = document.querySelectorAll(query);
-	for (let i=0; i<removeEles.length; i++)
+	for (let i = 0; i < removeEles.length; i++)
 		removeEles[i].parentNode.removeChild(removeEles[i]);
 }
 
 /* JSP에 새로운 태그 및 컨텐츠 삽입 */
-function insertElement(childTag, parentId, content, attr, attrVal){
+function insertElement(childTag, parentId, content, attr, attrVal) {
 	let newEle = document.createElement(childTag);
 	if (attr && attrVal)
 		newEle.setAttribute(attr, attrVal);
@@ -35,25 +35,25 @@ function insertElement(childTag, parentId, content, attr, attrVal){
 }
 
 /* 타임스탬프 -> 날짜 변환 */
-function convertDate(timeStamp){
+function convertDate(timeStamp) {
 	let rawDate = '';
 	let date = '';
 	rawDate = new Date(timeStamp);
 	date += rawDate.getFullYear() + '.' +
-			(rawDate.getMonth()+1) + '.' +
-			rawDate.getDate();
+		(rawDate.getMonth() + 1) + '.' +
+		rawDate.getDate();
 	return date;
 }
 
 /******************************* json parser **********************************/
 
 /* 상단에 표시할 게임데이터 파싱 후 출력 */
-function jsonParserForTop(data){
-	for (let i=0; i<data.length; i++){
-		if (i<3){
-			insertElement('td', 'topTableNum', (i+1)+'.');
+function jsonParserForTop(data) {
+	for (let i = 0; i < data.length; i++) {
+		if (i < 3) {
+			insertElement('td', 'topTableNum', (i + 1) + '.');
 			insertElement('td', 'topTableImg', '<a href="GameDetailServlet?gameNo='
-				+ data[i].gameNo +'"><img class="gameImg" src="' + data[i].gameImage
+				+ data[i].gameNo + '"><img class="gameImg" src="' + data[i].gameImage
 				+ '" alt="이미지를 불러올 수 없습니다."></a>');
 			insertElement('td', 'topTableName', '<a href="GameDetailServlet?gameNo='
 				+ data[i].gameNo + '">' + data[i].gameName + '</a>', 'class', 'center');
@@ -61,7 +61,7 @@ function jsonParserForTop(data){
 				data[i].gameReleasedDate, 'class', 'center');
 			insertElement('td', 'topTableCategory',
 				'#' + data[i].gameCategory, 'class', 'center tag');
-		} else{
+		} else {
 			insertElement('li', 'topChart', '<a href="GameDetailServlet?gameNo='
 				+ data[i].gameNo + '">' + data[i].gameName + data[i].gameReleasedDate + '</a>');
 		}
@@ -69,21 +69,21 @@ function jsonParserForTop(data){
 }
 
 /* 중단에 표시할 게임데이터 파싱 후 출력 */
-function jsonParserForMiddle(data){
-	for (let i=0; i<data.length; i++){
-		insertElement('tr', 'midTable', '', 'id', 'midTr'+i);
-		insertElement('td', 'midTr'+i, (i+1)+'.');
-		insertElement('td', 'midTr'+i, '<a href="GameDetailServlet?gameNo='
+function jsonParserForMiddle(data) {
+	for (let i = 0; i < data.length; i++) {
+		insertElement('tr', 'midTable', '', 'id', 'midTr' + i);
+		insertElement('td', 'midTr' + i, (i + 1) + '.');
+		insertElement('td', 'midTr' + i, '<a href="GameDetailServlet?gameNo='
 			+ data[i].gameNo + '"><img class="gameImg" src="' + data[i].gameImage
 			+ '" alt="이미지를 불러올 수 없습니다."></a>');
-		insertElement('td', 'midTr'+i, '<a href="GameDetailServlet?gameNo='
-			+ data[i].gameNo + '">' + data[i].gameName+data[i].gameReleasedDate + '</a>');
+		insertElement('td', 'midTr' + i, '<a href="GameDetailServlet?gameNo='
+			+ data[i].gameNo + '">' + data[i].gameName + data[i].gameReleasedDate + '</a>');
 	}
 }
 
 /* 중단 태그 파싱 후 출력 */
-function jsonParserForTags(data){
-	for (let i=0; i<data.length; i++){
+function jsonParserForTags(data) {
+	for (let i = 0; i < data.length; i++) {
 		insertElement('p', 'tagScroll',
 			'<input type="checkbox" name="tag" value="' +
 			data[i].genreId + '">' + data[i].gameCategory, 'class', 'tag');
@@ -91,9 +91,9 @@ function jsonParserForTags(data){
 }
 
 /* 하단에 표시할 게시판 데이터 파싱 후 출력 */
-function jsonParserForBoard(data, boardCategory){
+function jsonParserForBoard(data, boardCategory) {
 	let boardDate = '';
-	for (let i=0; i<data.length; i++){
+	for (let i = 0; i < data.length; i++) {
 		boardDate = convertDate(data[i].boardDate);
 		insertElement('li', boardCategory, '<a href="board/page/'
 			+ data[i].boardId + '">' + data[i].boardName + '</a><div><span>'
@@ -104,11 +104,11 @@ function jsonParserForBoard(data, boardCategory){
 }
 
 /* 하단에 표시할 뉴스 데이터 파싱 후 출력 */
-function jsonParserForNews(data){
+function jsonParserForNews(data) {
 	let newsDate = '';
-	for (let i=0; i<5; i++){
+	for (let i = 0; i < 5; i++) {
 		newsDate = convertDate(data[i].newsDate);
-		insertElement('li', 'mainNews', '<a href="'+ data[i].newsUrl + '">'
+		insertElement('li', 'mainNews', '<a href="' + data[i].newsUrl + '">'
 			+ data[i].newsTitle + newsDate + '</a>');
 	}
 }
@@ -116,7 +116,7 @@ function jsonParserForNews(data){
 /********************************** ajax *************************************/
 
 /* 상단 최신게임 불러오기 (페이지 첫 로딩) */
-function getNewGame(){
+function getNewGame() {
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -128,7 +128,7 @@ function getNewGame(){
 }
 
 /* 상단 최신게임 불러오기 (버튼 클릭) */
-function getNewGameEvent(){
+function getNewGameEvent() {
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -142,7 +142,7 @@ function getNewGameEvent(){
 }
 
 /* 상단 추천게임 불러오기 (버튼 클릭) */
-function getRecommendedGame(){
+function getRecommendedGame() {
 	fetch('game/category/recommend')
 		.then(res => res.json())
 		.then(data => {
@@ -156,7 +156,7 @@ function getRecommendedGame(){
 }
 
 /* 중단 태그 불러오기 및 태그 클릭 이벤트 등록 */
-function getTag(){
+function getTag() {
 	fetch('genre/genreList')
 		.then(res => res.json())
 		.then(data => {
@@ -172,17 +172,17 @@ function getTag(){
 }
 
 /* 중단 태그별 게임 불러오기 (페이지 첫 로딩) */
-function getTagGame(){
+function getTagGame() {
 	fetch('game/tag/noTag')
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForMiddle(data);
-			
+
 			fetch('rate/tag/noTag')
 				.then(res => res.json())
 				.then(data => {
-					for (let i=0; i<data.length; i++)
-						insertElement('td', 'midTr'+i, '<div class="score"><span>' + data[i]+'</span></div>');
+					for (let i = 0; i < data.length; i++)
+						insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
 				})
 				.catch(err => {
 					console.log(err);
@@ -194,7 +194,7 @@ function getTagGame(){
 }
 
 /* 중단 태그별 게임 불러오기 (태그 클릭) */
-function getTagGameEvent(tagId){
+function getTagGameEvent(tagId) {
 	fetch('game/tag/' + tagId)
 		.then(res => res.json())
 		.then(data => {
@@ -204,8 +204,8 @@ function getTagGameEvent(tagId){
 			fetch('rate/tag/' + tagId)
 				.then(res => res.json())
 				.then(data => {
-					for (let i=0; i<data.length; i++)
-						insertElement('td', 'midTr'+i, '<div class="score"><span>' + data[i]+'</span></div>');
+					for (let i = 0; i < data.length; i++)
+						insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
 				})
 				.catch(err => {
 					console.log(err);
@@ -217,15 +217,15 @@ function getTagGameEvent(tagId){
 }
 
 /* 중단 태그 클릭 이벤트 (버튼 클릭) */
-function getCheckboxValue(){
+function getCheckboxValue() {
 	let query = 'input[name="tag"]:checked';
-	let selectedEls = 
+	let selectedEls =
 		document.querySelectorAll(query);
 
-	if (selectedEls.length === 0){
+	if (selectedEls.length === 0) {
 		removeAllElements('.midTable tr');
 		getTagGame();
-	} else{
+	} else {
 		let checkedTagId = '';
 		selectedEls.forEach((el) => {
 			checkedTagId += el.value + ',';
@@ -250,7 +250,7 @@ function getCheckboxValue(){
 }
 
 /* 하단 게임게시판 추천순으로 불러오기 (페이지 첫 로딩) */
-function getRecommendedPost(){
+function getRecommendedPost() {
 	fetch('board/gameInfoCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
@@ -262,7 +262,7 @@ function getRecommendedPost(){
 }
 
 /* 하단 게임게시판 추천순으로 불러오기 (버튼 클릭) */
-function getRecommendedPostEvent(){
+function getRecommendedPostEvent() {
 	fetch('board/gameInfoCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
@@ -275,7 +275,7 @@ function getRecommendedPostEvent(){
 }
 
 /* 하단 게임게시판 조회수 정렬 (버튼 클릭) */
-function getMostViewPost(){
+function getMostViewPost() {
 	fetch('board/gameInfoCategory/hit')
 		.then(res => res.json())
 		.then(data => {
@@ -288,7 +288,7 @@ function getMostViewPost(){
 }
 
 /* 하단 QnA게시판 추천수 정렬 (페이지 첫 로딩) */
-function getRecommendedQnA(){
+function getRecommendedQnA() {
 	fetch('board/qnaCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
@@ -300,7 +300,7 @@ function getRecommendedQnA(){
 }
 
 /* 하단 QnA게시판 추천수 정렬 (버튼 클릭) */
-function getRecommendedQnAEvent(){
+function getRecommendedQnAEvent() {
 	fetch('board/qnaCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
@@ -313,7 +313,7 @@ function getRecommendedQnAEvent(){
 }
 
 /* 하단 QnA게시판 조회수 정렬 (버튼 클릭) */
-function getMostViewQnA(){
+function getMostViewQnA() {
 	fetch('board/qnaCategory/hit')
 		.then(res => res.json())
 		.then(data => {
@@ -326,7 +326,7 @@ function getMostViewQnA(){
 }
 
 /* 하단 뉴스게시판 불러오기 */
-function getNews(){
+function getNews() {
 	fetch('news/newsList')
 		.then(res => res.json())
 		.then(data => {
