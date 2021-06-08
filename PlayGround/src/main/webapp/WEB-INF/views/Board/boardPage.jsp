@@ -37,7 +37,7 @@
 				String loginName = dto.getMbrName();
 			%>
 			<script>
-				let loginId = <%= loginId %>;
+				let loginId = '<%= loginId %>';
 				document.getElementById('loginId').setAttribute('value', loginId);
 			</script>
 			<div><%= loginName %></div>

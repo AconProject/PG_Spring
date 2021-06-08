@@ -36,10 +36,10 @@ function insertElement(childTag, parentId, content, attr, attrVal) {
 
 /* 타임스탬프 -> 날짜 변환 */
 function convertDate(timeStamp) {
-	let rawDate = '';
-	let date = '';
+	let rawDate;
+	let date;
 	rawDate = new Date(timeStamp);
-	date += rawDate.getFullYear() + '.' +
+	date = rawDate.getFullYear() + '.' +
 		(rawDate.getMonth() + 1) + '.' +
 		rawDate.getDate();
 	return date;
@@ -92,7 +92,7 @@ function jsonParserForTags(data) {
 
 /* 하단에 표시할 게시판 데이터 파싱 후 출력 */
 function jsonParserForBoard(data, boardCategory) {
-	let boardDate = '';
+	let boardDate;
 	for (let i = 0; i < data.length; i++) {
 		boardDate = convertDate(data[i].boardDate);
 		insertElement('li', boardCategory, '<a href="board/page/'
@@ -105,7 +105,7 @@ function jsonParserForBoard(data, boardCategory) {
 
 /* 하단에 표시할 뉴스 데이터 파싱 후 출력 */
 function jsonParserForNews(data) {
-	let newsDate = '';
+	let newsDate;
 	for (let i = 0; i < 5; i++) {
 		newsDate = convertDate(data[i].newsDate);
 		insertElement('li', 'mainNews', '<a href="' + data[i].newsUrl + '">'

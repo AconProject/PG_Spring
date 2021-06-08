@@ -1,4 +1,4 @@
-let boardId = '';
+let boardId;
 
 window.onload = function () {
 	// boardId 값 가져오기
