@@ -4,13 +4,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <head>
-<link href="<c:url value="/resources/CSS/header.css?v=<%=System.currentTimeMillis() %>" />" rel="stylesheet">
+<link href="<c:url value="/resources/CSS/header.css" />" rel="stylesheet">
 </head>
 <header>
 		<div class="wrapper">
 		
 			<h1>
-				<a href="../Main.jsp"><img class="logo" src="resources/Image/logo.png" alt="로고 이미지"></a>
+				<a href="${request.getContextPath()}/app"><img class="logo" src="<c:url value="/resources/Image/logo.png" />" alt="로고 이미지"></a>
 			</h1>
 			
 			<%
@@ -23,10 +23,11 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
-					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
-					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
-					<li><a href="${pageContext.request.contextPath}/MyPageServlet">마이페이지</a></li>
-					<li><a href="${pageContext.request.contextPath}/LogoutServlet">로그아웃</a></li>
+
+					<li><a href="${request.getContextPath()}/app/board/list">게시판</a></li>
+					<li><a href="${request.getContextPath()}/app/news/list">뉴스 및 소식</a></li>
+					<li><a href="${request.getContextPath()}/app/loginCheck/myPage">마이페이지</a></li>
+					<li><a href="${request.getContextPath()}/app/loginCheck/logout">로그아웃</a></li>
 				</ul>
 			</nav>
 			<%
@@ -36,10 +37,10 @@
 			<nav>
 				<div class="empty"></div>
 				<ul class="nav">
-					<li><a href="${pageContext.request.contextPath}/Board/boardList.jsp">게시판</a></li>
-					<li><a href="${pageContext.request.contextPath}/Board/newsList.jsp">뉴스 및 소식</a></li>
+					<li><a href="${request.getContextPath()}/app/board/list">게시판</a></li>
+					<li><a href="${request.getContextPath()}/app/news/list">뉴스 및 소식</a></li>
 					<li><a href="LoginForm">로그인</a></li>
-					<li><a href="${pageContext.request.contextPath}/MemberUIServlet">회원가입</a></li>
+					<li><a href="MemberForm">회원가입</a></li>
 				</ul>
 			</nav>
 			

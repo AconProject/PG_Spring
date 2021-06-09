@@ -31,7 +31,7 @@
 		<a href="MemberUIServlet" class="menu">회원가입</a>
 	</div>
 	
-	<form action="MemberIdSearchServlet" method="post" class="findid">
+	<form action="MemberIdSearch" method="post" class="findid">
 		<h2>아이디 찾기</h2>
 		<div class="row">
 			<span class="title">닉네임</span> 
@@ -46,7 +46,7 @@
 		</div>
 	</form>
 	
-	<form action="MemberPwSearchServlet" method="post" class="findpw">
+	<form action="MemberPwSearch" method="post" class="findpw">
 		<h2>비밀번호 찾기</h2>
 		<div class="row">
 			<span class="title">아이디</span> 

@@ -22,7 +22,7 @@ import com.service.ReplyService;
 
 @RestController
 @RequestMapping("/reply")
-public class ReplyController {
+public class ReplyRestController {
 	@Autowired
 	ReplyService rService;
 	@Autowired
@@ -35,16 +35,16 @@ public class ReplyController {
 		return replyList;
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/replys")
 	public int replyInsert(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
-		int result = rService.replyInsert(reply);
+		int result = rService.replyInsert(reply);	
 		if (result == 0)
 			return -1;
 		return result;
 	}
 	
-	@PatchMapping("/update")
+	@PatchMapping("/replys")
 	public int replyUpdate(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
 		int result = rService.replyUpdate(reply);
@@ -53,7 +53,7 @@ public class ReplyController {
 		return result;
 	}
 	
-	@DeleteMapping("/delete/{replyId}")
+	@DeleteMapping("/replys/{replyId}")
 	public int replyDelete(@PathVariable int replyId) {
 		int result = rService.replyDelete(replyId);
 		if (result == 0) 
@@ -61,7 +61,7 @@ public class ReplyController {
 		return result;
 	}
 	
-	@PatchMapping("/like/{replyLike}/{replyId}")
+	@PatchMapping("replys/{replyId}/like/{replyLike}")
 	public int replyLike(@PathVariable int replyLike, @PathVariable int replyId,
 							 HttpSession session) {
 		System.out.println("현재 좋아요 개수 : " + replyLike);

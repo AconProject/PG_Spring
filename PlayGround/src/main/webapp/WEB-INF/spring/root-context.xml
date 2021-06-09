@@ -30,6 +30,7 @@
 				<value>classpath:com/config/MemberMapper.xml</value>
 				<value>classpath:com/config/NewsMapper.xml</value>
 				<value>classpath:com/config/RateMapper.xml</value>
+				<value>classpath:com/config/ReplyMapper.xml</value>
 				<value>classpath:com/config/ReviewMapper.xml</value>
 			</list>
 		</property>

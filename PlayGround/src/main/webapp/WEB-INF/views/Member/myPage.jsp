@@ -68,8 +68,8 @@
 						
 						</div><br>
 						
-						<button type="submit" onclick = "location.href='${pageContext.request.contextPath}/Member/memberUpdate.jsp'">수 정</button>
-						<button type="submit" onclick = "location.href='${pageContext.request.contextPath}/Member/memberDelete.jsp'">삭 제</button>
+						<button type="submit" onclick = "location.href='loginCheck/updatePage'">수 정</button>
+						<button type="submit" onclick = "location.href='loginCheck/deletePage'">삭 제</button>
 					
 					
 				</div>

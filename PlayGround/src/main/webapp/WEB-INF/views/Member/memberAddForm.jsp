@@ -1,20 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Date"%>
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/Image/gameLogo.png" />
 <link href="<c:url value="/resources/CSS/MemberAdd.css" />" rel="stylesheet">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-
 	$(document).ready(function() {
+		$("#idchk").on("click", function() {
+			$.ajax({
+				url : 'idDuplicateCheck',
+				type : 'get',
+				data : {
+					id : $("#mbrId").val(),
+				},
+				dataType : "text",
+				success : function(data, status, xhr) {
+					$("#result").text(data);
+				},
+				error : function(xhr, status, error) {
+				}
+			});//end ajax
+		});//end on
+
 		// 아이디 ,비밀번호 체크
 		$("form").on("submit", function() {
 
 			var mbrId = $("#mbrId");
 			var mbrPw = $("#mbrPw");
 			var mbrPw2 = $("#mbrPw2");
-			
+
 			if (mbrId.val().length == 0) {
 				swal("Oops!!", "ID를 다시 입력해주세요!", "error");
 				mbrId.focus();
@@ -25,34 +39,13 @@
 				event.preventDefault();
 			}
 			// 비밀번호 / 비밀번호 일치하지 않는 경우
-			if (mbrPw.val() != mbrPw2.val()){
+			if (mbrPw.val() != mbrPw2.val()) {
 				swal("Oops!!", "PASSWORD가 일치하지 않습니다! 다시 확인해주세요!", "error");
 				mbrPw.focus();
 				event.preventDefault();
 			}
-			
-		});
-		
-		// 아이디 중복체크
-		$("#idchk").click(function() {
-			var mbrId = $("#mbrId");
 
-			$.ajax({
-				type:"get",
-				url:"MemberIdCheckServlet",
-				dataType: "text",
-				data:{
-					mbrId : mbrId.val()
-				},
-				success : function(Data, status, xhr) {
-					swal(""+Data);
-				},
-				error : function(xhr, status, error) {
-					console.log("error");
-				}
-			});
 		});
-		return false;
 
 		// 비밀번호 숫자 제한(6자리)
 		$("#mbrPw").focusout(function() {
@@ -76,59 +69,55 @@
 			}
 		});
 	});
-	
+
 	// 태그페이지 넘어가기
 	var tagPage;
 	function tag() {
 		console.log("tagPage!!");
-		tagPage = window.open("${pageContext.request.contextPath}/Member/tagPage.jsp","","width=200,height=300,left=700,top=650,scrollbars=1,location=no,resizable=no");
+		tagPage = window
+				.open("Member/tagPage",
+						"",
+						"width=200,height=300,left=700,top=650,scrollbars=1,location=no,resizable=no");
 	}
-	
-	
 </script>
 
 <!--나오는 값: 아이디,비빌번호, 비밀번호 확인, 닉네임, 이메일 , 가입일자 (안보이는 값으로)   -->
 
-<form action="MemberAddServlet" method="post" class="addForm" id="addForm">
-	<a href="${pageContext.request.contextPath}/Main.jsp"><img class="logo" src="resources/Image/logo.png" alt="로고 이미지"></a>
+
+<form action="memberAdd" method="post" class="addForm" id="addForm">
+	<a href="${pageContext.request.contextPath}/Main.jsp"><img src="${pageContext.request.contextPath}/Image/logo.png"></a>
 	<h2>회원가입</h2>
 	<div class="contentform">
-	
+
 		<div class="row" style="display: inline;">
-			<span class="title">아이디 * 
-				<button id="idchk">중복체크</button>
-			</span> 
-			<input type="text" class="content" name="mbrId" id="mbrId" autofocus>
+			<span class="title">아이디 *
+				<button id="idchk" class="idchk">중복체크</button>
+			</span> <input type="text" class="content" name="mbrId" id="mbrId" autofocus> <span id="result"></span>
 		</div>
 
 		<div class="row">
-			<span class="title">비밀번호 *</span> 
-			<input type="text" class="content" name="mbrPw" id="mbrPw" autocomplete="off" placeholder=" 비밀번호는 6자리 이상이어야 합니다.">
+			<span class="title">비밀번호 *</span> <input type="text" class="content" name="mbrPw" id="mbrPw" autocomplete="off" placeholder=" 비밀번호는 6자리 이상이어야 합니다.">
 		</div>
 
 		<div class="row" style="display: inline;">
-			<span class="title">비밀번호 확인 * 
-				<span id="pwcheck"></span>
-			</span> 
-			<input type="text" class="content" name="mbrPw2" id="mbrPw2">
+			<span class="title">비밀번호 확인 * <span id="pwcheck"></span>
+			</span> <input type="text" class="content" name="mbrPw2" id="mbrPw2">
 		</div>
 
 		<div class="row">
-			<span class="title">닉네임 *</span> 
-			<input type="text" class="content" name="mbrName" id="mbrName">
+			<span class="title">닉네임 *</span> <input type="text" class="content" name="mbrName" id="mbrName">
 		</div>
 
 		<div class="row">
-			<span class="title">이메일 *</span> 
-			<input type="email" class="content" name="mbrEmail" id="mbrEmail">
+			<span class="title">이메일 *</span> <input type="email" class="content" name="mbrEmail" id="mbrEmail">
 		</div>
 
 		<div class="row">
-			<span class="title" id="tagname">태그</span> 
-			<button name="mbrGenre" id="tagbtn" onclick="tag(); return false;" >Tag</button>
-			<input type="text" name="mbrGenre" id="mbrGenre"  class="content">
+			<span class="title" id="tagname">태그</span>
+			<button name="mbrGenre" id="tagbtn" onclick="tag()">Tag</button>
+			<input type="text" name="mbrGenre" id="mbrGenre" class="content">
 		</div>
-			
+
 		<div class="button">
 			<input type="submit" value="제 출">
 		</div>

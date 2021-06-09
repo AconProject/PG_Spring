@@ -85,7 +85,7 @@ String loginPw = dto.getMbrPw();
 		<!-- 상단 -->
 		<section class="main-contents">
 
-			<form action="../MemberDeleteServlet" name="deleteForm" method="post">
+			<form action="loginCheck/memberDelete" name="deleteForm" method="post">
 
 				<div class="row" style="display: inline;">
 					<span class="title">아이디 * </span> <input type="text" class="content" name="mbrId" id="mbrId" autofocus>

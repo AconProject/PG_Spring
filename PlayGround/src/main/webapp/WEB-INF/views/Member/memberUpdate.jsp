@@ -51,12 +51,10 @@
 				swal("Oops!!", "비밀번호를 작성해주세요", "error");
 				document.updateForm.mbrPw.focus();
 				event.preventDefault();
-				return;
 			} else if(mbrPw.length<6){
 				swal("Oops!!", "비밀번호는 6글자 이상만 이용 가능합니다!", "error");
 				document.updateForm.mbrPw.focus();
 				event.preventDefault();
-				return;
 			}
 			
 			// 닉네임 체크
@@ -65,7 +63,6 @@
 				swal("Oops!!", "닉네임을 작성해주세요", "error");
 				document.updateForm.mbrName.focus();
 				event.preventDefault();
-				return;
 			}
 			
 			// 이메일 체크
@@ -74,7 +71,6 @@
 				swal("Oops!!", "이메일을 작성해주세요", "error");
 				document.updateForm.mbrEmail.focus();
 				event.preventDefault();
-				return;
 			}
 			
 		}
@@ -98,7 +94,6 @@
 	    String mbrRegdate = dto.getMbrRegdate();
 	    
 	    System.out.println("memberUpdate.jsp: "+dto.toString());
-	    System.out.println("memberUpdate.jsp(mbrId): "+mbrId);
 	%>
 	<!-- 메인화면 컨텐츠-->
 	<!-- 안의 내용은 데이터 받아오면 변경 예정 -->
@@ -107,7 +102,7 @@
 		<!-- 상단 -->
         <section class="main-contents">
         
-			<form action="../MemberUpdateServlet" name="updateForm" method="post">
+			<form action="loginCheck/memberUpdate" name="updateForm" method="post">
 			
 				<div class="member">아이디 &nbsp;&nbsp;&nbsp; <%=mbrId%>
 				<input type="hidden" class="mbrinfo" value="<%=mbrId%>" name="mbrId" id="mbrId" style="border:none;">
