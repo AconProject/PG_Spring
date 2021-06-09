@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/Image/gameLogo.png" />
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/MemberAdd.css">
-
+<link href="<c:url value="/resources/CSS/MemberAdd.css" />" rel="stylesheet">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -83,6 +82,7 @@
 </script>
 
 <!--나오는 값: 아이디,비빌번호, 비밀번호 확인, 닉네임, 이메일 , 가입일자 (안보이는 값으로)   -->
+
 
 <form action="memberAdd" method="post" class="addForm" id="addForm">
 	<a href="${pageContext.request.contextPath}/Main.jsp"><img src="${pageContext.request.contextPath}/Image/logo.png"></a>

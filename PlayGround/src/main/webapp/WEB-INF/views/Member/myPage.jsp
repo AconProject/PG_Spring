@@ -1,8 +1,11 @@
 <%@page import="com.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/Image/gameLogo.png" />
-<link href="${pageContext.request.contextPath}/CSS/MyPage.css" rel="stylesheet">
+<link href="<c:url value="/resources/CSS/MyPage.css" />" rel="stylesheet">
+
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <%

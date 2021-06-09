@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../CSS/TagPage.css">
+<link href="<c:url value="/resources/CSS/TagPage.css" />" rel="stylesheet">
+
 <title>TagPage</title>
 
  <script type="text/javascript">
@@ -24,6 +27,7 @@
 	</script>
 </head>
 <body>
+
 <input type="checkbox" name="tag" id="tag1" value="레이싱"><label for="tag1">레이싱</label><br>
 <input type="checkbox" name="tag" id="tag2" value="생존"><label for="tag2">생존</label><br>
 <input type="checkbox" name="tag" id="tag3" value="슈팅"><label for="tag3">슈팅</label><br>
