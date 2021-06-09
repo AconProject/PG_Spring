@@ -28,5 +28,16 @@ public class GameService {
 	public List<GameDTO> tagGameListSelect(List<Integer> listTags) {
 		return dao.tagGameListSelect(listTags);
 	}
+
+	public GameDTO detailGameSelect(int gameNo) {
+		GameDTO dto = dao.detailGameSelect(gameNo);
+		return dto;
+	}
+
+	public List<GameDTO> relatedGameList(String gameCategory) {
+		return dao.relatedGameList(gameCategory);
+	}
+
+	
 	
 }

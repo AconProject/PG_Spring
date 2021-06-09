@@ -51,7 +51,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/Member/tagPage")
 	public String tagPage() {
-		System.out.println("TagPage 이동@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return "redirect:../tagPage";
 	}
 	

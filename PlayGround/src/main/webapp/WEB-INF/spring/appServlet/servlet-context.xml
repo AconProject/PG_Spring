@@ -22,6 +22,10 @@
 	<mvc:view-controller path="/boardPage" view-name="boardPage" />
 	<mvc:view-controller path="/newsList" view-name="newsList" />
 
+
+	<mvc:view-controller path="/detailPage" view-name="Game/detailPage" />
+	
+
 	<!--외부 파일 -->
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
  

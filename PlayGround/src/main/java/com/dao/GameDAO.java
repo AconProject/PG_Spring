@@ -32,4 +32,13 @@ public class GameDAO {
 		List<GameDTO> list = session.selectList("GameMapper.tagGameListSelect", listTags);
 		return list;
 	}
+
+	public GameDTO detailGameSelect(int gameNo) {
+		GameDTO dto = session.selectOne("GameMapper.detailGameSelect", gameNo);
+		return dto;
+	}
+
+	public List<GameDTO> relatedGameList(String gameCategory) {
+		return session.selectList("GameMapper.relatedGameList", gameCategory);
+	}
 }
