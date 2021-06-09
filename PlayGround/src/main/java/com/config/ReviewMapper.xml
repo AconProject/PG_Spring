@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ReviewMapper">
 
-	<select id="reviewSelect" parameterType="string" resultType="ReviewDTO">
+	<select id="reviewSelect" resultType="ReviewDTO">
 		SELECT *
 		FROM review
 		WHERE gameNo = #{gameNo}
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 댓글 회원별명 존재여부 확인 -->
-	<select id="nameCheck" parameterType="string" resultType="int">
+	<select id="nameCheck"  resultType="int">
 		select count(*)
 		from review
 		where mbrName = #{mbrName}

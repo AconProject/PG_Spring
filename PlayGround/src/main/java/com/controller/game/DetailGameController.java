@@ -9,13 +9,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.dto.GameDTO;
-import com.dto.MemberDTO;
 import com.dto.RateDTO;
 import com.dto.ReviewDTO;
 import com.service.GameService;
@@ -33,21 +34,23 @@ public class DetailGameController {
 
 
 
-	@RequestMapping("/Game/detailPage")
-	public ModelAndView gameDetail(@RequestParam("gameNo") int gameNo) {
+	@RequestMapping("/Game/detailPage/{gameNo}")
+	public ModelAndView gameDetail(@PathVariable String gameNo) {
 		ModelAndView model = new ModelAndView();
+		int gameNumber=Integer.parseInt(gameNo);
+		System.out.println("게임번호: "+gameNo +"\t"+gameNumber);
 		//1-1: 게임정보 
-		GameDTO gameDTO= gameService.detailGameSelect(gameNo);
+		GameDTO gameDTO= gameService.detailGameSelect(gameNumber);
 		System.out.println("게임정보: "+gameDTO);
 		model.addObject("topPageGame",gameDTO);
 		
 		//1-2: 점수
-		RateDTO rateDTO = rateService.getGameScore(gameNo);
+		RateDTO rateDTO = rateService.getGameScore(gameNumber);
 		System.out.println("게임점수: "+rateDTO);
 		model.addObject("topPageScore",rateDTO);
 
 		//2. 중단: 게임댓글
-		List<ReviewDTO> reviewDTO = reviewService.reviewSelect(gameNo);
+		List<ReviewDTO> reviewDTO = reviewService.reviewSelect(gameNumber);
 		System.out.println("게임댓글: "+reviewDTO);
 		model.addObject("midPage",reviewDTO);
 		
@@ -57,7 +60,7 @@ public class DetailGameController {
 		System.out.println("관련게임: "+relatedGameList);
 		model.addObject("botPage",relatedGameList);
 		
-		model.setViewName("../detailPage");
+		model.setViewName("Game/detailPage");
 		return model;
 	}
 	
@@ -91,7 +94,6 @@ public class DetailGameController {
 		int result = reviewService.reviewDelete(reviewId);
 		System.out.println("댓글 삭제 성공 여부: "+result);
 		
-
 	}
 	
 	@RequestMapping(value = "/loginCheck/reviewUpdate")
