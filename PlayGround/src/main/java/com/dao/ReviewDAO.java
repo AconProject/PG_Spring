@@ -7,10 +7,12 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.dto.GameDTO;
 import com.dto.ReviewDTO;
 
+@Repository
 public class ReviewDAO {
 
 	@Autowired

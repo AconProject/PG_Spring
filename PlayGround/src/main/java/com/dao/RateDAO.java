@@ -23,6 +23,7 @@ public class RateDAO {
 	}
 
 	public RateDTO getGameScore(int gameNo) {
+		System.out.println("check gameNo in DAO: "+ gameNo);
 		return session.selectOne("RateMapper.getGameScore", gameNo);
 	}
 }
