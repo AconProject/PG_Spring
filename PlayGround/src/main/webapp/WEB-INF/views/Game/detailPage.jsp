@@ -48,7 +48,45 @@
 		// 좋아요버튼 누르기
 		$(".icon").on("click", function() {
 			console.log("따봉 클릭!");
-			var click = $(this).attr("data-liked");
+			var num = $(this).attr("data-num");
+			var liked = $("#"+num).text();
+			var reviewId = $(this).attr("data-reviewId");
+			var gameNo = $(this).attr("data-gameNo");
+			var login = $(this).attr("data-login");
+			
+			console.log("gameNo: ", gameNo);
+			console.log("ReviewId: ", reviewId);
+			console.log("좋아요 수: ", liked);
+			console.log("로그인: ", login);
+			
+			if(num == null){
+				alert('로그인 후 사용 바람');
+			}else {
+			$.ajax({
+				type:"get",
+				url:"reviewLikeServlet",
+				dataType:"text",
+				data:{
+					reviewId : reviewId,
+					gameNo : gameNo
+				},
+				success: function(Data, status, xhr) {
+					console.log("success");
+					console.log(Data);
+					if(Data==="이미 좋아요를 누르셨습니다."){
+						console.log("이미 좋아요를 눌렀습니다.")
+						alert(Data);
+					} else {
+						console.log("증가된 좋아요 수 : " + Data);
+						var liked = $("#"+num).text(Data);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log("error");
+				}
+			}); // end ajax
+			}
+			
 		}); // end liked
 		
 	});
@@ -118,22 +156,20 @@
 							<td class="tags">
 								<table>
 									<tr>
-										<td><a href="#" class="tag">#<%=category[0]%></a></td>
-										<td><a href="#" class="tag">#<%=category[1]%></a></td>
-										<td><a href="#" class="tag">#<%=category[2]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[0]%>" class="tag">#<%=category[0]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[1]%>" class="tag">#<%=category[1]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[2]%>" class="tag">#<%=category[2]%></a></td>
 									</tr>
 									<tr>
-										<td><a href="#" class="tag">#<%=category[3]%></a></td>
-										<td><a href="#" class="tag">#<%=category[4]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[3]%>" class="tag">#<%=category[3]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[4]%>" class="tag">#<%=category[4]%></a></td>
 									</tr>
 								</table>
 							</td>
 							<td rowspan="2"><div class="score" id="gameScore"><%= gameScore %></div></td>
 						</tr>
 						<tr>
-							<td><p class="content" id="gameContent">
-									“ <%= gameContent %> ”
-							</p></td>
+							<td><p class="content" id="gameContent">“ <%= gameContent %> ” </p></td>
 						</tr>
 
 					</table>
@@ -163,7 +199,7 @@
 						for (int i = (p - 1) * 4; i < (p * perPage); i++) {
 							if (i == totalPage) break;
 							ReviewDTO review = rdto.get(i);
-							
+							String id = "gameReviewLiked" + i;
 					 %>
 					 
 					 	<table class="midTable">
@@ -171,7 +207,7 @@
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
 							<td class="review"><p id="gameReplyContent"><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
-							<td class="thumb"><img class="icon" src="Image/thumb.png" alt="추천수"><span id="gameReplyRecommend"><%= review.getReviewLiked() %></span></td>
+							<td class="thumb"><img class="icon" src="Image/thumb.png" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
 							<%
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
@@ -193,7 +229,7 @@
 								if (i == totalPage) break;
 								ReviewDTO review = rdto.get(i);
 					%>
-					
+						
 						<table class="midTable">
 						<tr>
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
@@ -203,6 +239,9 @@
 						</tr>
 						</table>
 						
+						<script>
+							
+						</script>
 					<%
 							}
 						}
@@ -248,23 +287,39 @@
 			<div class="assogame">
 				<h1>연관 게임</h1>
 			</div>
+			
 			<div class="container">
 				<div>
 					<table class="bottomTable">
-						<tr>
-							<td><img class="game" id="game1" src="Image/sampleGame.jpg" alt="게임 이미지"></td>
-							<td><img class="game" id="game2" src="Image/sampleGame.jpg" alt="게임 이미지"></td>
-							<td><img class="game" id="game3" src="Image/sampleGame.jpg" alt="게임 이미지"></td>
-							<td><img class="game" id="game4" src="Image/sampleGame.jpg" alt="게임 이미지"></td>
-							<td><img class="game" id="game5" src="Image/sampleGame.jpg" alt="게임 이미지"></td>
+					<tr>
+					<%
+						List<GameDTO> relategame = (List<GameDTO>)request.getAttribute("relateGame");
+						for(int i = 0; i < relategame.size(); i++) {
+							GameDTO relate = relategame.get(i);
+							String gameNum = relate.getGameNo();
+							String gamename = relate.getGameName();
+							String gameImage = relate.getGameImage();
+					%> 
+						
+							<td><<a href="GameDetailServlet?gameNo=<%= gameNum %>" ><img class="game" id="game1" src="<%= gameImage %>" alt="게임 이미지"></a></td>
+					<%
+						}
+					%> 
 						</tr>
 						<tr>
-							<td class="title"><a href="#" class="gametitle" id="title1">Destinia</a></td>
-							<td class="title"><a href="#" class="gametitle" id="title2">HeroSquare</a></td>
-							<td class="title"><a href="#" class="gametitle" id="title3">PUBG</a></td>
-							<td class="title"><a href="#" class="gametitle" id="title4">Fortnite</a></td>
-							<td class="title"><a href="#" class="gametitle" id="title5">After Alpha</a></td>
+					<%
+						for(int i = 0; i < relategame.size(); i++) {
+							GameDTO relate = relategame.get(i);
+							String gameNum = relate.getGameNo();
+							String gamename = relate.getGameName();
+							String gameImage = relate.getGameImage();
+					%>
+							<td class="title"><a href="GameDetailServlet?gameNo=<%= gameNum %>" class="gametitle" id="title1"><%= gamename %></a></td>
+					<%
+						}
+					%> 
 						</tr>
+					
 					</table>
 				</div>
 			</div>
