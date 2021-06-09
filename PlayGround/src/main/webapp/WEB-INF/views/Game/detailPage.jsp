@@ -3,8 +3,8 @@
 <%@page import="com.dto.MemberDTO"%>
 <%@page import="com.dto.ReviewDTO"%>
 <%@page import="java.util.*" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +25,14 @@
 		alert("로그인하고 작성하세요!");
 	}
 	
-   $(function() {
 	   
 	   // 수정버튼 누르기
 	   $(".upBtn").on("click", function() {
 		   console.log("클릭했다!");
 		   var reviewId = $(this).attr("data-reviewId");
 		   var reviewContent = $(this).attr("data-reviewContent");
-		   window.name = "parentForm"; // 댓글수정페이지
-		   window.open("Game/reviewUpdateForm.jsp?reviewId=" + reviewId+"&reviewContent=" +reviewContent, "updateForm", "width=570, height=350, resizable=no, scrollbars=no");
-	   }); // end upBtn
+		   console.log(reviewId + "\t" + reviewContent);
+	   }); // end upBtn 
 	   
 	   
 	   // 삭제버튼 누르기
@@ -104,8 +102,9 @@
    </script>
 
 <%
-		session.removeAttribute("mbrId");
+		session.removeAttribute("mesg");
 	  } 
+	
 %>
 </head>
 
@@ -213,7 +212,7 @@
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
 							
-							<td><button type="submit" class="upBtn" id="update" data-reviewContent="<%= review.getReviewContent() %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">수정</button></td>
+							<td><button type="submit" class="upBtn" id="update" onclick="answerEdit();" data-reviewContent="<%= review.getReviewContent() %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">수정</button></td>
 							<td><button type="submit" class="delBtn" id="delete" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">삭제</button></td>
 							
 							<%
