@@ -178,6 +178,10 @@ button {
   width: 450px;
 }
 
+.newsChart {
+	width: 930px;
+}
+
 .boardChart li,
 .newsChart li {
   font-size: 1.3rem;
