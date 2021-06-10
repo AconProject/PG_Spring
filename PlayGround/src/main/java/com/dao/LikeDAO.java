@@ -1,5 +1,7 @@
 package com.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,9 @@ public class LikeDAO {
 	public int likeReplyInsert(LikeDTO like) {
 		return session.insert("LikeMapper.likeReplyInsert", like);
 	}
+	public int likeReplyCount(LikeDTO like) {
+		return session.selectOne("LikeMapper.likeReplyCount", like);
+	}
 	
 	/////게임 댓글에 대한  좋아요 삽입 가능
 	public int likeReviewInsert(LikeDTO ldto) {
@@ -39,12 +44,11 @@ public class LikeDAO {
 	public int likeReviewDelete(LikeDTO ldto) {
 		return session.delete("LikeMapper.likeReviewDelete",ldto); 
 	}
-
-	public int likeReviewCount(LikeDTO ldto) {
-		return session.selectOne("LikeMapper.likeReviewCount", ldto);
+	
+	public int likeReviewCount(HashMap<String, Object> map) {
+		return session.selectOne("LikeMapper.likeReviewCount", map);
 	}
 	
-	public int likeReplyCount(LikeDTO like) {
-		return session.selectOne("LikeMapper.likeReplyCount", like);
-	}
 }
+	
+

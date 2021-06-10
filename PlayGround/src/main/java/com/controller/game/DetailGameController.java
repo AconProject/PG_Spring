@@ -39,6 +39,7 @@ public class DetailGameController {
 		ModelAndView model = new ModelAndView();
 		int gameNumber=Integer.parseInt(gameNo);
 		System.out.println("게임번호: "+gameNo +"\t"+gameNumber);
+		
 		//1-1: 게임정보 
 		GameDTO gameDTO= gameService.detailGameSelect(gameNumber);
 		System.out.println("게임정보: "+gameDTO);
@@ -64,45 +65,6 @@ public class DetailGameController {
 		return model;
 	}
 	
-	
-	@RequestMapping("/loginCheck/reviewInsert")
-	public String cartAdd(@ModelAttribute ReviewDTO rDTO, HttpSession session) {
-		System.out.println("댓글 입력값 확인: "+ rDTO);
-		int reviewResult=0;
-		String rName=rDTO.getMbrName();	
-		int gameNo=Integer.parseInt(rDTO.getGameNo());
-		System.out.println("넘어온 정보: " + rName + "\t" + gameNo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("mbrname", rName);
-		map.put("gameNo", gameNo);
-		
-		int nameCheck = reviewService.nameCheck(map);
-		if(nameCheck==0) {
-			reviewResult = reviewService.reviewInsert(rDTO);
-			System.out.println("댓글삽입 성공: " + reviewResult);
-		}else {
-			System.out.println("댓글삽입 실패: " + reviewResult);
-
-		}
-		return "detailPage?gameNo="+rDTO.getGameNo();
-	}
-	
-	@RequestMapping(value = "/loginCheck/reviewDelete")
-	@ResponseBody
-	public void cartDelte(@RequestParam("reviewId") int reviewId) {
-		System.out.println("삭제할 reviewId: "+reviewId);
-		int result = reviewService.reviewDelete(reviewId);
-		System.out.println("댓글 삭제 성공 여부: "+result);
-		
-	}
-	
-	@RequestMapping(value = "/loginCheck/reviewUpdate")
-	@ResponseBody
-	public void cartUpdate(@ModelAttribute ReviewDTO rDTO) {
-		System.out.println("댓글 수정값 확인: "+rDTO.toString());
-		int result = reviewService.reviewUpdate(rDTO);
-		System.out.println("댓글 수정 성공 여부: "+result);
-	}
 	
 	
 }
