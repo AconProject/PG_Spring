@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js" />"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=1" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->

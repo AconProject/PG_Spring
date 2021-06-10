@@ -33,14 +33,31 @@ function convertDate(timeStamp) {
 	return date;
 }
 
+/* 보드 카테고리 ID에 맞는 카테고리명 출력 */
+function getBoardCategory(categoryId) {
+	switch (categoryId) {
+	case 'common':
+		return '일반글';
+	case 'info':
+		return '게임정보';
+	case 'sales':
+		return '할인정보';
+	case 'QnA':
+		return 'QnA';
+	default:
+		return '-';
+	}
+}
+
 /****************************** json parser **********************************/
 
 /* 게시글 데이터 파싱 후 출력 */
 function jsonParserForBoardContents(data) {
 	let boardDate = convertDate(data.boardDate);
+	let boardCategory = getBoardCategory(data.boardCategory);
 
 	let html =
-		'카테고리 - ' + data.boardCategory + '<br>' +
+		'카테고리 - ' + boardCategory + '<br>' +
 		'제목 - ' + data.boardName + '<br>' +
 		'작성자 - ' + data.mbrName + '<br>' +
 		'날짜 - ' + boardDate + '<br>' +

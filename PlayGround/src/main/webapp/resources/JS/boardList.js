@@ -49,6 +49,22 @@ function convertDate(timeStamp) {
 	return date;
 }
 
+/* 보드 카테고리 ID에 맞는 카테고리명 출력 */
+function getBoardCategory(categoryId) {
+	switch (categoryId) {
+	case 'common':
+		return '일반글';
+	case 'info':
+		return '게임정보';
+	case 'sales':
+		return '할인정보';
+	case 'QnA':
+		return 'QnA';
+	default:
+		return '-';
+	}
+}
+
 /************************** paging & json parser ******************************/
 
 /* 페이징 처리 */
@@ -108,10 +124,12 @@ function paging(data, totalData, maxDataPerPage, maxPagePerWindow, currentPage) 
 /* 게시판 데이터 파싱 후 출력 */
 function jsonParserForBoards(data, start, end) {
 	let boardDate;
+	let boardCategory;
 	for (let i = start; i < data.length && i < end; i++) {
 		boardDate = convertDate(data[i].boardDate);
+		boardCategory = getBoardCategory(data[i].boardCategory);
 		insertElement('tr', 'boardList', '', 'id', 'board' + i);
-		insertElement('td', 'board' + i, data[i].boardCategory);
+		insertElement('td', 'board' + i, boardCategory);
 		insertElement('td', 'board' + i, '<a href="page/' + data[i].boardId
 			+ '">' + data[i].boardName + '</a>');
 		insertElement('td', 'board' + i, data[i].mbrName);

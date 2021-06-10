@@ -109,7 +109,7 @@ function jsonParserForNews(data) {
 	for (let i = 0; i < 5; i++) {
 		newsDate = convertDate(data[i].newsDate);
 		insertElement('li', 'mainNews', '<a href="' + data[i].newsUrl + '">'
-			+ data[i].newsTitle + newsDate + '</a>');
+			+ data[i].newsTitle + '</a>' + '<span>' + newsDate + '</span>');
 	}
 }
 
