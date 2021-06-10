@@ -1,16 +1,16 @@
-let boardId;
+let boardUrlId;
 
 window.onload = function () {
 	// boardId 값 가져오기
-	boardId = location.href.substr(
+	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
 
-	document.getElementById('boardId').setAttribute('value', boardId);
+	document.getElementById('boardId').setAttribute('value', boardUrlId);
 	document.getElementById('reset').addEventListener('click', cancelBoard, false);
 	document.getElementById('submit').addEventListener('click', uploadBoard, false);
 
-	if (boardId !== 'insert')
+	if (boardUrlId !== 'insert')
 		getBoardContents();
 };
 
@@ -26,7 +26,7 @@ function jsonParserForBoardContents(data) {
 
 /* 수정 전 게시글 내용 불러오기 */
 function getBoardContents() {
-	fetch('../boards/' + boardId)
+	fetch('../boards/' + boardUrlId)
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForBoardContents(data);
@@ -45,19 +45,22 @@ function uploadBoard() {
 	let category = document.getElementById('boardCategory').value;
 	let title = document.getElementById('boardName').value;
 	let content = document.getElementById('boardName').value;
-	let fetchMethod;
+	let memberId = document.getElementById('loginId').value;
 
-	if (boardId !== 'insert')
-		fetchMethod = 'PATCH';
+	if (boardUrlId === 'insert')
+		insertBoard(category, title, content, memberId);
 	else
-		fetchMethod = 'POST';
+		updateBoard(category, title, content);
+}
 
+function insertBoard(category, title, content, memberId) {
 	fetch('../boards', {
-		method: fetchMethod,
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
+			mbrId: memberId,
 			boardCategory: category,
 			boardName: title,
 			boardContent: content,
@@ -65,14 +68,38 @@ function uploadBoard() {
 	})
 		.then(res => res.json())
 		.then(data => {
-			if (data === 1) {
-				if (boardId !== 'insert')
-					alert('새 게시글을 작성했습니다.');
-				else
-					alert('게시글을 수정했습니다.');
-				location.href = '../list';
+			if (data === -1) {
+				alert('게시글 작성 실패');
 			} else {
-				alert('오류 발생');
+				alert('게시글 작성 완료');
+				location.href = '../list';
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+function updateBoard(category, title, content) {
+	fetch('../boards', {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			boardId: boardUrlId,
+			boardCategory: category,
+			boardName: title,
+			boardContent: content,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === -1) {
+				alert('게시글 수정 실패');
+			} else {
+				alert('게시글 수정 완료');
+				location.href = '../list';
 			}
 		})
 		.catch(err => {
