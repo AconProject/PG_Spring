@@ -32,8 +32,8 @@
         
 			<div class="container">
 				<div class="side">
-	 				<div class="menu" id="profile" onclick="location.href='${pageContext.request.contextPath}/MyPage.jsp'">프로필</div>
-	 				<div class="menu" id="update" onclick="location.href='${pageContext.request.contextPath}/Member/memberUpdate.jsp'">정보수정</div>
+	 				<div class="menu" id="profile" onclick="location.href='loginCheck/myPage'">프로필</div>
+	 				<div class="menu" id="update" onclick="location.href='loginCheck/updatePage'">정보수정</div>
 				</div>
 				
 				<div class="content">
