@@ -8,21 +8,20 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js?v=1" />"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=8" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
 	<input type="hidden" id="loginId">
+	<input type="hidden" id="boardId">
 	<div class="wrapper contents">
 		<!-- 게시글 내용 -->
 		<section>
 			<div id="boardContents"></div>
-			<div id="updateBtn"></div>
-			<form action="board/delete/" id="deleteForm">
-				<input type="hidden" name="boardId" id="boardId">
-			</form>
+			<div id="update"></div>
+			<div id="delete"></div>
 		</section>
 
 		<!-- 댓글 -->

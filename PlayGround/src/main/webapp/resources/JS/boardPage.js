@@ -94,12 +94,14 @@ function jsonParserForBoardReply(data) {
 function checkMemberId(writerId) {
 	let loginId = document.getElementById('loginId').getAttribute('value');
 	if (loginId === writerId) {
-		insertElement('button', 'updateBtn', '글 수정', 'id', 'update');
-		insertElement('button', 'deleteForm', '글 삭제', 'type', 'submit');
+		insertElement('button', 'update', '글 수정', 'id', 'updateBtn');
+		insertElement('button', 'delete', '글 삭제', 'id', 'deleteBtn');
 
-		document.getElementById('update').addEventListener('click', function () {
-			location.href = 'board/write/' + boardId;
+		document.getElementById('updateBtn').addEventListener('click', function () {
+			location.href = '../write/' + boardId;
 		}, false);
+
+		document.getElementById('deleteBtn').addEventListener('click', deleteBoard, false);
 	}
 }
 
@@ -119,6 +121,24 @@ function getBoardContents() {
 					jsonParserForBoardReply(data);
 				})
 		)
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+function deleteBoard() {
+	fetch('../boards/' + boardId, {
+		method: 'DELETE',
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === 1) {
+				alert('게시글이 삭제되었습니다.');
+				location.href = '../list';
+			} else {
+				alert('오류 발생');
+			}
+		})
 		.catch(err => {
 			console.log(err);
 		});
