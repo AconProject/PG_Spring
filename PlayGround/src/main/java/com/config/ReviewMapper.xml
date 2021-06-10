@@ -83,4 +83,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where mbrName = #{mbrName}
 	</select>
 	
+		<!-- 수정버튼 누를시 reviewId로 댓글 찾기 -->
+	<select id="updatebtn" parameterType="int" resultType="ReviewDTO">
+		select *
+		from review
+		where reviewId = #{reviewId}	
+	</select>
+	
+	
 </mapper>
