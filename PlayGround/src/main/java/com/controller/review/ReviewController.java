@@ -73,10 +73,11 @@ public class ReviewController {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		String mbrId=login.getMbrId();
 		
-		LikeDTO ldto = new LikeDTO();
-		ldto.setMbrId(login.getMbrId());
-		ldto.setReviewId(reviewId);
-		System.out.println("ldto: "+ldto);
+		int likeNo = 0; // 추천
+		int boardId = 0; // 게번호시글 ID
+		int replyId = 0; // 게시판 댓글ID
+		LikeDTO ldto = new LikeDTO(likeNo, login.getMbrId(), boardId, reviewId, replyId);
+		System.out.println("likeDTO 확인: "+ldto);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mbrId", mbrId);
@@ -84,18 +85,28 @@ public class ReviewController {
 		int likedCount = likeService.likeReviewCount(map);
 		System.out.println("LikeCountCheck: "+likedCount);
 		
+		
+	
 		//like 들어있는지 확인=> 들어있는경우
-		if (likedCount != 0) {
+		if (likedCount == 1) {
+			System.out.println("좋아요가 있어서, -1했습니다");
+			int reviewMinus = reviewService.reviewLikeMinus(reviewId); // review 댓글 -1
+			System.out.println("좋아요 빼기 여부: " + reviewMinus);
+			
+			int likedDel = likeService.likeReviewDelete(ldto); //
+			System.out.println("liked테이블 제거: " + likedDel);
 			String mesg = "이미 좋아요를 누르셨습니다.";
 			return mesg;
-		}else{ //like 안들어있는 경우
-			// 좋아요 누르기 (+1)
+			
+		}else if (likedCount==0){ //like 안들어있는 경우
+			System.out.println("좋아요가 없어서, +1했습니다");
+
 			int plus = reviewService.reviewLikePlus(reviewId);
-			System.out.println("좋아요 성공 여부: " + plus);
+			System.out.println("좋아요 더하기 여부: " + plus);
 			
 			int likedAdd = likeService.likeReviewInsert(ldto);
 			System.out.println("liked테이블 추가: " + likedAdd);
-			}
+		} 
 
 			ReviewDTO rdto = reviewService.updatebtn(reviewId);
 			System.out.println("찾기: " + rdto);
