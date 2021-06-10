@@ -45,34 +45,62 @@ function uploadBoard() {
 	let category = document.getElementById('boardCategory').value;
 	let title = document.getElementById('boardName').value;
 	let content = document.getElementById('boardName').value;
-	let fetchMethod;
+	let mbrId = document.getElementById('loginId').value;
 
-	if (boardId !== 'insert')
-		fetchMethod = 'PATCH';
+	if (boardId === 'insert')
+		insertBoard(category, title, content, mbrId);
 	else
-		fetchMethod = 'POST';
+		updateBoard(category, title, content);
+}
 
+function insertBoard(category, title, content, mbrId) {
 	fetch('../boards', {
-		method: fetchMethod,
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			boardCategory: category,
-			boardName: title,
-			boardContent: content,
+			'boardId': boardId,
+			'boardCategory': category,
+			'boardName': title,
+			'boardContent': content,
+			'mbrId': mbrId,
 		}),
 	})
 		.then(res => res.json())
 		.then(data => {
-			if (data === 1) {
-				if (boardId !== 'insert')
-					alert('새 게시글을 작성했습니다.');
-				else
-					alert('게시글을 수정했습니다.');
-				location.href = '../list';
+			if (data === -1) {
+				alert('게시글 작성 실패');
 			} else {
-				alert('오류 발생');
+				alert('게시글 작성 완료');
+				location.href = '../list';
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+function updateBoard(category, title, content) {
+	fetch('../boards', {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			'boardId': boardId,
+			'boardCategory': category,
+			'boardName': title,
+			'boardContent': content,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === -1) {
+				alert('게시글 수정 실패');
+			} else {
+				alert('게시글 수정 완료');
+				location.href = '../list';
 			}
 		})
 		.catch(err => {

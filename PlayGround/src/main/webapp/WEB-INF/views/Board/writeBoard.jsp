@@ -7,13 +7,28 @@
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=8" />"></script>
+	<script src="<c:url value="/resources/JS/writeBoard.js?v=9" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
+	<%
+		MemberDTO dto = (MemberDTO)session.getAttribute("login");
+
+		if(dto != null){
+			String loginId = dto.getMbrId();
+	%>
+		<script>
+			let loginId = '<%= loginId %>';
+			document.getElementById('loginId').setAttribute('value', loginId);
+		</script>
+	<%
+		}
+	%>
+	<input type="hidden" id="loginId">
 	<input type="hidden" id="boardId">
+
 	<div class="wrapper contents">
 
 		<select id="boardCategory">

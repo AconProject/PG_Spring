@@ -133,10 +133,10 @@ function deleteBoard() {
 		.then(res => res.json())
 		.then(data => {
 			if (data === 1) {
-				alert('게시글이 삭제되었습니다.');
+				alert('게시글 삭제 완료');
 				location.href = '../list';
 			} else {
-				alert('오류 발생');
+				alert('게시글 삭제 실패');
 			}
 		})
 		.catch(err => {
