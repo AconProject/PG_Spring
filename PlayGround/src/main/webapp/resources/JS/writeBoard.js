@@ -1,16 +1,16 @@
-let boardId;
+let boardUrlId;
 
 window.onload = function () {
 	// boardId 값 가져오기
-	boardId = location.href.substr(
+	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
 
-	document.getElementById('boardId').setAttribute('value', boardId);
+	document.getElementById('boardId').setAttribute('value', boardUrlId);
 	document.getElementById('reset').addEventListener('click', cancelBoard, false);
 	document.getElementById('submit').addEventListener('click', uploadBoard, false);
 
-	if (boardId !== 'insert')
+	if (boardUrlId !== 'insert')
 		getBoardContents();
 };
 
@@ -26,7 +26,7 @@ function jsonParserForBoardContents(data) {
 
 /* 수정 전 게시글 내용 불러오기 */
 function getBoardContents() {
-	fetch('../boards/' + boardId)
+	fetch('../boards/' + boardUrlId)
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForBoardContents(data);
@@ -45,26 +45,25 @@ function uploadBoard() {
 	let category = document.getElementById('boardCategory').value;
 	let title = document.getElementById('boardName').value;
 	let content = document.getElementById('boardName').value;
-	let mbrId = document.getElementById('loginId').value;
+	let memberId = document.getElementById('loginId').value;
 
-	if (boardId === 'insert')
-		insertBoard(category, title, content, mbrId);
+	if (boardUrlId === 'insert')
+		insertBoard(category, title, content, memberId);
 	else
 		updateBoard(category, title, content);
 }
 
-function insertBoard(category, title, content, mbrId) {
+function insertBoard(category, title, content, memberId) {
 	fetch('../boards', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			'boardId': boardId,
-			'boardCategory': category,
-			'boardName': title,
-			'boardContent': content,
-			'mbrId': mbrId,
+			mbrId: memberId,
+			boardCategory: category,
+			boardName: title,
+			boardContent: content,
 		}),
 	})
 		.then(res => res.json())
@@ -88,10 +87,10 @@ function updateBoard(category, title, content) {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			'boardId': boardId,
-			'boardCategory': category,
-			'boardName': title,
-			'boardContent': content,
+			boardId: boardUrlId,
+			boardCategory: category,
+			boardName: title,
+			boardContent: content,
 		}),
 	})
 		.then(res => res.json())

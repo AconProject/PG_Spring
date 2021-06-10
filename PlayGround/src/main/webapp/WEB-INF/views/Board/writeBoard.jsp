@@ -1,3 +1,4 @@
+<%@page import="com.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,12 +8,14 @@
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=9" />"></script>
+	<script src="<c:url value="/resources/JS/writeBoard.js?v=12" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
+	<input type="hidden" id="loginId">
+	<input type="hidden" id="boardId">
 	<%
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 
@@ -26,8 +29,6 @@
 	<%
 		}
 	%>
-	<input type="hidden" id="loginId">
-	<input type="hidden" id="boardId">
 
 	<div class="wrapper contents">
 

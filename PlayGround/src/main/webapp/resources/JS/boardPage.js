@@ -1,13 +1,13 @@
-let boardId;
+let boardUrlId;
 
 window.onload = function () {
 
 	// boardId 값 가져오기
-	boardId = location.href.substr(
+	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
 
-	document.getElementById('boardId').setAttribute('value', boardId);
+	document.getElementById('boardId').setAttribute('value', boardUrlId);
 
 	getBoardContents();
 };
@@ -98,7 +98,7 @@ function checkMemberId(writerId) {
 		insertElement('button', 'delete', '글 삭제', 'id', 'deleteBtn');
 
 		document.getElementById('updateBtn').addEventListener('click', function () {
-			location.href = '../write/' + boardId;
+			location.href = '../write/' + boardUrlId;
 		}, false);
 
 		document.getElementById('deleteBtn').addEventListener('click', deleteBoard, false);
@@ -109,13 +109,13 @@ function checkMemberId(writerId) {
 
 /* 게시글 내용 불러오기 */
 function getBoardContents() {
-	fetch('../boards/' + boardId)
+	fetch('../boards/' + boardUrlId)
 		.then(res => res.json())
 		.then(data => {
 			jsonParserForBoardContents(data);
 		})
 		.then(
-			fetch('../../reply/read/' + boardId)
+			fetch('../../reply/read/' + boardUrlId)
 				.then(res => res.json())
 				.then(data => {
 					jsonParserForBoardReply(data);
@@ -127,7 +127,7 @@ function getBoardContents() {
 }
 
 function deleteBoard() {
-	fetch('../boards/' + boardId, {
+	fetch('../boards/' + boardUrlId, {
 		method: 'DELETE',
 	})
 		.then(res => res.json())
