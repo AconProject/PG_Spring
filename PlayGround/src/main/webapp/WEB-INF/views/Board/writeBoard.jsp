@@ -8,23 +8,27 @@
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=12" />"></script>
+	<script src="<c:url value="/resources/JS/writeBoard.js?v=16" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
 	<input type="hidden" id="loginId">
+	<input type="hidden" id="loginName">
 	<input type="hidden" id="boardId">
 	<%
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 
 		if(dto != null){
 			String loginId = dto.getMbrId();
+			String loginName = dto.getMbrName();
 	%>
 		<script>
 			let loginId = '<%= loginId %>';
+			let loginName = '<%= loginName %>';
 			document.getElementById('loginId').setAttribute('value', loginId);
+			document.getElementById('loginName').setAttribute('value', loginName);
 		</script>
 	<%
 		}
