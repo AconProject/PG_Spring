@@ -5,6 +5,8 @@
 <%@page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +27,9 @@
 		alert("로그인하고 작성하세요!");
 	}
 	
-	   
+	
+    $(function() {
+		
 	   // 수정버튼 누르기
 	   $(".upBtn").on("click", function() {
 		   console.log("클릭했다!");
@@ -41,7 +45,7 @@
 			var reviewId = $(this).attr("data-reviewId");
 			var gameNo = $(this).attr("data-gameNo");
 			console.log("gameNo: " + gameNo);
-			location.href="reviewDeleteServlet?reviewId=" + reviewId + "&gameNo=" + gameNo;
+			location.href="../../loginCheck/reviewDelete?reviewId=" + reviewId + "&gameNo=" + gameNo;
 		}); // end delBtn
 		
 		// 좋아요버튼 누르기
@@ -63,7 +67,7 @@
 			}else {
 			$.ajax({
 				type:"get",
-				url:"reviewLikeServlet",
+				url:"../../loginCheck/reviewLike",
 				dataType:"text",
 				data:{
 					reviewId : reviewId,
@@ -106,6 +110,68 @@
 	  } 
 	
 %>
+
+
+<script>
+	console.log('${topPageGame}');
+	var game = '${topPageGame}';
+	console.log(game);
+	
+	var gameNo = '${topPageGame.gameNo}';
+	var gameName = '${topPageGame.gameName}';
+	var gameImage = '${topPageGame.gameImage}';
+	var gamePrice = '${topPageGame.gamePrice}';
+	var gameContent = '${topPageGame.gameContent}';
+	var gameCategory = '${topPageGame.gameCategory}';
+	var gameGenre = '${topPageGame.gameGenre}';
+	var gameReleasedDate = '${topPageGame.gameReleasedDate}';
+	var gameScore = '${topPageScore.gameScore}';
+	
+	var date = gameReleasedDate.substring(0,4);
+	console.log(date);
+	
+	// 장르 배열로 
+	var category = [];
+	category = gameGenre.split(",");
+	
+	// 장르 하나씩 뽑기
+	for (var i = 0; i < category.length; i++) {
+		console.log(category[i]);
+	}
+	console.log(category[0]);
+	
+	
+	window.onload = function() {
+		
+		// 상단부분(게임설명)
+		
+		// 게임이름
+		document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )";
+		// 게임이미지
+		document.getElementById("gameImage").src = gameImage;
+		// 게임장르 넣기
+		document.getElementById("tag1").href = "./GameTagDetailServlet?gameCategory=" + category[0];
+		document.getElementById("tag1").innerHTML = "# " + category[0];
+		document.getElementById("tag2").href = "./GameTagDetailServlet?gameCategory=" + category[1];
+		document.getElementById("tag2").innerHTML = "# " + category[1];
+		document.getElementById("tag3").href = "./GameTagDetailServlet?gameCategory=" + category[2];
+		document.getElementById("tag3").innerHTML = "# " + category[2];
+		document.getElementById("tag4").href = "./GameTagDetailServlet?gameCategory=" + category[3];
+		document.getElementById("tag4").innerHTML = "# " + category[3];
+		document.getElementById("tag5").href = "./GameTagDetailServlet?gameCategory=" + category[4];
+		document.getElementById("tag5").innerHTML = "# " + category[4];
+		// 게임설명
+		document.getElementById("gameContent").innerHTML = gameContent;
+		// 게임점수
+		document.getElementById("gameScore").innerHTML = gameScore;
+		
+		
+		// 중단부분
+		
+	}
+	
+</script>
+
 </head>
 
 
@@ -113,63 +179,37 @@
 	<!-- 페이지 상단 로고 및 배너 -->
 	<jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
-	<%
 	
-
-	GameDTO gdto = (GameDTO) request.getAttribute("detailGame");
-	RateDTO ratedto = (RateDTO) request.getAttribute("gameScore");
-	double gameScore = ratedto.getGameScore();
-
-	System.out.println("detailjsp - 게임정보 gdto : " + gdto);
-	String gameNo = gdto.getGameNo();
-	String gameName = gdto.getGameName();
-	String gameIamge = gdto.getGameImage();
-	int gamePrice = gdto.getGamePrice();
-	String gameContent = gdto.getGameContent();
-	String gameCategory = gdto.getGameCategory();
-	String gameGenre = gdto.getGameGenre();
-	String gameReleasedDate = gdto.getGameReleasedDate();
-	
-	/* 게임출시년도만 뜨기 */
-	String date = gameReleasedDate.substring(0, 4);
-	
-	/* double gameScore = rdto.getGameScore(); */
-	String[] category = gameGenre.split(",");
-	
-	MemberDTO login =(MemberDTO)session.getAttribute("login");
-	%>
-
 	<!-- 메인화면 컨텐츠-->
 	<!-- 안의 내용은 데이터 받아오면 변경 예정 -->
 	<div class="wrapper">
 		<!-- 상단 -->
 		<section class="main-contents">
 			<div class="gamename">
-				<h1 id="gameName"><%=gameName%><small id="gameReleaseDate">( <%= date %> )</small>
-				</h1>
+				<h1 id="gameName"></h1>
 			</div>
 			<div class="container">
 				<div>
 					<table class="topTable">
 						<tr>
-							<td rowspan="2" style="width: 250px;"><img class="gameImg" id="gameImage" src="<%= gameIamge %>" alt="게임 이미지"></td>
+							<td rowspan="2" style="width: 250px;"><img class="gameImg" id="gameImage" src="" alt="게임 이미지"></td>
 							<td class="tags">
 								<table>
 									<tr>
-										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[0]%>" class="tag">#<%=category[0]%></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[1]%>" class="tag">#<%=category[1]%></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[2]%>" class="tag">#<%=category[2]%></a></td>
+										<td><a href="" class="tag" id="tag1"></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag2"></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag3"></a></td>
 									</tr>
 									<tr>
-										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[3]%>" class="tag">#<%=category[3]%></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=<%=category[4]%>" class="tag">#<%=category[4]%></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag4"></a></td>
+										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag5"></a></td>
 									</tr>
 								</table>
 							</td>
-							<td rowspan="2"><div class="score" id="gameScore"><%= gameScore %></div></td>
+							<td rowspan="2"><div class="score" id="gameScore"></div></td>
 						</tr>
 						<tr>
-							<td><p class="content" id="gameContent">“ <%= gameContent %> ” </p></td>
+							<td><p class="content" id="gameContent"></p></td>
 						</tr>
 
 					</table>
@@ -179,7 +219,8 @@
 
 		<!-- 중단 -->
 		<%
-			List<ReviewDTO> rdto = (List<ReviewDTO>) request.getAttribute("reviewList");
+			MemberDTO login =(MemberDTO)session.getAttribute("login");
+			List<ReviewDTO> rdto = (List<ReviewDTO>) request.getAttribute("midPage");
 			if (rdto != null) {
 				int totalPage = rdto.size();
 				int perPage = 4;
@@ -207,7 +248,7 @@
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
 							<td class="review"><p id="gameReplyContent"><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
-							<td class="thumb"><img class="icon" src="Image/thumb.png" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
+							<td class="thumb"><img class="icon" src="resources/Image/thumb.png" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
 							<%
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
@@ -255,8 +296,8 @@
 			    			name =  login.getMbrName();
 			    	%>
 			    			
-			    			<form action="reviewInsertServlet">
-							<input type="hidden" name="gameNo" value="<%= gameNo %>">
+			    			<form action="../../loginCheck/reviewInsert">
+							<input type="hidden" name="gameNo" value="${gameNo}">
 							<table class="reviewTable">
 								<tr>
 									<td rowspan="3" class="mbrName" id="mbrName"><%= name %></td>
@@ -293,7 +334,7 @@
 					<table class="bottomTable">
 					<tr>
 					<%
-						List<GameDTO> relategame = (List<GameDTO>)request.getAttribute("relateGame");
+						List<GameDTO> relategame = (List<GameDTO>)request.getAttribute("botPage");
 						for(int i = 0; i < relategame.size(); i++) {
 							GameDTO relate = relategame.get(i);
 							String gameNum = relate.getGameNo();
@@ -301,7 +342,7 @@
 							String gameImage = relate.getGameImage();
 					%> 
 						
-							<td><<a href="GameDetailServlet?gameNo=<%= gameNum %>" ><img class="game" id="game1" src="<%= gameImage %>" alt="게임 이미지"></a></td>
+							<td><a href="GameDetailServlet?gameNo=<%= gameNum %>" ><img class="game" id="game1" src="<%= gameImage %>" alt="게임 이미지"></a></td>
 					<%
 						}
 					%> 
@@ -324,6 +365,7 @@
 				</div>
 			</div>
 		</section>
+		
 
 	</div>
 
