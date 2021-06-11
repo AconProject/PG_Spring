@@ -35,8 +35,8 @@ public class MemberDAO {
 		return count;
 	}
 
-	public MemberDTO login(HashMap<String, String> map) {
-		MemberDTO n = template.selectOne("MemberMapper.login", map);
+	public MemberDTO login(String mbrId) {
+		MemberDTO n = template.selectOne("MemberMapper.login", mbrId);
 		return n;
 	}
 
@@ -46,9 +46,9 @@ public class MemberDAO {
 	}
 
 	
-	public int memberDelete(Map<String, String> map) {
-		System.out.println("DAO에서 찍어보는 MAP: "+map);
-		int result = template.delete("MemberMapper.memberDelete", map);
+	public int memberDelete(String mbrId) {
+		System.out.println("DAO에서 찍어보는 MAP: "+mbrId);
+		int result = template.delete("MemberMapper.memberDelete", mbrId);
 		return result;
 	}
 
