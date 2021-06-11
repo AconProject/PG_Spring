@@ -35,8 +35,9 @@ public class MemberService {
 		return count;
 	}// end idCheck
 
-	public MemberDTO login(HashMap<String, String> map) {
-		MemberDTO dto = dao.login(map);
+	public MemberDTO login(String mbrId) {
+		System.out.println("sysout in Service"+mbrId);
+		MemberDTO dto = dao.login(mbrId);
 		return dto;
 	}// end idCheck
 
@@ -46,8 +47,8 @@ public class MemberService {
 	}// end idCheck
 
 
-	public int memberDelete(Map<String, String> map) {
-		int result = dao.memberDelete(map);
+	public int memberDelete(String mbrId) {
+		int result = dao.memberDelete(mbrId);
 		return result;
 	}// end memberDelete
 

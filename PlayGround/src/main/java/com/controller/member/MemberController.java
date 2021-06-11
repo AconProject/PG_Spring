@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import com.service.MemberService;
 public class MemberController {
 	@Autowired
 	MemberService service;
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder;
 	
 	@RequestMapping(value = "/idDuplicateCheck", produces="text/plain;charset=UTF-8")
 	@ResponseBody
@@ -57,8 +60,11 @@ public class MemberController {
 	
 ////수행 부분
 	@RequestMapping(value = "/memberAdd")
-	public String memberAdd(MemberDTO m, Model model) {
-		int result=service.memberAdd(m);
+	public String memberAdd(MemberDTO dto, Model model) {
+		String inputPass=dto.getMbrPw();
+		String crytPass= pwdEncoder.encode(inputPass); //기존패스워드 암호화 저장
+		dto.setMbrPw(crytPass);
+		int result=service.memberAdd(dto);
 		if (result == 1) {
 			model.addAttribute("success", "환영합니다. 회원가입성공하셨습니다");
 		} else {
@@ -69,18 +75,20 @@ public class MemberController {
 	
 	@RequestMapping(value = "/loginCheck/memberUpdate")
 	public String memberUpdate(HttpSession session,MemberDTO dto) {
-		MemberDTO beforeChange = (MemberDTO) session.getAttribute("login");
-		System.out.println("회원정보 변경전 출력: " +beforeChange);
-		service.memberUpdate(dto);
-		session.setAttribute("login", dto); 
-		System.out.println("회원정보 변경후 출력: " +dto);
+		session.setAttribute("login", dto); //session에는 저장될 값은: 변경된 값 + 암호화되지않은 PW
+		System.out.println("암호화되기 전 DTO: "+dto);
+		String inputPass=dto.getMbrPw(); //바뀔 비밀번호
+		String crytPass=pwdEncoder.encode(inputPass); //암호화된 비밀번호
+		dto.setMbrPw(crytPass); //암호화된 PW을 DTO에 설정
+		service.memberUpdate(dto); //암호화된 PW가 DB에 설정
+		System.out.println("회원정보 암호화된  출력: " +dto);
 		return "redirect:../";
 	}
 	
 	@RequestMapping(value = "/loginCheck/memberDelete")
 	public String memberDelete(@RequestParam Map<String, String> map, Model model,HttpSession session) {
 		System.out.println(">>mbrId값: " + map.get("mbrId") + "\t" + "mbrPw값: " + map.get("mbrPw"));
-		int result = service.memberDelete(map);
+		int result = service.memberDelete(map.get("mbrId"));
 		session.invalidate();
 		System.out.println("Delete 결과: "+result);
 		if (result == 1) {
@@ -88,7 +96,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("mesg", "이용 불가. 입력하신 정보를 다시 확인해 주십시오");
 		}
-		return "Main";
+		return "redirect:../";
 	}
 
 
@@ -106,8 +114,10 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/MemberPwSearch", produces = "text/plain;charset=UTF-8")
-	public String MemberPwSearch(@RequestParam Map<String, String> map, Model model) {
+	public String MemberPwSearch(@RequestParam Map<String, String> map, Model model,HttpSession session) {
 		System.out.println(">>mbrId값: " + map.get("mbrId") + "\t" + "mbrEmail값: " + map.get("mbrEmail"));
+		MemberDTO dto=(MemberDTO) session.getAttribute("login");
+		System.out.println("PwSearch에서 찾아본 session의 값: "+dto);
 		String mbrPw = service.pwSearch(map);
 		if (mbrPw != null) {
 			model.addAttribute("mbrPw", mbrPw);
