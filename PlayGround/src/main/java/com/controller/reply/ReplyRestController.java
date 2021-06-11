@@ -35,7 +35,7 @@ public class ReplyRestController {
 		return replyList;
 	}
 	
-	@PostMapping("/replys")
+	@PostMapping("/replies")
 	public int replyInsert(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
 		int result = rService.replyInsert(reply);	
@@ -44,7 +44,7 @@ public class ReplyRestController {
 		return result;
 	}
 	
-	@PatchMapping("/replys")
+	@PatchMapping("/replies")
 	public int replyUpdate(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
 		int result = rService.replyUpdate(reply);
@@ -53,7 +53,7 @@ public class ReplyRestController {
 		return result;
 	}
 	
-	@DeleteMapping("/replys/{replyId}")
+	@DeleteMapping("/replies/{replyId}")
 	public int replyDelete(@PathVariable int replyId) {
 		int result = rService.replyDelete(replyId);
 		if (result == 0) 
@@ -61,7 +61,7 @@ public class ReplyRestController {
 		return result;
 	}
 	
-	@PatchMapping("replys/{replyId}/like/{replyLike}")
+	@PatchMapping("replies/{replyId}/like/{replyLike}")
 	public int replyLike(@PathVariable int replyLike, @PathVariable int replyId,
 							 HttpSession session) {
 		System.out.println("현재 좋아요 개수 : " + replyLike);
