@@ -1,5 +1,6 @@
 package com.controller.member;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -116,11 +117,32 @@ public class MemberController {
 	@RequestMapping(value = "/MemberPwSearch", produces = "text/plain;charset=UTF-8")
 	public String MemberPwSearch(@RequestParam Map<String, String> map, Model model,HttpSession session) {
 		System.out.println(">>mbrId값: " + map.get("mbrId") + "\t" + "mbrEmail값: " + map.get("mbrEmail"));
-		MemberDTO dto=(MemberDTO) session.getAttribute("login");
-		System.out.println("PwSearch에서 찾아본 session의 값: "+dto);
-		String mbrPw = service.pwSearch(map);
+		String mbrPw = service.pwSearch(map); //비밀번호 존재
 		if (mbrPw != null) {
-			model.addAttribute("mbrPw", mbrPw);
+			String changedPw = "123456789a";
+			HashMap<String, String> changedMap = new HashMap<String, String>();
+			changedMap.put("mbrId", map.get("mbrId"));
+			changedMap.put("mbrEmail", map.get("mbrEmail"));
+			changedMap.put("mbrPw", changedPw);
+			//효용성에 대해 물어보기 
+
+			int result=service.changeMbrPw(changedMap);
+			if(result!=0) {
+				model.addAttribute("mbrPw", "회원님의 비밀번호가 [ "+changedPw+" ]로 변경되었습니다");
+				//note: @유나님. .jsp에서 변경
+				
+				//다시 암호화 해주기
+				String crytPass= pwdEncoder.encode(changedPw);
+				HashMap<String, String> reEncryptMap = new HashMap<String, String>();
+				reEncryptMap.put("mbrId", map.get("mbrId"));
+				reEncryptMap.put("mbrEmail", map.get("mbrEmail"));
+				reEncryptMap.put("mbrPw", crytPass);
+				int reEncrypt=service.changeMbrPw(reEncryptMap);
+				System.out.println("다시 암호화된 결과: "+reEncrypt+"\t"+"다시암호화 된 PW: "+crytPass);
+				
+			}else {
+				model.addAttribute("mesg", "비밀번호 변경이 불가합니다. 관리자에게 연락해주십시오. ");
+			}
 		} else {
 			model.addAttribute("mesg", "확인할 수 없습니다. Id 혹은 Email을 확인해 주십시오");
 		}

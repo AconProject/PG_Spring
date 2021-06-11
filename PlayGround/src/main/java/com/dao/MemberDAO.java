@@ -61,6 +61,11 @@ public class MemberDAO {
 		return mbrPw;
 	}
 
+	public int changeMbrPw(HashMap<String, String> changedMap) {
+		int result = template.update("MemberMapper.changeMbrPw",changedMap);
+		return result;
+	}
+
 
 	
 }

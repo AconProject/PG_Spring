@@ -73,4 +73,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where mbrId = #{mbrId}
 	</select>
 	
+	<!--강제 비밀번호 변경  -->
+	<update id="changeMbrPw" parameterType="hashmap">
+		UPDATE member
+		SET mbrPw = #{mbrPw}
+		WHERE  mbrId=#{mbrId} and mbrEmail=#{mbrEmail}
+	</update>
 </mapper>
