@@ -79,7 +79,7 @@ public class BoardRestController {
 		int result = bService.boardUpdate(board);
 		if (result == 0)
 			return -1;
-		return result;
+		return board.getBoardId();
 	}
 	
 	@DeleteMapping("/boards/{boardId}")
