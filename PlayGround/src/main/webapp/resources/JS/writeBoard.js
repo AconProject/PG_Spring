@@ -44,7 +44,7 @@ function cancelBoard() {
 function uploadBoard() {
 	let category = document.getElementById('boardCategory').value;
 	let title = document.getElementById('boardName').value;
-	let content = document.getElementById('boardName').value;
+	let content = document.getElementById('boardContent').value;
 	let memberId = document.getElementById('loginId').value;
 	let memberName = document.getElementById('loginName').value;
 
@@ -74,7 +74,7 @@ function insertBoard(category, title, content, memberId, memberName) {
 				alert('게시글 작성 실패');
 			} else {
 				alert('게시글 작성 완료');
-				location.href = '../list';
+				location.href = '../page/' + data;
 			}
 		})
 		.catch(err => {
@@ -101,7 +101,7 @@ function updateBoard(category, title, content) {
 				alert('게시글 수정 실패');
 			} else {
 				alert('게시글 수정 완료');
-				location.href = '../list';
+				location.href = '../page/' + boardUrlId;
 			}
 		})
 		.catch(err => {
