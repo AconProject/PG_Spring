@@ -52,17 +52,17 @@ function jsonParserForTop(data) {
 	for (let i = 0; i < data.length; i++) {
 		if (i < 3) {
 			insertElement('td', 'topTableNum', (i + 1) + '.');
-			insertElement('td', 'topTableImg', '<a href="GameDetailServlet?gameNo='
+			insertElement('td', 'topTableImg', '<a href="Game/detailPage/'
 				+ data[i].gameNo + '"><img class="gameImg" src="' + data[i].gameImage
 				+ '" alt="이미지를 불러올 수 없습니다."></a>');
-			insertElement('td', 'topTableName', '<a href="GameDetailServlet?gameNo='
+			insertElement('td', 'topTableName', '<a href="Game/detailPage/'
 				+ data[i].gameNo + '">' + data[i].gameName + '</a>', 'class', 'center');
 			insertElement('td', 'topTableYear',
 				data[i].gameReleasedDate, 'class', 'center');
 			insertElement('td', 'topTableCategory',
 				'#' + data[i].gameCategory, 'class', 'center tag');
 		} else {
-			insertElement('li', 'topChart', '<a href="GameDetailServlet?gameNo='
+			insertElement('li', 'topChart', '<a href="Game/detailPage/'
 				+ data[i].gameNo + '">' + data[i].gameName + data[i].gameReleasedDate + '</a>');
 		}
 	}
@@ -73,10 +73,10 @@ function jsonParserForMiddle(data) {
 	for (let i = 0; i < data.length; i++) {
 		insertElement('tr', 'midTable', '', 'id', 'midTr' + i);
 		insertElement('td', 'midTr' + i, (i + 1) + '.');
-		insertElement('td', 'midTr' + i, '<a href="GameDetailServlet?gameNo='
+		insertElement('td', 'midTr' + i, '<a href="Game/detailPage/'
 			+ data[i].gameNo + '"><img class="gameImg" src="' + data[i].gameImage
 			+ '" alt="이미지를 불러올 수 없습니다."></a>');
-		insertElement('td', 'midTr' + i, '<a href="GameDetailServlet?gameNo='
+		insertElement('td', 'midTr' + i, '<a href="Game/detailPage/'
 			+ data[i].gameNo + '">' + data[i].gameName + data[i].gameReleasedDate + '</a>');
 	}
 }

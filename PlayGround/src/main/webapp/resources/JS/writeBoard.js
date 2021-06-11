@@ -46,14 +46,15 @@ function uploadBoard() {
 	let title = document.getElementById('boardName').value;
 	let content = document.getElementById('boardName').value;
 	let memberId = document.getElementById('loginId').value;
+	let memberName = document.getElementById('loginName').value;
 
 	if (boardUrlId === 'insert')
-		insertBoard(category, title, content, memberId);
+		insertBoard(category, title, content, memberId, memberName);
 	else
 		updateBoard(category, title, content);
 }
 
-function insertBoard(category, title, content, memberId) {
+function insertBoard(category, title, content, memberId, memberName) {
 	fetch('../boards', {
 		method: 'POST',
 		headers: {
@@ -61,6 +62,7 @@ function insertBoard(category, title, content, memberId) {
 		},
 		body: JSON.stringify({
 			mbrId: memberId,
+			mbrName: memberName,
 			boardCategory: category,
 			boardName: title,
 			boardContent: content,
