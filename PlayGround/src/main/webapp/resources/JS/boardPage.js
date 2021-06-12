@@ -10,6 +10,10 @@ window.onload = function () {
 	let insertCommentBtn = document.getElementById('insertCommentBtn');
 	if (insertCommentBtn)
 		insertCommentBtn.addEventListener('click', insertComment, false);
+	
+	let boardLikeBtn = document.getElementById('boardLikeBtn');
+	if (boardLikeBtn)
+		boardLikeBtn.addEventListener('click', boardLikeEvent, false);
 
 	getBoardContents();
 	getBoardReplies();
@@ -64,7 +68,7 @@ function jsonParserForBoardContents(data) {
 		'작성자 - ' + data.mbrName + '<br>' +
 		'날짜 - ' + boardDate + '<br>' +
 		'조회수 - ' + data.boardCount + '<br>' +
-		'추천수 - ' + data.boardLiked + '<br>' +
+		'추천수 - <span id="boardLike">' + data.boardLiked + '</span><br>' +
 		'내용 - ' + data.boardContent + '<br>';
 
 	document.getElementById('boardContents').innerHTML = html;
@@ -98,21 +102,30 @@ function jsonParserForBoardReply(data) {
 			'닉넴 - ' + data[i].mbrName + '<br>' +
 			'댓글 - ' + data[i].replyContent + '<br>' +
 			'날짜 - ' + replyDate + '<br>' +
-			'추천수 - ' + data[i].replyLiked + '<br>';
-		
-		html += '<input type="hidden" id="replyId' + i + '" value="' + data[i].replyId + '">';
+			'추천수 - <span id="replyLike' + data[i].replyId + '">' + data[i].replyLiked + '</span><br>';
 		
 		document.getElementById('boardComments').innerHTML = html;
-		
+
+		let loginId = document.getElementById('loginId').value;
+		if (loginId !== '') {
+			console.log(loginId);
+			html += '<button id="replyLikeBtn' + i + '" value="' + data[i].replyId + '">추천</button>';
+		}
+
 		if (checkMemberId(data[i].mbrId)) {
 			html +=
-				'<button id="updateComment' + i + '" value="' + data[i].replyId + '">수정</button>' +
-				'<button id="deleteComment' + i + '" value="' + data[i].replyId + '">삭제</button>';
+				'<button id="updateCommentBtn' + i + '" value="' + data[i].replyId + '">수정</button>' +
+				'<button id="deleteCommentBtn' + i + '" value="' + data[i].replyId + '">삭제</button>';
 
 			document.getElementById('boardComments').innerHTML = html;
 
-			let updateCommentBtns = document.querySelectorAll('button[id^="updateComment"]');
-			let deleteCommentBtns = document.querySelectorAll('button[id^="deleteComment"]');
+			let replyLikeBtns = document.querySelectorAll('button[id^="replyLikeBtn"]');
+			let updateCommentBtns = document.querySelectorAll('button[id^="updateCommentBtn"]');
+			let deleteCommentBtns = document.querySelectorAll('button[id^="deleteCommentBtn"]');
+
+			replyLikeBtns.forEach(el => {
+				el.addEventListener('click', replyLikeEvent, false);
+			});
 
 			updateCommentBtns.forEach(el => {
 				el.addEventListener('click', updateComment, false);
@@ -170,6 +183,30 @@ function deleteBoard() {
 		});
 }
 
+/* 게시글 좋아요 클릭 */
+function boardLikeEvent() {
+	let boardLike = document.getElementById('boardLike').innerText;
+	let loginId = document.getElementById('loginId').value;
+
+	fetch('../boards/' + boardUrlId + '/like/' + boardLike, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			mbrId: loginId,
+			boardId: boardUrlId,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			document.getElementById('boardLike').innerText = data;
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
 /* 댓글 작성 */
 function insertComment() {
 	let memberId = document.getElementById('loginId').value;
@@ -204,8 +241,8 @@ function insertComment() {
 }
 
 /* 댓글 수정 */
-function updateComment(e) {
-	let eventId = e.target.value;
+function updateComment(event) {
+	let eventId = event.target.value;
 	let comment = document.getElementById('comment').value;
 	
 	fetch('../../reply/replies', {
@@ -232,8 +269,8 @@ function updateComment(e) {
 }
 
 /* 댓글 삭제 */
-function deleteComment(e) {
-	let replyId = e.target.value;
+function deleteComment(event) {
+	let replyId = event.target.value;
 
 	fetch('../../reply/replies/' + replyId, {
 		method: 'DELETE',
@@ -245,6 +282,31 @@ function deleteComment(e) {
 			} else {
 				getBoardReplies();
 			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+/* 댓글 좋아요 클릭 */
+function replyLikeEvent(event) {
+	let eventId = event.target.value;
+	let replyLike = document.getElementById('replyLike' + eventId).innerText;
+	let loginId = document.getElementById('loginId').value;
+
+	fetch('../../reply/replies/' + eventId + '/like/' + replyLike, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			mbrId: loginId,
+			replyId: eventId,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			document.getElementById('replyLike' + eventId).innerText = data;
 		})
 		.catch(err => {
 			console.log(err);
