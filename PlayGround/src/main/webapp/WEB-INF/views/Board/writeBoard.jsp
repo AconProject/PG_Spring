@@ -16,7 +16,6 @@
 
 	<input type="hidden" id="loginId">
 	<input type="hidden" id="loginName">
-	<input type="hidden" id="boardId">
 	<%
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 

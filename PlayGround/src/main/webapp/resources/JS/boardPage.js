@@ -6,21 +6,14 @@ window.onload = function () {
 	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
-
-	document.getElementById('boardId').setAttribute('value', boardUrlId);
+	
+	let insertCommentBtn = document.getElementById('insertCommentBtn');
+	if (insertCommentBtn)
+		insertCommentBtn.addEventListener('click', insertComment, false);
 
 	getBoardContents();
+	getBoardReplies();
 };
-
-/* JSP에 새로운 태그 및 컨텐츠 삽입 */
-function insertElement(childTag, parentId, content, attr, attrVal) {
-	let newEle = document.createElement(childTag);
-	if (attr && attrVal)
-		newEle.setAttribute(attr, attrVal);
-	newEle.innerHTML = content;
-	let parentEle = document.getElementById(parentId);
-	parentEle.appendChild(newEle);
-}
 
 /* 타임스탬프 -> 날짜 변환 */
 function convertDate(timeStamp) {
@@ -49,6 +42,15 @@ function getBoardCategory(categoryId) {
 	}
 }
 
+/* 작성자와 로그인 유저가 동일한지 체크 (1:일치, 0:불일치) */
+function checkMemberId(writerId) {
+	let loginId = document.getElementById('loginId').getAttribute('value');
+	if (loginId === writerId)
+		return 1;
+	else
+		return 0;
+}
+
 /****************************** json parser **********************************/
 
 /* 게시글 데이터 파싱 후 출력 */
@@ -67,7 +69,18 @@ function jsonParserForBoardContents(data) {
 
 	document.getElementById('boardContents').innerHTML = html;
 
-	checkMemberId(data.mbrId);
+	if (checkMemberId(data.mbrId)) {
+		html +=
+			'<button id="updateBtn">수정</button>' +
+			'<button id="deleteBtn">삭제</button>';
+
+		document.getElementById('boardContents').innerHTML = html;
+
+		document.getElementById('updateBtn').addEventListener('click', function () {
+			location.href = '../write/' + boardUrlId;
+		}, false);
+		document.getElementById('deleteBtn').addEventListener('click', deleteBoard, false);
+	}
 }
 
 /* 게시글 댓글 파싱 후 출력 */
@@ -76,7 +89,7 @@ function jsonParserForBoardReply(data) {
 	let replyDate;
 
 	let html = '';
-	for (let i = 1; i < data.length; i++) {
+	for (let i = 0; i < data.length; i++) {
 
 		replyDate = convertDate(data[i].replyDate);
 		html +=
@@ -86,22 +99,29 @@ function jsonParserForBoardReply(data) {
 			'댓글 - ' + data[i].replyContent + '<br>' +
 			'날짜 - ' + replyDate + '<br>' +
 			'추천수 - ' + data[i].replyLiked + '<br>';
-	}
-	document.getElementById('boardComments').innerHTML = html;
-}
+		
+		html += '<input type="hidden" id="replyId' + i + '" value="' + data[i].replyId + '">';
+		
+		document.getElementById('boardComments').innerHTML = html;
+		
+		if (checkMemberId(data[i].mbrId)) {
+			html +=
+				'<button id="updateComment' + i + '">수정</button>' +
+				'<button id="deleteComment' + i + '">삭제</button>';
 
-/* 글 작성자만 수정/삭제 버튼 표시 */
-function checkMemberId(writerId) {
-	let loginId = document.getElementById('loginId').getAttribute('value');
-	if (loginId === writerId) {
-		insertElement('button', 'update', '글 수정', 'id', 'updateBtn');
-		insertElement('button', 'delete', '글 삭제', 'id', 'deleteBtn');
+			document.getElementById('boardComments').innerHTML = html;
 
-		document.getElementById('updateBtn').addEventListener('click', function () {
-			location.href = '../write/' + boardUrlId;
-		}, false);
+			let updateCommentBtns = document.querySelectorAll('button[id^="updateComment"]');
+			let deleteCommentBtns = document.querySelectorAll('button[id^="deleteComment"]');
 
-		document.getElementById('deleteBtn').addEventListener('click', deleteBoard, false);
+			updateCommentBtns.forEach(el => {
+				el.addEventListener('click', function(event) {
+					updateComment(event.target.value);
+				}, false);
+			});
+			document.getElementById('updateComment').addEventListener('click', updateComment, false);
+			document.getElementById('deleteComment').addEventListener('click', deleteComment, false);
+		}
 	}
 }
 
@@ -114,18 +134,24 @@ function getBoardContents() {
 		.then(data => {
 			jsonParserForBoardContents(data);
 		})
-		.then(
-			fetch('../../reply/read/' + boardUrlId)
-				.then(res => res.json())
-				.then(data => {
-					jsonParserForBoardReply(data);
-				})
-		)
 		.catch(err => {
 			console.log(err);
 		});
 }
 
+/* 게시글 댓글 불러오기 */
+function getBoardReplies() {
+	fetch('../../reply/read/' + boardUrlId)
+		.then(res => res.json())
+		.then(data => {
+			jsonParserForBoardReply(data);
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+/* 게시글 삭제 */
 function deleteBoard() {
 	fetch('../boards/' + boardUrlId, {
 		method: 'DELETE',
@@ -137,6 +163,62 @@ function deleteBoard() {
 				location.href = '../list';
 			} else {
 				alert('게시글 삭제 실패');
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+/* 댓글 작성 */
+function insertComment() {
+	let memberId = document.getElementById('loginId').value;
+	let memberName = document.getElementById('loginName').value;
+	let comment = document.getElementById('comment').value;
+
+	fetch('../../reply/replys', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			boardId: boardUrlId,
+			mbrId: memberId,
+			mbrName: memberName,
+			replyContent: comment,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === -1) {
+				alert('댓글 업로드 실패');
+			} else {
+				getBoardReplies();
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+
+	document.getElementById('comment').value = '';
+}
+
+/* 댓글 수정 */
+function updateComment() {
+	// blabla
+}
+
+/* 댓글 삭제 */
+function deleteComment(replyId) {
+	fetch('../../reply/replys/' + replyId, {
+		method: 'DELETE',
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === -1) {
+				alert('댓글 삭제 실패');
+			} else {
+				getBoardReplies();
 			}
 		})
 		.catch(err => {
