@@ -100,12 +100,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE boardId = #{boardId}
 	</delete>
 	
-	<update id="boardLikeCount" parameterType="Hashmap">
+	<select id="boardLikeCount" parameterType="Hashmap">
 		SELECT count(*)
         	FROM liked
         	WHERE boardId = #{boardId}
         	AND mbrId = #{mbrId}
-	</update>
+	</select>
 	
 	<update id="boardLikePlus" parameterType="int">
 		UPDATE board
@@ -129,4 +129,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT boardSeq.NEXTVAL
 		FROM dual
 	</select>
+	
+	<update id="boardHitAdd" parameterType="int">
+		UPDATE board
+	     SET boardHit = boardHit + 1
+	     WHERE boardId = #{boardId}
+	</update>
 </mapper>

@@ -74,4 +74,8 @@ public class BoardService {
 	public int boardLikePlus(int boardId) {
 		return dao.boardLikePlus(boardId);
 	}
+	
+	public int boardHitAdd(int boardId) {
+		return dao.boardHitAdd(boardId);
+	}
 }
