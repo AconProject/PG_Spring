@@ -77,4 +77,8 @@ public class BoardDAO {
 	public List<BoardDTO> boardWriterSearchSelect(HashMap<String, String> searchMap) {
 		return session.selectList("BoardMapper.boardWriterSearchSelect", searchMap);
 	}
+	
+	public int boardHitAdd(int boardId) {
+		return session.update("BoardMapper.boardHitAdd", boardId);
+	}
 }

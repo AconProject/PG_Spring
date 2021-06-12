@@ -58,6 +58,7 @@ public class BoardRestController {
 	@GetMapping("/boards/{boardId}")
 	public BoardDTO boardRead(@PathVariable int boardId) {
 		BoardDTO board = bService.boardRead(boardId);
+		bService.boardHitAdd(boardId);
 		return board;
 	}
 	
