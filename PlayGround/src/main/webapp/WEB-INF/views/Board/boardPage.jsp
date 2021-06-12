@@ -8,20 +8,18 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js?v=8" />"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=25" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
 	<input type="hidden" id="loginId">
-	<input type="hidden" id="boardId">
+	<input type="hidden" id="loginName">
 	<div class="wrapper contents">
 		<!-- 게시글 내용 -->
 		<section>
 			<div id="boardContents"></div>
-			<div id="update"></div>
-			<div id="delete"></div>
 		</section>
 
 		<!-- 댓글 -->
@@ -37,11 +35,13 @@
 			%>
 			<script>
 				let loginId = '<%= loginId %>';
+				let loginName = '<%= loginName %>';
 				document.getElementById('loginId').setAttribute('value', loginId);
+				document.getElementById('loginName').setAttribute('value', loginName);
 			</script>
 			<div><%= loginName %></div>
 			<input type="text" id="comment">
-			<button id="submitComment">댓글 작성</button>
+			<button id="insertCommentBtn">댓글 작성</button>
 			<%
   			}
 			%>

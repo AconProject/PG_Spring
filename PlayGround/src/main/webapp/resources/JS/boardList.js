@@ -34,8 +34,9 @@ function insertElement(childTag, parentId, content, attr, attrVal) {
 /* 모든 요소 삭제 (데이터 갱신 시 기존 데이터 삭제 위함) */
 function removeAllElements(query) {
 	let removeEles = document.querySelectorAll(query);
-	for (let i = 0; i < removeEles.length; i++)
-		removeEles[i].parentNode.removeChild(removeEles[i]);
+	removeEles.forEach(el => {
+		el.parentNode.removeChild(el);
+	});
 }
 
 /* 타임스탬프 -> 날짜 변환 */

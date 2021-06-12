@@ -5,14 +5,35 @@ window.onload = function () {
 	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
-
-	document.getElementById('boardId').setAttribute('value', boardUrlId);
+		
 	document.getElementById('reset').addEventListener('click', cancelBoard, false);
 	document.getElementById('submit').addEventListener('click', uploadBoard, false);
 
 	if (boardUrlId !== 'insert')
 		getBoardContents();
 };
+
+/* 게시글 작성 리셋 */
+function cancelBoard() {
+	document.getElementById('boardName').value = '';
+	document.getElementById('boardContent').value = '';
+}
+
+/* 게시글 작성, 수정 */
+function uploadBoard() {
+	let memberId = document.getElementById('loginId').value;
+	let memberName = document.getElementById('loginName').value;
+	let category = document.getElementById('boardCategory').value;
+	let title = document.getElementById('boardName').value;
+	let content = document.getElementById('boardContent').value;
+
+	if (boardUrlId === 'insert')
+		insertBoard(category, title, content, memberId, memberName);
+	else
+		updateBoard(category, title, content);
+}
+
+/****************************** json parser **********************************/
 
 /*  수정 전 게시글 데이터 파싱 후 출력 */
 function jsonParserForBoardContents(data) {
@@ -36,24 +57,9 @@ function getBoardContents() {
 		});
 }
 
-function cancelBoard() {
-	document.getElementById('boardName').value = '';
-	document.getElementById('boardContent').value = '';
-}
+/********************************* ajax *************************************/
 
-function uploadBoard() {
-	let category = document.getElementById('boardCategory').value;
-	let title = document.getElementById('boardName').value;
-	let content = document.getElementById('boardContent').value;
-	let memberId = document.getElementById('loginId').value;
-	let memberName = document.getElementById('loginName').value;
-
-	if (boardUrlId === 'insert')
-		insertBoard(category, title, content, memberId, memberName);
-	else
-		updateBoard(category, title, content);
-}
-
+/* 게시글 작성 */
 function insertBoard(category, title, content, memberId, memberName) {
 	fetch('../boards', {
 		method: 'POST',
@@ -82,6 +88,7 @@ function insertBoard(category, title, content, memberId, memberName) {
 		});
 }
 
+/* 게시글 수정 */
 function updateBoard(category, title, content) {
 	fetch('../boards', {
 		method: 'PATCH',
