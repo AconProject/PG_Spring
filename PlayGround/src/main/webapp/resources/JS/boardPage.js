@@ -85,7 +85,7 @@ function jsonParserForBoardContents(data) {
 
 /* 게시글 댓글 파싱 후 출력 */
 function jsonParserForBoardReply(data) {
-	let conmmentNum = data.length - 1;
+	let conmmentNum = data.length;
 	let replyDate;
 
 	let html = '';
@@ -106,8 +106,8 @@ function jsonParserForBoardReply(data) {
 		
 		if (checkMemberId(data[i].mbrId)) {
 			html +=
-				'<button id="updateComment' + i + '">수정</button>' +
-				'<button id="deleteComment' + i + '">삭제</button>';
+				'<button id="updateComment' + i + '" value="' + data[i].replyId + '">수정</button>' +
+				'<button id="deleteComment' + i + '" value="' + data[i].replyId + '">삭제</button>';
 
 			document.getElementById('boardComments').innerHTML = html;
 
@@ -115,12 +115,12 @@ function jsonParserForBoardReply(data) {
 			let deleteCommentBtns = document.querySelectorAll('button[id^="deleteComment"]');
 
 			updateCommentBtns.forEach(el => {
-				el.addEventListener('click', function(event) {
-					updateComment(event.target.value);
-				}, false);
+				el.addEventListener('click', updateComment, false);
 			});
-			document.getElementById('updateComment').addEventListener('click', updateComment, false);
-			document.getElementById('deleteComment').addEventListener('click', deleteComment, false);
+
+			deleteCommentBtns.forEach(el => {
+				el.addEventListener('click', deleteComment, false);
+			});
 		}
 	}
 }
@@ -176,7 +176,7 @@ function insertComment() {
 	let memberName = document.getElementById('loginName').value;
 	let comment = document.getElementById('comment').value;
 
-	fetch('../../reply/replys', {
+	fetch('../../reply/replies', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -204,13 +204,38 @@ function insertComment() {
 }
 
 /* 댓글 수정 */
-function updateComment() {
-	// blabla
+function updateComment(e) {
+	let eventId = e.target.value;
+	let comment = document.getElementById('comment').value;
+	
+	fetch('../../reply/replies', {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			replyId: eventId,
+			replyContent: comment,
+		}),
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data === -1) {
+				alert('댓글 수정 실패');
+			} else {
+				getBoardReplies();
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
 }
 
 /* 댓글 삭제 */
-function deleteComment(replyId) {
-	fetch('../../reply/replys/' + replyId, {
+function deleteComment(e) {
+	let replyId = e.target.value;
+
+	fetch('../../reply/replies/' + replyId, {
 		method: 'DELETE',
 	})
 		.then(res => res.json())
