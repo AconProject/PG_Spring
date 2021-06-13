@@ -13,6 +13,7 @@
 <meta charset="UTF-8">
 <title>Detail Page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head profile="http://www.w3.org/2005/10/profile">
 <link href="<c:url value="/resources/CSS/DetailPage.css" />" rel="stylesheet">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -76,6 +77,8 @@
 				success: function(Data, status, xhr) {
 					console.log("success");
 					console.log(Data);
+					var chk = /|d/;
+					
 					if(Data==="이미 좋아요를 누르셨습니다."){
 						console.log("이미 좋아요를 눌렀습니다.")
 						alert(Data);
@@ -166,8 +169,16 @@
 		document.getElementById("gameScore").innerHTML = gameScore;
 		
 		
-		// 중단부분
-		
+		// 중단부분 - (댓글삽입부분)
+		var login = '${login}';
+		console.log(login);
+		var mbrName = '${login.mbrName}';
+		console.log(mbrName);
+		var mbrId = '${login.mbrId}';
+		console.log(mbrId);
+	
+		// 회원닉네임
+		document.getElementById("mbrName2").innerHTML = mbrName;
 	}
 	
 </script>
@@ -220,6 +231,7 @@
 		<!-- 중단 -->
 		<%
 			MemberDTO login =(MemberDTO)session.getAttribute("login");
+	
 			List<ReviewDTO> rdto = (List<ReviewDTO>) request.getAttribute("midPage");
 			if (rdto != null) {
 				int totalPage = rdto.size();
@@ -248,7 +260,7 @@
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
 							<td class="review"><p id="gameReplyContent"><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
-							<td class="thumb"><img class="icon" src="resources/Image/thumb.png" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
+							<td class="thumb"><img class="icon" src="<c:url value="/resources/Image/thumb.png" />" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
 							<%
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
@@ -298,9 +310,12 @@
 			    			
 			    			<form action="../../loginCheck/reviewInsert">
 							<input type="hidden" name="gameNo" value="${gameNo}">
+							<input type="hidden" name="mbrId" value="${mbrId}">
+							<input type="hidden" name="mbrName" value="${mbrName}">
+							
 							<table class="reviewTable">
 								<tr>
-									<td rowspan="3" class="mbrName" id="mbrName"><%= name %></td>
+									<td rowspan="3" class="mbrName" id="mbrName2"></td>
 									<td rowspan="3" class="review">
 									<textarea name="reviewContent" id="gameReplyContent" cols="80" rows="5" placeholder=" 내용을 입력해주세요"></textarea>
 									</td>
@@ -333,6 +348,7 @@
 				<div>
 					<table class="bottomTable">
 					<tr>
+					
 					<%
 						List<GameDTO> relategame = (List<GameDTO>)request.getAttribute("botPage");
 						for(int i = 0; i < relategame.size(); i++) {
@@ -359,6 +375,7 @@
 					<%
 						}
 					%> 
+					
 						</tr>
 					
 					</table>

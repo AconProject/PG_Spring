@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class LikeDAO {
 		return session.delete("LikeMapper.likeReviewDelete",ldto); 
 	}
 	
-	public int likeReviewCount(HashMap<String, Object> map) {
+	public int likeReviewCount(Map<String, Object> map) {
+		System.out.println("Map in DAO: "+map);
 		return session.selectOne("LikeMapper.likeReviewCount", map);
 	}
 	
