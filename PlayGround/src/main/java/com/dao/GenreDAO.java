@@ -16,4 +16,8 @@ public class GenreDAO {
 	public List<GenreDTO> genreList() {
 		return session.selectList("GenreMapper.genreSelect");
 	}
+	
+	public List<GenreDTO> genreSearch(String search) {
+		return session.selectList("GenreMapper.genreSearch", search);
+	}
 }

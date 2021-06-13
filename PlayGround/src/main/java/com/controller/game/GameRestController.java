@@ -29,6 +29,8 @@ public class GameRestController {
 		List<GameDTO> gameList = null;
 		if (category == null || category.contentEquals("new"))
 			gameList = gService.newGameListSelect();
+		else if (category.contentEquals("sales"))
+			gameList = gService.saleGameListSelect();
 		else if (login == null && category.contentEquals("recommend"))
 			gameList = gService.recommendGameListSelect(11);
 		else if (login != null && category.contentEquals("recommend"))
@@ -52,5 +54,11 @@ public class GameRestController {
 			gameList = gService.tagGameListSelect(listTags);
 		}
 		return gameList;
+	}
+	
+	@GetMapping("/search/{search}")
+	public List<GameDTO> gameSearch(@PathVariable String search) {
+		System.out.println("검색어 : " + search);
+		return gService.gameSearch(search);
 	}
 }

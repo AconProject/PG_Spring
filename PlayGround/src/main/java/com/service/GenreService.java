@@ -16,4 +16,8 @@ public class GenreService {
 	public List<GenreDTO> genreList() {
 		return dao.genreList();
 	}
+	
+	public List<GenreDTO> genreSearch(String search) {
+		return dao.genreSearch(search);
+	}
 }

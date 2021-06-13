@@ -38,6 +38,11 @@ public class GameService {
 		return dao.relatedGameList(gameCategory);
 	}
 
+	public List<GameDTO> gameSearch(String search) {
+		return dao.gameSearch(search);
+	}
 	
-	
+	public List<GameDTO> saleGameListSelect() {
+		return dao.saleGameListSelect();
+	}
 }

@@ -9,5 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM genre
 	</select>
 	
-	
+	<select id="genreSearch" parameterType="string" resultType="GenreDTO">
+		SELECT genreId, gameCategory
+		FROM genre
+		WHERE gameCategory LIKE '%'||#{search}||'%'
+	</select>
 </mapper>

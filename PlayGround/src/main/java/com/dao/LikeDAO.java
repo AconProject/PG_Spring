@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,8 +34,8 @@ public class LikeDAO {
 	public int likeReplyInsert(LikeDTO like) {
 		return session.insert("LikeMapper.likeReplyInsert", like);
 	}
-	public int likeReplyCount(LikeDTO like) {
-		return session.selectOne("LikeMapper.likeReplyCount", like);
+	public List<Integer> likeReplyCount(LikeDTO like) {
+		return session.selectList("LikeMapper.likeReplyCount", like);
 	}
 	
 	/////게임 댓글에 대한  좋아요 삽입 가능

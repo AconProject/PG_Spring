@@ -62,12 +62,11 @@ public class ReplyRestController {
 		return result;
 	}
 
-	@GetMapping("/replies/{replyId}")
-	public int likeReplyId(@PathVariable int replyId, HttpSession session) {
+	@GetMapping("/replies/boards/{boardId}")
+	public List<Integer> likeReplyCount(@PathVariable int boardId, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), 0, 0, replyId);
-		int cnt = lService.likeReplyCount(like);
-
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
+		List<Integer> cnt = lService.likeReplyCount(like);
 		return cnt;
 	}
 

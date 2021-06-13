@@ -10,6 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE rownum &lt; 11
 		ORDER BY gameReleasedDate DESC
 	</select>
+	
+	<select id="saleGameListSelect" resultType="GameDTO">
+		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
+		FROM game
+		WHERE rownum &lt; 11
+		AND discountRate != 0
+		ORDER BY gameReleasedDate DESC
+	</select>
 
 	<select id="recommendGameListSelect" parameterType="int" resultType="GameDTO">
 		SELECT game.gameNo, game.gameName, game.gameImage,
@@ -71,8 +79,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 태그 상세 페이지 -->
 	<select id="tagDetailSelect" parameterType="string" resultType="GameDTO">
-	select gameNo,gameName,gameImage,gameGenre,to_char(gameReleasedDate, 'YYYY-MM-DD') as gameReleasedDate
-	from game
-	where gameCategory = #{gameCategory}
+		select gameNo,gameName,gameImage,gameGenre,to_char(gameReleasedDate, 'YYYY-MM-DD') as gameReleasedDate
+		from game
+		where gameCategory = #{gameCategory}
+	</select>
+	
+	<select id="gameSearch" parameterType="string" resultType="GameDTO">
+		SELECT gameNo,gameName,gameImage,gameGenre,to_char(gameReleasedDate, 'YYYY-MM-DD') as gameReleasedDate
+		FROM game
+		WHERE gameName LIKE '%'||UPPER(#{search})||'%'
+		OR gameName LIKE '%'||LOWER(#{search})||'%'
+		OR gameName LIKE '%'||INITCAP(#{search})||'%'
 	</select>
 </mapper>
