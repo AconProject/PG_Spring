@@ -1,4 +1,5 @@
 let boardUrlId;
+let isBoardLiked;
 
 window.onload = function () {
 
@@ -12,8 +13,10 @@ window.onload = function () {
 		insertCommentBtn.addEventListener('click', insertComment, false);
 	
 	let boardLikeBtn = document.getElementById('boardLikeBtn');
-	if (boardLikeBtn)
+	if (boardLikeBtn) {
 		boardLikeBtn.addEventListener('click', boardLikeEvent, false);
+		checkBoardLike();
+	}
 
 	getBoardContents();
 	getBoardReplies();
@@ -107,9 +110,8 @@ function jsonParserForBoardReply(data) {
 		document.getElementById('boardComments').innerHTML = html;
 
 		let loginId = document.getElementById('loginId').value;
-		if (loginId !== '') {
-			html += '<button id="replyLikeBtn' + i + '" value="' + data[i].replyId + '">추천</button>';
-		}
+		if (loginId !== '')
+			html += '<button id="replyLikeBtn' + data[i].replyId + '" value="' + data[i].replyId + '">추천</button>';
 
 		if (checkMemberId(data[i].mbrId)) {
 			html +=
@@ -182,27 +184,69 @@ function deleteBoard() {
 		});
 }
 
-/* 게시글 좋아요 클릭 */
-function boardLikeEvent() {
-	let boardLikeNum = document.getElementById('boardLike').innerText;
-
-	fetch('../boardLike', {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			boardId: boardUrlId,
-			boardLike: boardLikeNum,
-		}),
-	})
+/* 게시글 좋아요 선택 여부 체크 */
+function checkBoardLike() {
+	fetch('../boardLikeCount/' + boardUrlId)
 		.then(res => res.json())
 		.then(data => {
-			document.getElementById('boardLike').innerText = data;
+			isBoardLiked = data;
+			if (isBoardLiked === 1)
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요 취소';
+			else
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요';
 		})
 		.catch(err => {
 			console.log(err);
 		});
+}
+
+/* 게시글 좋아요 클릭 */
+function boardLikeEvent() {
+	let boardLikeNum = document.getElementById('boardLike').innerText;
+
+	// 좋아요 누른적 없음 - 추가
+	if (isBoardLiked === 0) {
+		fetch('../boardLikePlus', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				boardId: boardUrlId,
+				boardLike: boardLikeNum,
+			}),
+		})
+			.then(res => res.json())
+			.then(data => {
+				document.getElementById('boardLike').innerText = data;
+				isBoardLiked = 1;
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요 취소';
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+	else { // 이미 좋아요 누름 - 취소
+		fetch('../boardLikeMinus', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				boardId: boardUrlId,
+				boardLike: boardLikeNum,
+			}),
+		})
+			.then(res => res.json())
+			.then(data => {
+				document.getElementById('boardLike').innerText = data;
+				isBoardLiked = 0;
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요';
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
 }
 
 /* 댓글 작성 */
@@ -288,25 +332,5 @@ function deleteComment(event) {
 
 /* 댓글 좋아요 클릭 */
 function replyLikeEvent(event) {
-	let eventId = event.target.value;
-	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
-
-	fetch('../../reply/replyLike/', {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			replyId: eventId,
-			boardId: boardUrlId,
-			replyLike: replyLikeNum,
-		}),
-	})
-		.then(res => res.json())
-		.then(data => {
-			document.getElementById('replyLike' + eventId).innerText = data;
-		})
-		.catch(err => {
-			console.log(err);
-		});
+	console.log(event);
 }
