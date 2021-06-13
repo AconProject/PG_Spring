@@ -61,6 +61,11 @@ public class MemberService {
 		return mbrPw;
 	}//end idSearch
 
+	public int changeMbrPw(HashMap<String, String> changedMap) {
+		int result = dao.changeMbrPw(changedMap);
+		return result;
+	}
+
 
 
 	
