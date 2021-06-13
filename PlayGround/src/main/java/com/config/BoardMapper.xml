@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- %넣기 -->
 	<select id="boardTitleSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
 		SELECT *
-		FROM <!--  board USE INDEX (board_category) -->
+		FROM board<!--  board USE INDEX (board_category) -->
 		WHERE <if test="!boardCategory.equals('all')">
 		boardCategory = #{boardCategory}
 		AND 
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="boardWriterSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
 		SELECT *
-		FROM <!-- board USE INDEX (board_category) -->
+		FROM board<!-- board USE INDEX (board_category) -->
 		WHERE <if test="!boardCategory.equals('all')">
 		boardCategory = #{boardCategory}
 		AND 
@@ -132,7 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="boardHitAdd" parameterType="int">
 		UPDATE board
-	     SET boardHit = boardHit + 1
+	     SET boardCount = boardCount + 1
 	     WHERE boardId = #{boardId}
 	</update>
 </mapper>
