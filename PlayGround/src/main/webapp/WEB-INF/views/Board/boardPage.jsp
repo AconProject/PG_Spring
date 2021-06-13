@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js?v=32" />"></script>
+	<script src="<c:url value="/resources/JS/boardPage.js?v=39" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -24,7 +24,7 @@
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
 			if(dto != null){
 			%>
-				<button id="boardLikeBtn">좋아요</button>
+				<button id="boardLikeBtn"></button>
 			<%
   			}
 			%>
