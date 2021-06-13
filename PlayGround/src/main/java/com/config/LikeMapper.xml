@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="likeReplyInsert" parameterType="LikeDTO">
 		INSERT INTO liked(likeNo, mbrId, boardId, reviewId, replyId)
-		VALUES (likedSeq.NEXTVAL, #{mbrId}, null, null, #{replyId})
+		VALUES (likedSeq.NEXTVAL, #{mbrId}, #{boardId}, null, #{replyId})
 	</insert>
 
 
