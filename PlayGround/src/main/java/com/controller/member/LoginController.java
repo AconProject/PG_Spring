@@ -32,18 +32,21 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam HashMap<String, String> map, Model model, HttpSession session) {
 		System.out.println("Map의 값입니다: " + map);
-		MemberDTO dbDTO = service.login(map.get("mbrId")); 
-		session.setAttribute("login", dbDTO);
-		String dbPassword=dbDTO.getMbrPw();
+		MemberDTO dbDTO = service.login(map.get("mbrId"));
+		String dbPassword = dbDTO.getMbrPw();
 		System.out.println(dbPassword);
-		boolean pwdEqual=pwdEncoder.matches(map.get("mbrPw"), dbPassword);
-		System.out.println("패스워드 비교 결과: "+pwdEqual);
-		if(pwdEqual) {
+		boolean pwdEqual = pwdEncoder.matches(map.get("mbrPw"), dbPassword);
+		System.out.println("패스워드 비교 결과: " + pwdEqual);
+		if (pwdEqual) {
+			session.setAttribute("login", dbDTO);
 			dbDTO.setMbrPw(map.get("mbrPw"));
-			System.out.println("암호해제된 DTO: "+dbDTO.toString());
-			//45번째 줄, jsp에서 사용하기 위해서는 session에 암호화된 암호가 아닌, 입력한 암호(암호화되지 않은 암호) 저장
+			System.out.println("암호해제된 DTO: " + dbDTO.toString());
+			// 45번째 줄, jsp에서 사용하기 위해서는 session에 암호화된 암호가 아닌, 입력한 암호(암호화되지 않은 암호) 저장
+			return "Main";
+		} else {
+			//model.addAttribute("mesg", "ID"); alert 창 띄워주기
+			return "LoginForm";
 		}
-		   return "Main";
-		 
+
 	}
 }
