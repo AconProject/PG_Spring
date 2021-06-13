@@ -1,5 +1,6 @@
 package com.controller.reply;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,23 +28,23 @@ public class ReplyRestController {
 	ReplyService rService;
 	@Autowired
 	LikeService lService;
-	
+
 	@GetMapping("/read/{boardId}")
 	public List<ReplyDTO> replyRead(@PathVariable int boardId) {
 		List<ReplyDTO> replyList = rService.replyRead(boardId);
 		System.out.println(replyList);
 		return replyList;
 	}
-	
+
 	@PostMapping("/replies")
 	public int replyInsert(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
-		int result = rService.replyInsert(reply);	
+		int result = rService.replyInsert(reply);
 		if (result == 0)
 			return -1;
 		return result;
 	}
-	
+
 	@PatchMapping("/replies")
 	public int replyUpdate(@RequestBody ReplyDTO reply) {
 		System.out.println(reply);
@@ -52,32 +53,52 @@ public class ReplyRestController {
 			return -1;
 		return result;
 	}
-	
+
 	@DeleteMapping("/replies/{replyId}")
 	public int replyDelete(@PathVariable int replyId) {
 		int result = rService.replyDelete(replyId);
-		if (result == 0) 
+		if (result == 0)
 			return -1;
 		return result;
 	}
-	
-	@PatchMapping("/replyLike")
-	public int replyLike(@RequestBody int replyLike, @RequestBody int replyId,
+
+	@GetMapping("/replies/{replyId}")
+	public int likeReplyId(@PathVariable int replyId, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), 0, 0, replyId);
+		int cnt = lService.likeReplyCount(like);
+
+		return cnt;
+	}
+
+	@PatchMapping("/replyLikePlus")
+	public int replyLikePlus(@RequestBody HashMap<String, Integer> replyMap,
 							 HttpSession session) {
-		System.out.println("현재 좋아요 개수 : " + replyLike + " \t " +  replyId);
+		int replyLike = replyMap.get("replyLike");
+		System.out.println("현재 좋아요 개수 : " + replyMap.get("replyLike") + " \t " +  replyMap.get("replyId"));
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
 		System.out.println(login);
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), 0, 0, replyId);
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), replyMap.get("boardId"), 0, replyMap.get("replyId"));
 		boolean isComplete = false;
-		int cnt = lService.likeReplyCount(like);
-		if (cnt >= 1) {
-			replyLike += rService.replyLikeMinus(replyId) * -1;
-			isComplete = lService.likeBoardDelete(like);
-		} else {
-			replyLike += rService.replyLikePlus(replyId);
-			isComplete = lService.likeBoardInsert(like);
-		}
-		System.out.println("좋아요 : " + replyLike + " , replyLiked 개수 : " + cnt + " , 삭제, 삽입 : " + isComplete);
+		replyLike += rService.replyLikePlus(replyMap.get("replyId"));
+		isComplete = lService.likeReplyInsert(like);
+		System.out.println("좋아요 : " + replyLike + " , 삭제, 삽입 : " + isComplete);
 		return replyLike;
 	}
+	
+	@PatchMapping("/replyLikeMinus")
+	public int replyLikeMinus(@RequestBody HashMap<String, Integer> replyMap,
+							 HttpSession session) {
+		int replyLike = replyMap.get("replyLike");
+		System.out.println("현재 좋아요 개수 : " + replyMap.get("replyLike") + " \t " +  replyMap.get("replyId"));
+		MemberDTO login = (MemberDTO)session.getAttribute("login");
+		System.out.println(login);
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), replyMap.get("boardId"), 0, replyMap.get("replyId"));
+		boolean isComplete = false;
+		replyLike += rService.replyLikeMinus(replyMap.get("replyId")) * -1;
+		isComplete = lService.likeReplyDelete(like);
+		System.out.println("좋아요 : " + replyLike + " , 삭제, 삽입 : " + isComplete);
+		return replyLike;
+	}
+		
 }

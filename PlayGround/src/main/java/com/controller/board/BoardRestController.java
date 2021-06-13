@@ -1,10 +1,8 @@
 package com.controller.board;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.dto.BoardDTO;
 import com.dto.LikeDTO;
@@ -103,22 +101,43 @@ public class BoardRestController {
 		return boardList;
 	}
 	
-	@PatchMapping("/boardLike")
-	public int boardLike(@RequestBody int boardLike, @RequestBody int boardId,
+	@GetMapping("/boardLikeCount/{boardId}")
+	public int likeReplyId(@PathVariable int boardId, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
+		int cnt = lService.likeBoardCount(like);
+
+		return cnt;
+	}
+	
+	@PatchMapping("/boardLikePlus")
+	public int boardLikePlus(@RequestBody HashMap<String, Integer> boardMap,
 							 HttpSession session) {
+		int boardLike = boardMap.get("boardLike");
 		System.out.println("현재 좋아요 개수 : " + boardLike);
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardMap.get("boardId"), 0, 0);
 		boolean isComplete = false;
 		int cnt = lService.likeBoardCount(like);
-		if (cnt >= 1) {
-			boardLike += bService.boardLikeMinus(boardId) * -1;
-			isComplete = lService.likeBoardDelete(like);
-		} else {
-			boardLike += bService.boardLikePlus(boardId);
-			isComplete = lService.likeBoardInsert(like);
-		}
+		boardLike += bService.boardLikePlus(boardMap.get("boardId"));
+		isComplete = lService.likeBoardInsert(like);
 		System.out.println("좋아요 : " + boardLike + " , boardLiked 개수 : " + cnt + " , 삭제, 삽입 : " + isComplete);
 		return boardLike;
 	}
+	
+	@PatchMapping("/boardLikeMinus")
+	public int boardLikeMinus(@RequestBody HashMap<String, Integer> boardMap,
+							 HttpSession session) {
+		int boardLike = boardMap.get("boardLike");
+		System.out.println("현재 좋아요 개수 : " + boardLike);
+		MemberDTO login = (MemberDTO)session.getAttribute("login");
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardMap.get("boardId"), 0, 0);
+		boolean isComplete = false;
+		int cnt = lService.likeBoardCount(like);
+		boardLike += bService.boardLikeMinus(boardMap.get("boardId")) * -1;
+		isComplete = lService.likeBoardDelete(like);
+		System.out.println("좋아요 : " + boardLike + " , boardLiked 개수 : " + cnt + " , 삭제, 삽입 : " + isComplete);
+		return boardLike;
+	}
+
 }
