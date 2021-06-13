@@ -17,6 +17,7 @@ window.onload = function () {
 
 	getBoardContents();
 	getBoardReplies();
+	//updateBoardHit();
 };
 
 /* 타임스탬프 -> 날짜 변환 */
@@ -185,17 +186,16 @@ function deleteBoard() {
 
 /* 게시글 좋아요 클릭 */
 function boardLikeEvent() {
-	let boardLike = document.getElementById('boardLike').innerText;
-	let loginId = document.getElementById('loginId').value;
+	let boardLikeNum = document.getElementById('boardLike').innerText;
 
-	fetch('../boards/' + boardUrlId + '/like/' + boardLike, {
+	fetch('../boardLike', {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			mbrId: loginId,
 			boardId: boardUrlId,
+			boardLike: boardLikeNum
 		}),
 	})
 		.then(res => res.json())
@@ -291,17 +291,16 @@ function deleteComment(event) {
 /* 댓글 좋아요 클릭 */
 function replyLikeEvent(event) {
 	let eventId = event.target.value;
-	let replyLike = document.getElementById('replyLike' + eventId).innerText;
-	let loginId = document.getElementById('loginId').value;
+	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
 
-	fetch('../../reply/replies/' + eventId + '/like/' + replyLike, {
+	fetch('../../reply/replyLike/', {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			mbrId: loginId,
 			replyId: eventId,
+			replyLike: replyLikeNum,
 		}),
 	})
 		.then(res => res.json())
