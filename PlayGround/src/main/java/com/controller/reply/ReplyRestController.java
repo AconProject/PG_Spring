@@ -61,11 +61,12 @@ public class ReplyRestController {
 		return result;
 	}
 	
-	@PatchMapping("replies/{replyId}/like/{replyLike}")
-	public int replyLike(@PathVariable int replyLike, @PathVariable int replyId,
+	@PatchMapping("/replyLike")
+	public int replyLike(@RequestBody int replyLike, @RequestBody int replyId,
 							 HttpSession session) {
-		System.out.println("현재 좋아요 개수 : " + replyLike);
+		System.out.println("현재 좋아요 개수 : " + replyLike + " \t " +  replyId);
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
+		System.out.println(login);
 		LikeDTO like = new LikeDTO(0, login.getMbrId(), 0, 0, replyId);
 		boolean isComplete = false;
 		int cnt = lService.likeReplyCount(like);

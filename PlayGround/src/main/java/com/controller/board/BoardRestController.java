@@ -103,8 +103,8 @@ public class BoardRestController {
 		return boardList;
 	}
 	
-	@PatchMapping("boards/{boardId}/like/{boardLike}")
-	public int boardLike(@PathVariable int boardLike, @PathVariable int boardId,
+	@PatchMapping("/boardLike")
+	public int boardLike(@RequestBody int boardLike, @RequestBody int boardId,
 							 HttpSession session) {
 		System.out.println("현재 좋아요 개수 : " + boardLike);
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
