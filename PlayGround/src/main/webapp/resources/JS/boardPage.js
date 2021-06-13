@@ -17,6 +17,7 @@ window.onload = function () {
 
 	getBoardContents();
 	getBoardReplies();
+	checkBoardLike();
 };
 
 /* 타임스탬프 -> 날짜 변환 */
@@ -199,6 +200,21 @@ function boardLikeEvent() {
 		.then(res => res.json())
 		.then(data => {
 			document.getElementById('boardLike').innerText = data;
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+/* 좋아요 선택 여부에 따라 버튼 바꾸기 */
+function checkBoardLike() {
+	fetch('??')
+		.then(res => res.json())
+		.then(data => {
+			if (data === 1)
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요 취소';
+			else
+				document.getElementById('boardLikeBtn').innerHTML = '좋아요';
 		})
 		.catch(err => {
 			console.log(err);
