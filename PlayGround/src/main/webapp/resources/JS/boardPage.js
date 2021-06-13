@@ -17,7 +17,6 @@ window.onload = function () {
 
 	getBoardContents();
 	getBoardReplies();
-	//updateBoardHit();
 };
 
 /* 타임스탬프 -> 날짜 변환 */
@@ -109,7 +108,6 @@ function jsonParserForBoardReply(data) {
 
 		let loginId = document.getElementById('loginId').value;
 		if (loginId !== '') {
-			console.log(loginId);
 			html += '<button id="replyLikeBtn' + i + '" value="' + data[i].replyId + '">추천</button>';
 		}
 
@@ -195,7 +193,7 @@ function boardLikeEvent() {
 		},
 		body: JSON.stringify({
 			boardId: boardUrlId,
-			boardLike: boardLikeNum
+			boardLike: boardLikeNum,
 		}),
 	})
 		.then(res => res.json())
@@ -300,6 +298,7 @@ function replyLikeEvent(event) {
 		},
 		body: JSON.stringify({
 			replyId: eventId,
+			boardId: boardUrlId,
 			replyLike: replyLikeNum,
 		}),
 	})
