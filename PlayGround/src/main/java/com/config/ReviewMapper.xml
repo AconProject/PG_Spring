@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INTO review (reviewId, mbrId, mbrName, gameNo, reviewContent, reviewLiked, reviewScore, reviewDate)
 		VALUES (reviewseq.nextval,#{mbrId},#{mbrName},#{gameNo},#{reviewContent},0,#{reviewScore},SYSDATE)
 	</insert>
-	
+
 	<!--댓글:수정 -->
 	<update id="reviewUpdate" parameterType="ReviewDTO">
 		UPDATE review
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET reviewLiked = reviewLiked-1
 		WHERE reviewId=#{reviewId}
 	</update>
-	
+
 
 	<!--좋아요 가져오기 -->
 	<select id="reviewLikeSelect" parameterType="int">
@@ -63,32 +63,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!--댓글 페이지 -->
-	<select id="selectAll"  resultType="ReviewDTO">
+	<select id="selectAll" resultType="ReviewDTO">
 		select *
 		from review
 		order by mbrId
 	</select>
 
-	<!-- reviewId 찾기  -->
+	<!-- reviewId 찾기 -->
 	<select id="selectreviewId" parameterType="hashmap" resultType="int">
 		SELECT reviewId
 		FROM review
 		WHERE mbrName = #{mbrName} and gameNo = #{gameNo}
 	</select>
-	
+
 	<!-- 댓글 회원별명 존재여부 확인 -->
-	<select id="nameCheck"  resultType="int">
+	<select id="nameCheck" parameterType="Map" resultType="int">
 		select count(*)
 		from review
 		where mbrName = #{mbrName}
+		and gameNo = #{gameNo}
 	</select>
-	
-		<!-- 수정버튼 누를시 reviewId로 댓글 찾기 -->
+
+	<!-- 수정버튼 누를시 reviewId로 댓글 찾기 -->
 	<select id="updatebtn" parameterType="int" resultType="ReviewDTO">
 		select *
 		from review
-		where reviewId = #{reviewId}	
+		where reviewId = #{reviewId}
 	</select>
-	
-	
+
+
 </mapper>

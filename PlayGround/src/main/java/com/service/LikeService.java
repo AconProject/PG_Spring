@@ -2,6 +2,7 @@ package com.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public int likeReviewDelete(LikeDTO ldto) {
 	return dao.likeReviewDelete(ldto);
 }
 ////
-public int likeReviewCount(HashMap<String, Object> map) {
+public int likeReviewCount(Map<String, Object> map) {
 	return dao.likeReviewCount(map);
 }
 
