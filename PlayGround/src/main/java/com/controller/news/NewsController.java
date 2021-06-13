@@ -11,4 +11,4 @@ public class NewsController {
 	public String newsList() {
 		return "News/newsList";
 	}
-}
+} 

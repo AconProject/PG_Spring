@@ -5,35 +5,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="BoardMapper">
 	
 	<select id="recommendInfoBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board<!--  USE INDEX (board_category) -->
+		SELECT /*+ index(board board_category) */ *
+		FROM board
 		WHERE boardCategory = 'info'
+		AND rownum &lt; 6
 		ORDER BY boardLiked DESC, boardCount DESC
-		LIMIT 5
 	</select>
 	
 	<select id="hitInfoBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board <!-- USE INDEX (board_category) -->
+		SELECT /*+ index(board board_category) */ *
+		FROM board
 		WHERE boardCategory = 'info'
+		AND rownum &lt; 6
 		ORDER BY boardCount DESC, boardLiked DESC
-		LIMIT 5
 	</select>
 	
 	<select id="recommendQnaBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board <!-- USE INDEX (board_category) -->
+		SELECT /*+ index(board board_category) */ *
+		FROM board
 		WHERE boardCategory = 'QnA'
+		AND rownum &lt; 6
 		ORDER BY boardLiked DESC, boardCount DESC
-		LIMIT 5
 	</select>
 	
 	<select id="hitQnaBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board <!-- USE INDEX (board_category) -->
+		SELECT /*+ index(board board_category) */ *
+		FROM board
 		WHERE boardCategory = 'QnA'
+		AND rownum &lt; 6
 		ORDER BY boardCount DESC, boardLiked DESC
-		LIMIT 5
 	</select>
 	
 	<!-- boardSelect에서 boardListSelect로 변환? -->
