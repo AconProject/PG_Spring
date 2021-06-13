@@ -1,5 +1,6 @@
 package com.controller.reply;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -62,19 +63,20 @@ public class ReplyRestController {
 	}
 	
 	@PatchMapping("/replyLike")
-	public int replyLike(@RequestBody int replyLike, @RequestBody int replyId,
+	public int replyLike(@RequestBody HashMap<String, Integer> replyMap,
 							 HttpSession session) {
-		System.out.println("현재 좋아요 개수 : " + replyLike + " \t " +  replyId);
+		int replyLike = replyMap.get("replyLike");
+		System.out.println("현재 좋아요 개수 : " + replyMap.get("replyLike") + " \t " +  replyMap.get("replyId"));
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
 		System.out.println(login);
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), 0, 0, replyId);
+		LikeDTO like = new LikeDTO(0, login.getMbrId(), replyMap.get("boardId"), 0, replyMap.get("replyId"));
 		boolean isComplete = false;
 		int cnt = lService.likeReplyCount(like);
 		if (cnt >= 1) {
-			replyLike += rService.replyLikeMinus(replyId) * -1;
+			replyLike += rService.replyLikeMinus(replyMap.get("replyId")) * -1;
 			isComplete = lService.likeBoardDelete(like);
 		} else {
-			replyLike += rService.replyLikePlus(replyId);
+			replyLike += rService.replyLikePlus(replyMap.get("replyId"));
 			isComplete = lService.likeBoardInsert(like);
 		}
 		System.out.println("좋아요 : " + replyLike + " , replyLiked 개수 : " + cnt + " , 삭제, 삽입 : " + isComplete);

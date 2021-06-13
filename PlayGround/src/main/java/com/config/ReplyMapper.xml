@@ -4,13 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ReplyMapper">
 
-	<update id="replyLikePlus" parameterType="string">
+	<update id="replyLikePlus" parameterType="int">
 		UPDATE reply
 	     SET replyLiked = replyLiked + 1
 	     WHERE boardId = #{replyId}
 	</update>
 	
-	<update id="replyLikeMinus" parameterType="string">
+	<update id="replyLikeMinus" parameterType="int">
 		UPDATE reply
 	     SET replyLiked = replyLiked - 1
 	     WHERE boardId = #{replyId}
