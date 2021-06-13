@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,17 +26,26 @@ public class ReviewController {
 	@Autowired
 	LikeService likeService;
 
-	@RequestMapping("/loginCheck/reviewInsert")
+	@RequestMapping(value ="/loginCheck/reviewInsert")
 	public String cartAdd(@ModelAttribute ReviewDTO rDTO, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		System.out.println("댓글 입력값 확인: "+ rDTO);
 		int reviewResult=0;
+
+		rDTO.setMbrId(login.getMbrId());
+		rDTO.setMbrName(login.getMbrName());
 		String mbrName=rDTO.getMbrName();	
 		int gameNo=Integer.parseInt(rDTO.getGameNo());
+		
+		
+		System.out.println("여기는 rDTO 값: "+rDTO.toString());
+		
 		System.out.println("넘어온 정보: " + mbrName + "\t" + gameNo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mbrName", mbrName);
 		map.put("gameNo", gameNo);
 		
+		System.out.println("map값 확인: "+map.toString());
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
 		if(nameCheck==0) {
@@ -45,28 +55,32 @@ public class ReviewController {
 			System.out.println("댓글삽입 실패: " + reviewResult);
 
 		}
-		return "detailPage?gameNo="+rDTO.getGameNo();
+		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
 	}
 	
 	@RequestMapping(value = "/loginCheck/reviewDelete")
-	@ResponseBody
-	public void cartDelte(@RequestParam("reviewId") int reviewId) {
+	public String cartDelte(@RequestParam("reviewId") int reviewId, @ModelAttribute ReviewDTO rDTO) {
 		System.out.println("삭제할 reviewId: "+reviewId);
 		int result = reviewService.reviewDelete(reviewId);
 		System.out.println("댓글 삭제 성공 여부: "+result);
 		
+		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
+		
 	}
 	
 	@RequestMapping(value = "/loginCheck/reviewUpdate")
-	@ResponseBody
-	public void cartUpdate(@ModelAttribute ReviewDTO rDTO) {
+	public String cartUpdate(@ModelAttribute ReviewDTO rDTO) {
 		System.out.println("댓글 수정값 확인: "+rDTO.toString());
 		int result = reviewService.reviewUpdate(rDTO);
 		System.out.println("댓글 수정 성공 여부: "+result);
+	
+		
+		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
+
 	}
 
 	
-	@RequestMapping(value = "/loginCheck/reviewLike")
+	@RequestMapping(value = "/loginCheck/reviewLike", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public Object reviewLike(@RequestParam("reviewId") int reviewId, @RequestParam("gameNo") String gameNo, HttpSession session) {
 		System.out.println("gameNo: " + gameNo + " reviewId: " + reviewId);
@@ -112,9 +126,11 @@ public class ReviewController {
 			System.out.println("찾기: " + rdto);
 			int liked = rdto.getReviewLiked();
 			System.out.println("증가된 좋아요 수 : " + rdto);
-
+			
 			return liked;
+			
 
 		}
 	}
+
 

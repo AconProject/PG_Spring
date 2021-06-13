@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<!-- review -->
-	<select id="likeReviewCount" parameterType="LikeDTO">
+	<select id="likeReviewCount" parameterType="hashmap" resultType="int">
 		SELECT count(*)
 		FROM liked
 		WHERE mbrId = #{mbrId}
