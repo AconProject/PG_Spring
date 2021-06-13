@@ -14,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+
 public class GameDTO {
 	private String gameNo;
 	private String gameName;
@@ -23,11 +24,10 @@ public class GameDTO {
 	private String gameCategory;
 	private String gameGenre;
 	private String gameReleasedDate;
+	private double discountRate;
 
 	public GameDTO() {
 		super();
 	}
 
-	
-	
 }

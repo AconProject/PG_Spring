@@ -41,4 +41,12 @@ public class GameDAO {
 	public List<GameDTO> relatedGameList(String gameCategory) {
 		return session.selectList("GameMapper.relatedGameList", gameCategory);
 	}
+	
+	public List<GameDTO> gameSearch(String search) {
+		return session.selectList("GameMapper.gameSearch", search);
+	}
+
+	public List<GameDTO> saleGameListSelect() {
+		return session.selectList("GameMapper.saleGameListSelect"); 
+	}
 }

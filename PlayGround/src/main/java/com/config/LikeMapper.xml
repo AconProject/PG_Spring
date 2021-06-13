@@ -57,6 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*)
 		FROM liked
 		WHERE mbrId = #{mbrId}
-		AND replyId = #{replyId}
+		AND boardId = #{boardId}
 	</select>
 </mapper>

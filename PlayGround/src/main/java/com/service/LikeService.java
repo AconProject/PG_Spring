@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class LikeService {
 		return result >= 1 ? true:false;
 	}
 	
-	public int likeReplyCount(LikeDTO like) {
+	public List<Integer> likeReplyCount(LikeDTO like) {
 		return dao.likeReplyCount(like);
 	}
 /////////Review(게임 댓글 부분)//////////////////
