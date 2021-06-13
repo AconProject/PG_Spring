@@ -71,18 +71,13 @@
 				url:"../../loginCheck/reviewLike",
 				dataType:"text",
 				data:{
-					reviewId : reviewId,
-					gameNo : gameNo
+					reviewId : reviewId
 				},
 				success: function(Data, status, xhr) {
 					console.log("success");
-					console.log(Data);
-					var chk = /|d/;
+					console.log(Data);		
 					
-					if(Data==="이미 좋아요를 누르셨습니다."){
-						console.log("이미 좋아요를 눌렀습니다.")
-						alert(Data);
-					} else {
+					if(Data!=null){
 						console.log("증가된 좋아요 수 : " + Data);
 						var liked = $("#"+num).text(Data);
 					}
