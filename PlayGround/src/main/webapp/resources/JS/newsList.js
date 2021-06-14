@@ -114,7 +114,8 @@ function getNewsList() {
 	fetch('newsList')
 		.then(res => res.json())
 		.then(data => {
-			processNewsData(data);
+			if (data.length !== 0)
+				processNewsData(data);
 		})
 		.catch(err => {
 			console.log(err);

@@ -8,7 +8,7 @@
 <title>NewsPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<c:url value="/resources/CSS/BoardList.css" />" rel="stylesheet">
-	<script src="<c:url value="/resources/JS/newsList.js" />"></script>
+	<script src="<c:url value="/resources/JS/newsList.js?v=5" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->

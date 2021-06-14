@@ -121,7 +121,8 @@ function getNewGame() {
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForTop(data);
+			if (data.length !== 0)
+				jsonParserForTop(data);
 		})
 		.catch(err => {
 			console.log(err);
@@ -135,7 +136,8 @@ function getNewGameEvent() {
 		.then(data => {
 			removeAllElements('.topTable td');
 			removeAllElements('.topChart li');
-			jsonParserForTop(data);
+			if (data.length !== 0)
+				jsonParserForTop(data);
 		})
 		.catch(err => {
 			console.log(err);
@@ -149,7 +151,8 @@ function getRecommendedGame() {
 		.then(data => {
 			removeAllElements('.topTable td');
 			removeAllElements('.topChart li');
-			jsonParserForTop(data);
+			if (data.length !== 0)
+				jsonParserForTop(data);
 		})
 		.catch(err => {
 			console.log(err);
@@ -161,11 +164,13 @@ function getTag() {
 	fetch('genre/genreList')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForTags(data);
-			let tags = document.getElementsByName('tag');
-			tags.forEach((tag) => {
-				tag.addEventListener('click', getCheckboxValue, false);
-			});
+			if (data.length !== 0) {
+				jsonParserForTags(data);
+				let tags = document.getElementsByName('tag');
+				tags.forEach((tag) => {
+					tag.addEventListener('click', getCheckboxValue, false);
+				});
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -177,17 +182,19 @@ function getTagGame() {
 	fetch('game/tag/noTag')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForMiddle(data);
+			if (data.length !== 0) {
+				jsonParserForMiddle(data);
 
-			fetch('rate/tag/noTag')
-				.then(res => res.json())
-				.then(data => {
-					for (let i = 0; i < data.length; i++)
-						insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-				})
-				.catch(err => {
-					console.log(err);
-				});
+				fetch('rate/tag/noTag')
+					.then(res => res.json())
+					.then(data => {
+						for (let i = 0; i < data.length; i++)
+							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -200,17 +207,19 @@ function getTagGameEvent(tagId) {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('.midTable tr');
-			jsonParserForMiddle(data);
+			if (data.length !== 0) {
+				jsonParserForMiddle(data);
 
-			fetch('rate/tag/' + tagId)
-				.then(res => res.json())
-				.then(data => {
-					for (let i = 0; i < data.length; i++)
-						insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-				})
-				.catch(err => {
-					console.log(err);
-				});
+				fetch('rate/tag/' + tagId)
+					.then(res => res.json())
+					.then(data => {
+						for (let i = 0; i < data.length; i++)
+							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -255,7 +264,8 @@ function getRecommendedPost() {
 	fetch('board/gameInfoCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForBoard(data, 'boardPost');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardPost');
 		})
 		.catch(err => {
 			console.log(err);
@@ -268,7 +278,8 @@ function getRecommendedPostEvent() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('#boardPost li');
-			jsonParserForBoard(data, 'boardPost');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardPost');
 		})
 		.catch(err => {
 			console.log(err);
@@ -281,7 +292,8 @@ function getMostViewPost() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('#boardPost li');
-			jsonParserForBoard(data, 'boardPost');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardPost');
 		})
 		.catch(err => {
 			console.log(err);
@@ -293,7 +305,8 @@ function getRecommendedQnA() {
 	fetch('board/qnaCategory/recommend')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForBoard(data, 'boardQnA');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardQnA');
 		})
 		.catch(err => {
 			console.log(err);
@@ -306,7 +319,8 @@ function getRecommendedQnAEvent() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('#boardQnA li');
-			jsonParserForBoard(data, 'boardQnA');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardQnA');
 		})
 		.catch(err => {
 			console.log(err);
@@ -319,7 +333,8 @@ function getMostViewQnA() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('#boardQnA li');
-			jsonParserForBoard(data, 'boardQnA');
+			if (data.length !== 0)
+				jsonParserForBoard(data, 'boardQnA');
 		})
 		.catch(err => {
 			console.log(err);
@@ -331,7 +346,8 @@ function getNews() {
 	fetch('news/newsList')
 		.then(res => res.json())
 		.then(data => {
-			jsonParserForNews(data);
+			if (data.length !== 0)
+				jsonParserForNews(data);
 		})
 		.catch(err => {
 			console.log(err);

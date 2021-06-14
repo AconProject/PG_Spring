@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Update Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=19" />"></script>
+	<script src="<c:url value="/resources/JS/writeBoard.js?v=20" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
