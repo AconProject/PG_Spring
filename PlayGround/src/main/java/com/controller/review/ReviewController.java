@@ -68,15 +68,17 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping(value = "/loginCheck/reviewUpdate")
-	public String cartUpdate(@ModelAttribute ReviewDTO rDTO) {
-		System.out.println("댓글 수정값 확인: "+rDTO.toString());
-		int result = reviewService.reviewUpdate(rDTO);
-		System.out.println("댓글 수정 성공 여부: "+result);
-	
+	@RequestMapping(value = "/loginCheck/reviewUpdate", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String cartUpdate(@RequestParam Map<String, String>map) {
+		System.out.println("댓글 수정값 확인: "+ map);
+		reviewService.reviewUpdate(map);
 		
-		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
-
+		int reviewId = Integer.parseInt(map.get("reviewId"));
+		System.out.println("reviewId: " + reviewId);
+		String content = reviewService.findContent(reviewId);
+		System.out.println("수정된 content: "+content);
+		return content;
 	}
 
 	

@@ -38,8 +38,8 @@ public class ReviewDAO {
 	}
 
 //////////////////댓글 수정 부분
-	public int reviewUpdate(ReviewDTO rdto) {
-		int result = session.update("ReviewMapper.reviewUpdate", rdto);
+	public int reviewUpdate(Map<String, String> map) {
+		int result = session.update("ReviewMapper.reviewUpdate", map);
 		return result;
 	}
 
@@ -78,6 +78,11 @@ public class ReviewDAO {
 
 	public ReviewDTO updatebtn(int reviewId) {
 		ReviewDTO result = session.selectOne("ReviewMapper.updatebtn", reviewId);
+		return result;
+	}
+
+	public String findContent(int reviewId) {
+		String result = session.selectOne("ReviewMapper.findContent", reviewId);
 		return result;
 	}
 
