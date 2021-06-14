@@ -44,7 +44,7 @@ public class LoginController {
 			// 45번째 줄, jsp에서 사용하기 위해서는 session에 암호화된 암호가 아닌, 입력한 암호(암호화되지 않은 암호) 저장
 			return "Main";
 		} else {
-			//model.addAttribute("mesg", "ID"); alert 창 띄워주기
+			model.addAttribute("mesg", "ID 혹은 PW를 확인하여 주십시오. "); 
 			return "LoginForm";
 		}
 
