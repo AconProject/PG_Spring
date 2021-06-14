@@ -35,8 +35,8 @@ public class ReviewService {
 	}
 
 	////// 댓글 수정///////
-	public int reviewUpdate(ReviewDTO rdto) {
-		return dao.reviewUpdate(rdto);
+	public int reviewUpdate(Map<String, String> map) {
+		return dao.reviewUpdate(map);
 	}
 
 	////// 댓글 삭제///////
@@ -73,6 +73,10 @@ public class ReviewService {
 	// 댓글 수정버튼 클릭시 reviewId로 댓글 찾기
 	public ReviewDTO updatebtn(int reviewId) {
 		return dao.updatebtn(reviewId);
+	}
+
+	public String findContent(int reviewId) {
+		return dao.findContent(reviewId);
 	}
 
 }
