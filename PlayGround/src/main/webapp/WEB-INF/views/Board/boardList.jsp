@@ -9,7 +9,7 @@
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="<c:url value="/resources/CSS/BoardList.css" />" rel="stylesheet">
-	<script src="<c:url value="/resources/JS/boardList.js?v=1" />"></script>
+	<script src="<c:url value="/resources/JS/boardList.js?v=2" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->

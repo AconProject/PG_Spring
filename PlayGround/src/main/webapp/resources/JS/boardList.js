@@ -155,7 +155,8 @@ function getBoardList() {
 	fetch('boardList/all')
 		.then(res => res.json())
 		.then(data => {
-			prepareForPaging(data);
+			if (data.length !== 0)
+				prepareForPaging(data);
 		})
 		.catch(err => {
 			console.log(err);
@@ -170,7 +171,8 @@ function getChangedBoardList() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');
-			prepareForPaging(data);
+			if (data.length !== 0)
+				prepareForPaging(data);
 		})
 		.catch(err => {
 			console.log(err);
@@ -187,7 +189,8 @@ function getBoardSearchList() {
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('tr[id^="board"]');
-			prepareForPaging(data);
+			if (data.length !== 0)
+				prepareForPaging(data);
 		})
 		.catch(err => {
 			console.log(err);
