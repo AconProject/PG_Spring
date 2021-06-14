@@ -5,7 +5,7 @@ window.onload = function () {
 	boardUrlId = location.href.substr(
 		location.href.lastIndexOf('/') + 1
 	);
-		
+
 	document.getElementById('reset').addEventListener('click', cancelBoard, false);
 	document.getElementById('submit').addEventListener('click', uploadBoard, false);
 
