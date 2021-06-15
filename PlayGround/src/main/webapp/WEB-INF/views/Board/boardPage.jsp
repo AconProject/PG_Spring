@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="<c:url value="/resources/CSS/BoardPage.css?v=23" />" rel="stylesheet">
-	<script src="<c:url value="/resources/JS/boardPage.js?v=59" />"></script>
+	<link href="<c:url value="/resources/CSS/BoardPage.css?v=41" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/boardPage.js?v=73" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -33,9 +33,7 @@
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
 			if(dto != null){
 			%>
-				<button id="boardLikeBtn">
-					<img src="<c:url value="/resources/Image/liked.png" />">
-				</button>
+				<div class="img"><img id="boardLikeBtn"></div>
 			<%
   			}
 			%>

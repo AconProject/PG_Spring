@@ -147,8 +147,8 @@ function jsonParserForBoardContents(data) {
 
 	insertElement('h3', 'boardCategory', '[' + boardCategory + ']');
 	insertElement('h1', 'boardHead', data.boardName);
-	insertElement('h4', 'boardHead', data.mbrName);
-	insertElement('span', 'boardHead', '<small>' + boardDate + '</small>');
+	insertElement('h3', 'boardHead', data.mbrName);
+	insertElement('span', 'boardHead', boardDate);
 	
 	document.getElementById('hits').innerHTML = data.boardCount;
 	document.getElementById('recommends').innerHTML = data.boardLiked;
@@ -189,24 +189,24 @@ function jsonParserForBoardReply(data, start, end) {
 
 		let loginId = document.getElementById('loginId').value;
 		if (loginId !== '') {
-			let mesg;
+			let src;
 			if (data[i].visit === 0)
-				mesg = '추천';
+				src = '../../resources/Image/emptyThumb.png';
 			else
-				mesg = '추천 취소';
+				src = '../../resources/Image/thumb.png';
 
-			insertElement('td', 'comment' + i, '<button id="replyLikeBtn' + data[i].replyId +
-				'" value="' + data[i].replyId + '">' + mesg + '</button>');
+			insertElement('td', 'comment' + i,
+				'<img id="replyLikeBtn' + data[i].replyId + '" src="' + src + '">');
 		}
 
 		if (checkMemberId(data[i].mbrId)) {
-			insertElement('td', 'comment' + i, '<button id="updateCommentBtn' + data[i].replyId +
-				'" value="' + data[i].replyId + '">수정</button>');
 			insertElement('td', 'comment' + i, '<button id="deleteCommentBtn' + i +
 				'" value="' + data[i].replyId + '">삭제</button>');
+			insertElement('td', 'comment' + i, '<button id="updateCommentBtn' + data[i].replyId +
+				'" value="' + data[i].replyId + '">수정</button>');
 		}
 	}
-	let replyLikeBtns = document.querySelectorAll('button[id^="replyLikeBtn"]');
+	let replyLikeBtns = document.querySelectorAll('img[id^="replyLikeBtn"]');
 	let updateCommentBtns = document.querySelectorAll('button[id^="updateCommentBtn"]');
 	let deleteCommentBtns = document.querySelectorAll('button[id^="deleteCommentBtn"]');
 
@@ -270,20 +270,19 @@ function deleteBoard() {
 
 /* 게시글 좋아요 선택 여부 체크 */
 function checkBoardLiked() {
-	// fetch('../boardLikeCount/' + boardUrlId)
-	// 	.then(res => res.json())
-	// 	.then(data => {
-	// 		isBoardLiked = data;
-	// 		if (isBoardLiked === 1)
-	// 			document.getElementById('boardLikeBtn').innerHTML =
-	// 			'<img src="<c:url value="/resources/Image/afterLike.png" />">';
-	// 		else
-	// 			document.getElementById('boardLikeBtn').innerHTML =
-	// 			'<img src="<c:url value="/resources/Image/beforeLike.png" />">';
-	// 	})
-	// 	.catch(err => {
-	// 		console.log(err);
-	// 	});
+	fetch('../boardLikeCount/' + boardUrlId)
+		.then(res => res.json())
+		.then(data => {
+			isBoardLiked = data;
+			let boardLikeBtn = document.getElementById('boardLikeBtn');
+			if (isBoardLiked === 1)
+				boardLikeBtn.setAttribute('src', '../../resources/Image/thumb.png');
+			else	
+				boardLikeBtn.setAttribute('src', '../../resources/Image/emptyThumb.png');
+		})
+		.catch(err => {
+			console.log(err);
+		});
 }
 
 /* 게시글 좋아요 클릭 */
@@ -304,10 +303,10 @@ function boardLikeEvent() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				document.getElementById('comments').innerText = data;
+				document.getElementById('recommends').innerText = data;
 				isBoardLiked = 1;
-				document.getElementById('boardLikeBtn').innerHTML =
-					'<img src="<c:url value="/resources/Image/afterLike.png" />">';
+				document.getElementById('boardLikeBtn')
+					.setAttribute('src', '../../resources/Image/thumb.png');
 			})
 			.catch(err => {
 				console.log(err);
@@ -326,10 +325,10 @@ function boardLikeEvent() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				document.getElementById('comments').innerText = data;
+				document.getElementById('recommends').innerText = data;
 				isBoardLiked = 0;
-				document.getElementById('boardLikeBtn').innerHTML =
-					'<img src="<c:url value="/resources/Image/beforeLike.png" />">';
+				document.getElementById('boardLikeBtn')
+					.setAttribute('src', '../../resources/Image/emptyThumb.png');
 			})
 			.catch(err => {
 				console.log(err);
@@ -379,6 +378,7 @@ function updateComment() {
 	
 	replyTextArea.removeAttribute('readonly');
 	replyTextArea.style.border = '1px solid black';
+	replyTextArea.style.textAlign = 'left';
 	replyTextArea.focus();
 
 	this.innerHTML = '완료';
@@ -415,6 +415,7 @@ function updateCommentSubmit() {
 	
 	replyTextArea.setAttribute('readonly', 'readonly');
 	replyTextArea.style.border = 'none';
+	replyTextArea.style.textAlign = 'center';
 
 	this.innerHTML = '수정';
 	this.removeEventListener('click', updateCommentSubmit);
@@ -444,7 +445,7 @@ function deleteComment() {
 
 /* 댓글 좋아요 클릭 */
 function replyLikeEvent() {
-	let eventId = this.value;
+	let eventId = this.id.slice(12, );
 	let isReplyLiked = document.getElementById('isLiked' + eventId).value;
 	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
 
@@ -465,7 +466,8 @@ function replyLikeEvent() {
 			.then(data => {
 				document.getElementById('replyLike' + eventId).innerText = data;
 				document.getElementById('isLiked' + eventId).value = 1;
-				document.getElementById('replyLikeBtn' + eventId).innerHTML = '추천 취소';
+				document.getElementById('replyLikeBtn' + eventId)
+					.setAttribute('src', '../../resources/Image/thumb.png');
 			})
 			.catch(err => {
 				console.log(err);
@@ -487,7 +489,8 @@ function replyLikeEvent() {
 			.then(data => {
 				document.getElementById('replyLike' + eventId).innerText = data;
 				document.getElementById('isLiked' + eventId).value = 0;
-				document.getElementById('replyLikeBtn' + eventId).innerHTML = '추천';
+				document.getElementById('replyLikeBtn' + eventId)
+					.setAttribute('src', '../../resources/Image/emptyThumb.png');
 			})
 			.catch(err => {
 				console.log(err);
