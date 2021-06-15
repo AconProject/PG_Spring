@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.LikeDTO;
 import com.dto.MemberDTO;
 import com.dto.ReplyDTO;
+import com.dto.ReplyRestDTO;
 import com.service.LikeService;
 import com.service.ReplyService;
 
@@ -30,10 +31,14 @@ public class ReplyRestController {
 	LikeService lService;
 
 	@GetMapping("/read/{boardId}")
-	public List<ReplyDTO> replyRead(@PathVariable int boardId) {
+	public List<ReplyRestDTO> replyRead(@PathVariable int boardId, HttpSession session) {
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		List<ReplyDTO> replyList = rService.replyRead(boardId);
+		List<ReplyRestDTO> replyRestList = null;
 		System.out.println(replyList);
-		return replyList;
+		if (replyList != null)
+			replyRestList = rService.replyCount(replyList, login, boardId);
+		return replyRestList;
 	}
 
 	@PostMapping("/replies")
@@ -62,13 +67,6 @@ public class ReplyRestController {
 		return result;
 	}
 
-	@GetMapping("/replies/boards/{boardId}")
-	public List<Integer> likeReplyCount(@PathVariable int boardId, HttpSession session) {
-		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
-		List<Integer> cnt = lService.likeReplyCount(like);
-		return cnt;
-	}
 
 	@PatchMapping("/replyLikePlus")
 	public int replyLikePlus(@RequestBody HashMap<String, Integer> replyMap,
