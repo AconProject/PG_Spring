@@ -93,11 +93,6 @@ textarea {
   color: black;
 }
 
-#boardLikeBtn {
-  background-color: white;
-  border-radius: 100%;
-}
-
 button:hover {
   cursor: pointer;
 }
