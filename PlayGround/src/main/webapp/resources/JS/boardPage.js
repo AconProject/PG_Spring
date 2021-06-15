@@ -176,14 +176,14 @@ function jsonParserForBoardReply(data, start, end) {
 			'댓글 - <span id="reply' + data[i].replyId + '">' + data[i].replyContent + '</span><br>' +
 			'날짜 - ' + replyDate + '<br>' +
 			'추천수 - <span id="replyLike' + data[i].replyId + '">' + data[i].replyLiked + '</span><br>' +
-			'<input type="hidden" id="isLiked' + data[i].replyId + '" value="' + data[i].isLiked + '">';
+			'<input type="hidden" id="isLiked' + data[i].replyId + '" value="' + data[i].visit + '">';
 
 		document.getElementById('boardComments').innerHTML = html;
 
 		let loginId = document.getElementById('loginId').value;
 		if (loginId !== '') {
 			let mesg;
-			if (data[i].isLiked === 0)
+			if (data[i].visit === 0)
 				mesg = '추천';
 			else
 				mesg = '추천 취소';
@@ -414,9 +414,10 @@ function deleteComment(event) {
 function replyLikeEvent(event) {
 	let eventId = event.target.value;
 	let isReplyLiked = document.getElementById('isLiked' + eventId).value;
+	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
 
 	// 좋아요 누른적 없음 - 추가
-	if (isReplyLiked === 0) {
+	if (isReplyLiked === '0') {
 		fetch('../../reply/replyLikePlus', {
 			method: 'PATCH',
 			headers: {
@@ -424,6 +425,8 @@ function replyLikeEvent(event) {
 			},
 			body: JSON.stringify({
 				replyId: eventId,
+				boardId: boardUrlId,
+				replyLike: replyLikeNum,
 			}),
 		})
 			.then(res => res.json())
@@ -444,6 +447,8 @@ function replyLikeEvent(event) {
 			},
 			body: JSON.stringify({
 				replyId: eventId,
+				boardId: boardUrlId,
+				replyLike: replyLikeNum,
 			}),
 		})
 			.then(res => res.json())
