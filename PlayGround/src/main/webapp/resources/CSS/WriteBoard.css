@@ -31,23 +31,56 @@ img {
 ------------------------------- */
 
 .contents {
-	margin: 150px auto;
+  margin: 150px auto;
 }
 
-#submit, #reset {
-	float: right;
-	width: 80px;
-	height: 30px;
-	border-radius: 10%;
-	border: none;
+hr {
+  background-color: #34314c;
+  height: 10px;
+  margin-bottom: 50px;
+}
+
+select {
+  width: 160px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+input {
+  width: 910px;
+  height: 45px;
+}
+
+textarea {
+  margin-top: 30px;
+  width: 1090px;
+  height: 700px;
+  margin-bottom: 30px;
+}
+
+select,
+input,
+textarea {
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+#submit,
+#reset {
+  float: right;
+  width: 100px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 10%;
+  border: none;
 }
 
 #submit {
-	background-color: #34314c;
-	color: white;
+  background-color: #34314c;
+  color: white;
 }
 
 #reset {
-	background-color: #ff7473;
-	color: black;
+  background-color: #ff7473;
+  color: black;
 }

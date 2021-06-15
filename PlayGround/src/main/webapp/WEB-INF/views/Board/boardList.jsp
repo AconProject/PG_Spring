@@ -16,7 +16,7 @@
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
 	<!-- 게시판 컨텐츠-->
-    <div class="wrapper contents">
+    <section class="wrapper contents">
 
 		<h1>게시판</h1>
 

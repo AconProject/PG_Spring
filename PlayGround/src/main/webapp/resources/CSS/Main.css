@@ -69,7 +69,8 @@ img {
   text-align: center;
 }
 
-.tag {
+.tag,
+.tag a {
   color: rgb(64, 147, 214);
   font-size: 1rem;
 }
@@ -179,7 +180,7 @@ button {
 }
 
 .newsChart {
-	width: 930px;
+  width: 930px;
 }
 
 .boardChart li,

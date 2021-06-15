@@ -15,7 +15,7 @@
     <jsp:include page="../common/header.jsp" flush="true"></jsp:include>
 
 	<!-- 게시판 컨텐츠-->
-    <div class="wrapper contents">
+    <section class="wrapper contents">
 
 		<h1>뉴스 및 소식</h1>
 
@@ -28,7 +28,7 @@
 
 		<div id="paging"></div>
 
-    </div>
+    </section>
 
 
 	<!-- 페이지 맨 밑부분 -->

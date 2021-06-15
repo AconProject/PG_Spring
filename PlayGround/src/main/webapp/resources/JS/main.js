@@ -60,8 +60,8 @@ function jsonParserForTop(data) {
 				+ data[i].gameNo + '">' + data[i].gameName + '</a>', 'class', 'center');
 			insertElement('td', 'topTableYear',
 				data[i].gameReleasedDate, 'class', 'center');
-			insertElement('td', 'topTableCategory',
-				'#' + data[i].gameCategory, 'class', 'center tag');
+			insertElement('td', 'topTableCategory', '<a href="Game/tagDetail/'
+				+ data[i].gameCategory + '">#' + data[i].gameCategory + '</a>', 'class', 'center tag');
 		} else {
 			insertElement('li', 'topChart', '<a href="Game/detailPage/'
 				+ data[i].gameNo + '">' + data[i].gameName + data[i].gameReleasedDate + '</a>');
