@@ -71,6 +71,10 @@ nav {
 	background-color: #000066;
 	color: white;
 }
+#gameName {
+	display:inline;
+	font-size:30px;
+}
 .gameImg {
 	width: 200px;
 	margin: 20px;
