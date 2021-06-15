@@ -168,6 +168,9 @@
 	var gameGenre = '${topPageGame.gameGenre}';
 	var gameReleasedDate = '${topPageGame.gameReleasedDate}';
 	var gameScore = '${topPageScore.gameScore}';
+	var discountRate = '${topPageGame.discountRate}';
+	var discountPrice = gamePrice - (gamePrice * (discountRate/100));
+	console.log(discountPrice);
 	
 	var date = gameReleasedDate.substring(0,4);
 	console.log(date);
@@ -186,9 +189,16 @@
 	window.onload = function() {
 		
 		// 상단부분(게임설명)
-		
+		if(discountRate != 0.0) {
 		// 게임이름
-		document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )";
+		document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " ) &nbsp;&nbsp;  <span style='font-size:17px; color:red; text-decoration:line-through;'>\\" + gamePrice.toLocaleString() + "</span> <span style='font-size:17px; color:red;'>("+ discountRate + "% ) → \\" + discountPrice.toLocaleString() +"</span>";
+		} else {
+			document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )  <span style='font-size:17px; color:yellow;'>&nbsp;&nbsp; \\" + gamePrice.toLocaleString();
+		}
+		if(gamePrice == 0){
+			gamePrice = '무료';
+			document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )  <span style='font-size:17px; color:yellow;'>&nbsp;&nbsp; " + gamePrice.toLocaleString();
+		}
 		// 게임이미지
 		document.getElementById("gameImage").src = gameImage;
 		// 게임장르 넣기
@@ -330,7 +340,7 @@
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
 							<td class="review"><p id="gameReplyContent"><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
-							<td class="thumb"><img class="icon" src="Image/thumb.png" alt="추천수"><span id="gameReplyRecommend"><%= review.getReviewLiked() %></span></td>
+							<td class="thumb"><img class="icon" src="<c:url value="/resources/Image/thumb.png" />" alt="추천수"><span id="gameReplyRecommend"><%= review.getReviewLiked() %></span></td>
 						</tr>
 						</table>
 						
