@@ -18,7 +18,7 @@ public class ReplyDAO {
 	}
 	
 	public int replyLikePlus(int replyId) {
-		return session.update("ReplyMapper.replyLikeMinus", replyId);
+		return session.update("ReplyMapper.replyLikePlus", replyId);
 	}
 
 	public List<ReplyDTO> replyRead(int boardId) {
