@@ -34,7 +34,7 @@
 			if(dto != null){
 			%>
 				<button id="boardLikeBtn">
-					<img src="<c:url value="/resources/Image/afterLike.png" />">
+					<img src="<c:url value="/resources/Image/liked.png" />">
 				</button>
 			<%
   			}
