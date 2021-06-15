@@ -6,9 +6,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Update Board</title>
+<title>Write Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/writeBoard.js?v=20" />"></script>
+	<link href="<c:url value="/resources/CSS/WriteBoard.css?v=21" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/writeBoard.js?v=26" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -33,7 +34,11 @@
 		}
 	%>
 
-	<div class="wrapper contents">
+	<!-- 게시글 입력 -->
+	<section class="wrapper contents">
+
+		<h1>게시글 작성</h1>
+		<hr>
 
 		<select id="boardCategory">
 			<option value="common">일반글</option>
@@ -41,13 +46,18 @@
 			<option value="sales">할인정보</option>
 			<option value="QnA">QnA</option>
 		</select>
-		<input type="text" id="boardName">
-		<input type="text" id="boardContent">
-		<button id="reset">다시쓰기</button>
+
+		<input type="text" id="boardName" placeholder="제목">
+
+		<div>
+			<textarea id="boardContent"></textarea>
+		</div>
+
 		<button id="submit">완료</button>
+		<button id="reset">다시쓰기</button>
 
 
-	</div>
+	</section>
 
 	<!-- 페이지 맨 밑부분 -->
     <jsp:include page="../common/footer.jsp" flush="true"></jsp:include>
