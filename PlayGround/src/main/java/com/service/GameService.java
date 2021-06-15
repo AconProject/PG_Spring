@@ -45,4 +45,8 @@ public class GameService {
 	public List<GameDTO> saleGameListSelect() {
 		return dao.saleGameListSelect();
 	}
+		
+	public List<GameDTO> tagDetailSelect(String gameCategory) {
+		return dao.tagDetailSelect(gameCategory);
+	}
 }

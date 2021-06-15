@@ -192,15 +192,15 @@
 		// 게임이미지
 		document.getElementById("gameImage").src = gameImage;
 		// 게임장르 넣기
-		document.getElementById("tag1").href = "./GameTagDetailServlet?gameCategory=" + category[0];
+		document.getElementById("tag1").href = "../tagDetail/" + category[0];
 		document.getElementById("tag1").innerHTML = "# " + category[0];
-		document.getElementById("tag2").href = "./GameTagDetailServlet?gameCategory=" + category[1];
+		document.getElementById("tag2").href = "../tagDetail/" + category[1];
 		document.getElementById("tag2").innerHTML = "# " + category[1];
-		document.getElementById("tag3").href = "./GameTagDetailServlet?gameCategory=" + category[2];
+		document.getElementById("tag3").href = "../tagDetail/" + category[2];
 		document.getElementById("tag3").innerHTML = "# " + category[2];
-		document.getElementById("tag4").href = "./GameTagDetailServlet?gameCategory=" + category[3];
+		document.getElementById("tag4").href = "../tagDetail/" + category[3];
 		document.getElementById("tag4").innerHTML = "# " + category[3];
-		document.getElementById("tag5").href = "./GameTagDetailServlet?gameCategory=" + category[4];
+		document.getElementById("tag5").href = "../tagDetail/" + category[4];
 		document.getElementById("tag5").innerHTML = "# " + category[4];
 		// 게임설명
 		document.getElementById("gameContent").innerHTML = gameContent;
@@ -246,13 +246,13 @@
 							<td class="tags">
 								<table>
 									<tr>
-										<td><a href="" class="tag" id="tag1"></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag2"></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag3"></a></td>
+										<td><a href="../tagDetail/" class="tag" id="tag1"></a></td>
+										<td><a href="../tagDetail/" class="tag" id="tag2"></a></td>
+										<td><a href="../tagDetail/" class="tag" id="tag3"></a></td>
 									</tr>
 									<tr>
-										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag4"></a></td>
-										<td><a href="./GameTagDetailServlet?gameCategory=" class="tag" id="tag5"></a></td>
+										<td><a href="../tagDetail/" class="tag" id="tag4"></a></td>
+										<td><a href="../tagDetail/" class="tag" id="tag5"></a></td>
 									</tr>
 								</table>
 							</td>
