@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT replyId, boardId, mbrId, mbrName, replyContent, replyLiked, replyDate
 		FROM reply
 		WHERE boardId = #{boardId}
-		ORDER BY replyDate DESC
+		ORDER BY replyId DESC
 	</select>
 	
 	<insert id="replyInsert" parameterType="ReplyDTO">

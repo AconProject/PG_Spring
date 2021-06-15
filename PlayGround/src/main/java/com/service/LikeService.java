@@ -40,22 +40,19 @@ public class LikeService {
 		return result >= 1 ? true:false;
 	}
 	
-	public List<Integer> likeReplyCount(LikeDTO like) {
-		return dao.likeReplyCount(like);
+	/////////Review(게임 댓글 부분)//////////////////
+	
+	//like 테이블 +1
+	public int likeReviewInsert(LikeDTO ldto) {
+		return dao.likeReviewInsert(ldto);
 	}
-/////////Review(게임 댓글 부분)//////////////////
-
-//like 테이블 +1
-public int likeReviewInsert(LikeDTO ldto) {
-	return dao.likeReviewInsert(ldto);
-}
-//like 테이블 -1	
-public int likeReviewDelete(LikeDTO ldto) {
-	return dao.likeReviewDelete(ldto);
-}
-////
-public int likeReviewCount(Map<String, Object> map) {
-	return dao.likeReviewCount(map);
-}
+	//like 테이블 -1	
+	public int likeReviewDelete(LikeDTO ldto) {
+		return dao.likeReviewDelete(ldto);
+	}
+	////
+	public int likeReviewCount(Map<String, Object> map) {
+		return dao.likeReviewCount(map);
+	}
 
 }

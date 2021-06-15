@@ -102,9 +102,11 @@ public class BoardRestController {
 	}
 	
 	@GetMapping("/boardLikeCount/{boardId}")
-	public int likeReplyId(@PathVariable int boardId, HttpSession session) {
+	public int likeBoardCount(@PathVariable int boardId, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
+		LikeDTO like = null;
+		if (login != null)
+			like = new LikeDTO(0, login.getMbrId(), boardId, 0, 0);
 		int cnt = lService.likeBoardCount(like);
 
 		return cnt;
