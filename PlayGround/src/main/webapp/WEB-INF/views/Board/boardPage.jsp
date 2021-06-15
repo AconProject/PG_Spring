@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="<c:url value="/resources/JS/boardPage.js?v=44" />"></script>
+	<link href="<c:url value="/resources/CSS/BoardPage.css?v=23" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/boardPage.js?v=59" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -19,20 +20,33 @@
 	<div class="wrapper contents">
 		<!-- 게시글 내용 -->
 		<section>
+			<div id="boardCategory"></div>
+			<div id="boardHead"></div>
+			<hr>
+			<div class="boardIcons">
+				<img class="icon" src="<c:url value="/resources/Image/eye.png" />">&nbsp;<span id="hits"></span>
+				<img class="icon" src="<c:url value="/resources/Image/thumb.png" />">&nbsp;<span id="recommends"></span>
+				<img class="icon" src="<c:url value="/resources/Image/reply.png" />">&nbsp;<span id="comments">0</span>
+			</div>
 			<div id="boardContents"></div>
 			<%
 			MemberDTO dto = (MemberDTO)session.getAttribute("login");
 			if(dto != null){
 			%>
-				<button id="boardLikeBtn"></button>
+				<button id="boardLikeBtn">
+					<img src="<c:url value="/resources/Image/afterLike.png" />">
+				</button>
 			<%
   			}
 			%>
+			<div id="boardBtns"></div>
 		</section>
 
 		<!-- 댓글 -->
 		<section>
-			<div id="boardComments"></div>
+			<h1>댓글</h1>
+			<hr>
+			<table id="boardComments"></table>
 			<div id="paging"></div>
 
 			<%
@@ -46,9 +60,9 @@
 					document.getElementById('loginId').setAttribute('value', loginId);
 					document.getElementById('loginName').setAttribute('value', loginName);
 				</script>
-				<div><%= loginName %></div>
-				<input type="text" id="comment">
-				<button id="insertCommentBtn">댓글 작성</button>
+				<span><%= loginName %></span>
+				<textarea id="comment"></textarea>
+				<button id="insertCommentBtn">작성</button>
 			<%
   			}
 			%>

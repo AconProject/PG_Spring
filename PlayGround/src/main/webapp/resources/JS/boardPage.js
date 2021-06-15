@@ -58,6 +58,16 @@ function checkMemberId(writerId) {
 		return 0;
 }
 
+/* JSP에 새로운 태그 및 컨텐츠 삽입 */
+function insertElement(childTag, parentId, content, attr, attrVal) {
+	let newEle = document.createElement(childTag);
+	if (attr && attrVal)
+		newEle.setAttribute(attr, attrVal);
+	newEle.innerHTML = content;
+	let parentEle = document.getElementById(parentId);
+	parentEle.appendChild(newEle);
+}
+
 /* 모든 요소 삭제 (데이터 갱신 시 기존 데이터 삭제 위함) */
 function removeAllElements(query) {
 	let removeEles = document.querySelectorAll(query);
@@ -135,23 +145,19 @@ function jsonParserForBoardContents(data) {
 	let boardDate = convertDate(data.boardDate);
 	let boardCategory = getBoardCategory(data.boardCategory);
 
-	let html =
-		'카테고리 - ' + boardCategory + '<br>' +
-		'제목 - ' + data.boardName + '<br>' +
-		'작성자 - ' + data.mbrName + '<br>' +
-		'날짜 - ' + boardDate + '<br>' +
-		'조회수 - ' + data.boardCount + '<br>' +
-		'추천수 - <span id="boardLike">' + data.boardLiked + '</span><br>' +
-		'내용 - ' + data.boardContent + '<br>';
+	insertElement('h3', 'boardCategory', '[' + boardCategory + ']');
+	insertElement('h1', 'boardHead', data.boardName);
+	insertElement('h4', 'boardHead', data.mbrName);
+	insertElement('span', 'boardHead', '<small>' + boardDate + '</small>');
+	
+	document.getElementById('hits').innerHTML = data.boardCount;
+	document.getElementById('recommends').innerHTML = data.boardLiked;
 
-	document.getElementById('boardContents').innerHTML = html;
+	document.getElementById('boardContents').innerHTML = data.boardContent;
 
 	if (checkMemberId(data.mbrId)) {
-		html +=
-			'<button id="updateBtn">수정</button>' +
-			'<button id="deleteBtn">삭제</button>';
-
-		document.getElementById('boardContents').innerHTML = html;
+		insertElement('button', 'boardBtns', '수정', 'id', 'updateBtn');
+		insertElement('button', 'boardBtns', '삭제', 'id', 'deleteBtn');
 
 		document.getElementById('updateBtn').addEventListener('click', function () {
 			location.href = '../write/' + boardUrlId;
@@ -165,20 +171,21 @@ function jsonParserForBoardReply(data, start, end) {
 	let conmmentNum = data.length;
 	let replyDate;
 
-	let html = '';
+	document.getElementById('comments').innerHTML= conmmentNum;
+
 	for (let i = start; i < data.length && i < end; i++) {
 
 		replyDate = convertDate(data[i].replyDate);
-		html +=
-			'------------------------------<br>' +
-			'댓글수 - ' + conmmentNum + '<br>' +
-			'닉넴 - ' + data[i].mbrName + '<br>' +
-			'댓글 - <span id="reply' + data[i].replyId + '">' + data[i].replyContent + '</span><br>' +
-			'날짜 - ' + replyDate + '<br>' +
-			'추천수 - <span id="replyLike' + data[i].replyId + '">' + data[i].replyLiked + '</span><br>' +
-			'<input type="hidden" id="isLiked' + data[i].replyId + '" value="' + data[i].visit + '">';
 
-		document.getElementById('boardComments').innerHTML = html;
+		insertElement('tr', 'boardComments', '', 'id', 'comment' + i);
+		insertElement('th', 'comment' + i, data[i].mbrName);
+		insertElement('td', 'comment' + i, '<textarea id="reply' + data[i].replyId +
+			'" readonly>' + data[i].replyContent + '</textarea>');
+		insertElement('td', 'comment' + i, replyDate);
+		insertElement('td', 'comment' + i, '<span id="replyLike' + data[i].replyId + '">' +
+			data[i].replyLiked + '</span>');
+		insertElement('td', 'comment' + i, '<input type="hidden" id="isLiked' + data[i].replyId +
+			'" value="' + data[i].visit + '">');
 
 		let loginId = document.getElementById('loginId').value;
 		if (loginId !== '') {
@@ -187,36 +194,33 @@ function jsonParserForBoardReply(data, start, end) {
 				mesg = '추천';
 			else
 				mesg = '추천 취소';
-			
-			html +=
-				'<button id="replyLikeBtn' + data[i].replyId +
-				'" value="' + data[i].replyId + '">' + mesg + '</button>';
+
+			insertElement('td', 'comment' + i, '<button id="replyLikeBtn' + data[i].replyId +
+				'" value="' + data[i].replyId + '">' + mesg + '</button>');
 		}
 
 		if (checkMemberId(data[i].mbrId)) {
-			html +=
-				'<button id="updateCommentBtn' + i + '" value="' + data[i].replyId + '">수정</button>' +
-				'<button id="deleteCommentBtn' + i + '" value="' + data[i].replyId + '">삭제</button>';
-
-			document.getElementById('boardComments').innerHTML = html;
-
-			let replyLikeBtns = document.querySelectorAll('button[id^="replyLikeBtn"]');
-			let updateCommentBtns = document.querySelectorAll('button[id^="updateCommentBtn"]');
-			let deleteCommentBtns = document.querySelectorAll('button[id^="deleteCommentBtn"]');
-
-			replyLikeBtns.forEach(el => {
-				el.addEventListener('click', replyLikeEvent, false);
-			});
-
-			updateCommentBtns.forEach(el => {
-				el.addEventListener('click', updateComment, false);
-			});
-
-			deleteCommentBtns.forEach(el => {
-				el.addEventListener('click', deleteComment, false);
-			});
+			insertElement('td', 'comment' + i, '<button id="updateCommentBtn' + data[i].replyId +
+				'" value="' + data[i].replyId + '">수정</button>');
+			insertElement('td', 'comment' + i, '<button id="deleteCommentBtn' + i +
+				'" value="' + data[i].replyId + '">삭제</button>');
 		}
 	}
+	let replyLikeBtns = document.querySelectorAll('button[id^="replyLikeBtn"]');
+	let updateCommentBtns = document.querySelectorAll('button[id^="updateCommentBtn"]');
+	let deleteCommentBtns = document.querySelectorAll('button[id^="deleteCommentBtn"]');
+
+	replyLikeBtns.forEach(el => {
+		el.addEventListener('click', replyLikeEvent, false);
+	});
+
+	updateCommentBtns.forEach(el => {
+		el.addEventListener('click', updateComment, false);
+	});
+
+	deleteCommentBtns.forEach(el => {
+		el.addEventListener('click', deleteComment, false);
+	});
 }
 
 /********************************* ajax *************************************/
@@ -266,23 +270,25 @@ function deleteBoard() {
 
 /* 게시글 좋아요 선택 여부 체크 */
 function checkBoardLiked() {
-	fetch('../boardLikeCount/' + boardUrlId)
-		.then(res => res.json())
-		.then(data => {
-			isBoardLiked = data;
-			if (isBoardLiked === 1)
-				document.getElementById('boardLikeBtn').innerHTML = '좋아요 취소';
-			else
-				document.getElementById('boardLikeBtn').innerHTML = '좋아요';
-		})
-		.catch(err => {
-			console.log(err);
-		});
+	// fetch('../boardLikeCount/' + boardUrlId)
+	// 	.then(res => res.json())
+	// 	.then(data => {
+	// 		isBoardLiked = data;
+	// 		if (isBoardLiked === 1)
+	// 			document.getElementById('boardLikeBtn').innerHTML =
+	// 			'<img src="<c:url value="/resources/Image/afterLike.png" />">';
+	// 		else
+	// 			document.getElementById('boardLikeBtn').innerHTML =
+	// 			'<img src="<c:url value="/resources/Image/beforeLike.png" />">';
+	// 	})
+	// 	.catch(err => {
+	// 		console.log(err);
+	// 	});
 }
 
 /* 게시글 좋아요 클릭 */
 function boardLikeEvent() {
-	let boardLikeNum = document.getElementById('boardLike').innerText;
+	let boardLikeNum = document.getElementById('comments').innerText;
 
 	// 좋아요 누른적 없음 - 추가
 	if (isBoardLiked === 0) {
@@ -298,9 +304,10 @@ function boardLikeEvent() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				document.getElementById('boardLike').innerText = data;
+				document.getElementById('comments').innerText = data;
 				isBoardLiked = 1;
-				document.getElementById('boardLikeBtn').innerHTML = '좋아요 취소';
+				document.getElementById('boardLikeBtn').innerHTML =
+					'<img src="<c:url value="/resources/Image/afterLike.png" />">';
 			})
 			.catch(err => {
 				console.log(err);
@@ -319,9 +326,10 @@ function boardLikeEvent() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				document.getElementById('boardLike').innerText = data;
+				document.getElementById('comments').innerText = data;
 				isBoardLiked = 0;
-				document.getElementById('boardLikeBtn').innerHTML = '좋아요';
+				document.getElementById('boardLikeBtn').innerHTML =
+					'<img src="<c:url value="/resources/Image/beforeLike.png" />">';
 			})
 			.catch(err => {
 				console.log(err);
@@ -333,7 +341,8 @@ function boardLikeEvent() {
 function insertComment() {
 	let memberId = document.getElementById('loginId').value;
 	let memberName = document.getElementById('loginName').value;
-	let comment = document.getElementById('comment').value;
+	let commentTextArea = document.getElementById('comment');
+	let comment = commentTextArea.value;
 
 	fetch('../../reply/replies', {
 		method: 'POST',
@@ -352,6 +361,7 @@ function insertComment() {
 			if (data === -1) {
 				alert('댓글 업로드 실패');
 			} else {
+				removeAllElements('#boardComments *');
 				getBoardReplies();
 			}
 		})
@@ -359,13 +369,27 @@ function insertComment() {
 			console.log(err);
 		});
 
-	document.getElementById('comment').value = '';
+	commentTextArea.value = '';
 }
 
 /* 댓글 수정 */
-function updateComment(event) {
-	let eventId = event.target.value;
-	let comment = document.getElementById('comment').value;
+function updateComment() {
+	let eventId = this.value;
+	let replyTextArea = document.getElementById('reply' + eventId);
+	
+	replyTextArea.removeAttribute('readonly');
+	replyTextArea.style.border = '1px solid black';
+	replyTextArea.focus();
+
+	this.innerHTML = '완료';
+	this.removeEventListener('click', updateComment);
+	this.addEventListener('click', updateCommentSubmit, false);
+}
+
+function updateCommentSubmit() {
+	let eventId = this.value;
+	let replyTextArea = document.getElementById('reply' + eventId);
+	let comment = replyTextArea.value;
 
 	fetch('../../reply/replies', {
 		method: 'PATCH',
@@ -382,17 +406,24 @@ function updateComment(event) {
 			if (data === -1) {
 				alert('댓글 수정 실패');
 			} else {
-				document.getElementById('reply' + eventId).innerHTML = comment;
+				document.getElementById('reply' + eventId).value = comment;
 			}
 		})
 		.catch(err => {
 			console.log(err);
 		});
+	
+	replyTextArea.setAttribute('readonly', 'readonly');
+	replyTextArea.style.border = 'none';
+
+	this.innerHTML = '수정';
+	this.removeEventListener('click', updateCommentSubmit);
+	this.addEventListener('click', updateComment, false);
 }
 
 /* 댓글 삭제 */
-function deleteComment(event) {
-	let replyId = event.target.value;
+function deleteComment() {
+	let replyId = this.value;
 
 	fetch('../../reply/replies/' + replyId, {
 		method: 'DELETE',
@@ -402,6 +433,7 @@ function deleteComment(event) {
 			if (data === -1) {
 				alert('댓글 삭제 실패');
 			} else {
+				removeAllElements('#boardComments *');
 				getBoardReplies();
 			}
 		})
@@ -411,8 +443,8 @@ function deleteComment(event) {
 }
 
 /* 댓글 좋아요 클릭 */
-function replyLikeEvent(event) {
-	let eventId = event.target.value;
+function replyLikeEvent() {
+	let eventId = this.value;
 	let isReplyLiked = document.getElementById('isLiked' + eventId).value;
 	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
 

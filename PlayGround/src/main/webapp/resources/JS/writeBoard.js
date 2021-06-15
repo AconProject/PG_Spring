@@ -38,7 +38,7 @@ function uploadBoard() {
 /*  수정 전 게시글 데이터 파싱 후 출력 */
 function jsonParserForBoardContents(data) {
 	document.getElementById('boardName').setAttribute('value', data.boardName);
-	document.getElementById('boardContent').setAttribute('value', data.boardContent);
+	document.getElementById('boardContent').innerHTML = data.boardContent;
 
 	let selectedCategory =
 		document.querySelector('option[value = "' + data.boardCategory + '"]');
