@@ -132,6 +132,8 @@
 			}
 		});
 	}
+    
+    
 </script>
 
 <%
@@ -146,18 +148,8 @@
 		session.removeAttribute("mesg");
 	  } 
 	
-	String reviewError = (String)request.getAttribute("reviewError");
-	System.out.println("reviewError" + reviewError);
-	if(reviewError == null) {
 %>
-	<script>
-     alert('<%= reviewError %>');
-   </script>
 
-<%
-	}
-	request.removeAttribute("reviewError");
-%>
 <script>
 	var game = '${topPageGame}';
 	console.log(game);
@@ -328,6 +320,7 @@
 							<td class="review"><p id="<%= update %>" ><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
 							<td class="thumb"><img class="icon" src="<c:url value="/resources/Image/thumb.png" />" alt="추천수" data-login="<%= login.getMbrId()%>" data-num="<%= id %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>"><span id="<%=id%>"><%= review.getReviewLiked() %></span></td>
+							
 							<%
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
@@ -336,9 +329,13 @@
 							<td><button type="submit" class="delBtn" id="delete" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">삭제</button></td>
 							
 							<%
+								} else {
+							%>
+							<td><button type="submit" class="upBtn" id="update2" onclick="reviewUpdate();" data-reviewContent="<%= review.getReviewContent() %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">수정</button></td>
+							<td><button type="submit" class="delBtn" id="delete2" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">삭제</button></td>
+							<%
 								}
 							%>
-								
 						</tr>
 						</table>
 						
@@ -354,7 +351,7 @@
 						<table class="midTable">
 						<tr>
 							<td class="mbrName" id="mbrName"><%= review.getMbrName() %></td>
-							<td class="review"><p id="gameReplyContent"><%= review.getReviewContent() %></p></td>
+							<td class="review"><p id="gameReviewContent"><%= review.getReviewContent() %></p></td>
 							<td class="meter"><meter min="0" max="100" value="<%= review.getReviewScore() %>"></meter><span id="gameScore"><%= review.getReviewScore() %></span></td>
 							<td class="thumb"><img class="icon" src="<c:url value="/resources/Image/thumb.png" />" alt="추천수"><span id="gameReplyRecommend"><%= review.getReviewLiked() %></span></td>
 						</tr>
@@ -385,12 +382,12 @@
 								<tr>
 									<td rowspan="3" class="mbrName" id="mbrName2"></td>
 									<td rowspan="3" class="review">
-									<textarea name="reviewContent" id="gameReplyContent" cols="80" rows="5" placeholder=" 내용을 입력해주세요"></textarea>
+									<textarea name="reviewContent" id="reviewContent" cols="80" rows="5" placeholder="내용을 입력해주세요"></textarea>
 									</td>
 									<td class="newmeter">0 <input type="range" name="reviewScore" id="newmeter" min="0" max="100" onclick="range()"> 100
 									</td>
 								<tr>
-									<td><span id="reviewScore">0</span></td>
+									<td><span id="reviewScore">50</span></td>
 								</tr>
 								<tr>
 									<td><button type="submit" id="submit">올리기</button></td>

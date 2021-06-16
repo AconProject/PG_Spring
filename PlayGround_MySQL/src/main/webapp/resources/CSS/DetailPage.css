@@ -138,8 +138,10 @@ meter{
 	margin:10px 5px;
 	width: 25px;
 }
-
-#newreview {
+#update2, #delete2 {
+	visibility:hidden;
+}
+#reviewContent {
 	border-radius: 5px;
 	padding: 10px;
 	margin: 5px;
@@ -150,14 +152,17 @@ meter{
 }
 #newmeter{
 	margin:20px;
+	margin-bottom:0px;
 }
 #reviewScore {
+	margin-bottom: 10px;
 	margin:0px 20px;
 	font-size: 20px;
 }
 button {
 	margin-bottom: 20px;
-	width: 90px;
+	margin-right:7px;
+	width: 70px;
 	height:30px;
 	background:#FFA500	;
 	color:#fff;
@@ -176,7 +181,7 @@ button {
 }
 .game{
 	width:200px;
-	padding: 20px 0px 0px 20px;
+	padding: 10px 0px 0px 0px;
 }
 .title{
 	padding-bottom: 15px;
