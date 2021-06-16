@@ -16,8 +16,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class RateDTO {
 	String gameNo;
-	Double gameScore;
-	int rateCount;
+	Double gameScore; 
+	int rateCount; 
 	
 
 	public RateDTO() {

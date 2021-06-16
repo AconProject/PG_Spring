@@ -31,11 +31,29 @@ img {
 ------------------------------- */
 
 .main-contents {
+  clear: both;
   margin: 100px auto;
 }
 
 .gamesBtn {
   background: rgba(171, 219, 252, 0.2);
+}
+
+.searchBox {
+  float: right;
+  margin-top: 20px;
+  display: flex;
+}
+
+.searchBox img {
+  width: 20px;
+}
+
+#searchText {
+  width: 200px;
+  height: 30px;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
 }
 
 .main-contents .container {

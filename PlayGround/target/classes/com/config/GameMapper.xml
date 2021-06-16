@@ -5,14 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="GameMapper">
 
 	<select id="newGameListSelect" resultType="GameDTO">
-		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
+		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
 		FROM game
 		WHERE rownum &lt; 11
 		ORDER BY gameReleasedDate DESC
 	</select>
 	
 	<select id="saleGameListSelect" resultType="GameDTO">
-		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
+		SELECT gameNo, gameName, gameImage, gamePrice, gameContent, gameGenre, '('||to_char(gameReleasedDate,'yyyy')||')' as gameReleasedDate, gameCategory
 		FROM game
 		WHERE rownum &lt; 11
 		AND discountRate != 0
