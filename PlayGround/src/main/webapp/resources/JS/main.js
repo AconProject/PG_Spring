@@ -15,6 +15,9 @@ window.onload = function () {
 	document.getElementById('mostViewPost').addEventListener('click', getMostViewPost, false);
 	document.getElementById('recommendedQnA').addEventListener('click', getRecommendedQnAEvent, false);
 	document.getElementById('mostViewQnA').addEventListener('click', getMostViewQnA, false);
+	document.getElementById('search').addEventListener('click', function(){
+		//location.href = 'write/insert';
+	}, false);
 };
 
 /* 모든 요소 삭제 (데이터 갱신 시 기존 데이터 삭제 위함) */

@@ -19,6 +19,11 @@
     <div class="wrapper">
 
 		<!-- 메인 상단 -->
+		<div class="searchBox">
+			<input type="text" id="searchText" placeholder="게임검색">
+			<button id="search"><img src="<c:url value="/resources/Image/search.png" />" alt="검색"></button>
+		</div>
+
         <section class="main-contents">
 			<button id="newGame" class="gamesBtn">최신게임</button>
 			<button id="recommendedGame" class="gamesBtn">추천게임</button>
