@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+/* 공통 부분
+------------------------------- */
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: "나눔고딕", NanumGothic, "맑은고딕", MalgunGothic, sans-serif;
+  line-height: 1.7;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+img {
+  max-width: 100%;
+}
+
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 4%;
+}
+
+/* BoardPage
+------------------------------- */
+
+.contents {
+  margin: 150px auto;
+}
+
+#boardHead {
+  display: table;
+}
+
+#boardHead * {
+  display: table-cell;
+}
+
+#boardHead h1 {
+  font-size: 30px;
+  width: 800px;
+}
+
+#boardHead h3 {
+  width: 100px;
+}
+
+hr {
+  background-color: #34314c;
+  height: 10px;
+}
+
+.boardIcons {
+  float: right;
+  margin-top: 15px;
+}
+
+.icon {
+  width: 30px;
+}
+
+#boardContents {
+  clear: both;
+  margin-top: 150px;
+  margin-bottom: 200px;
+}
+
+#updateBtn,
+#deleteBtn {
+  float: right;
+  width: 80px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 10%;
+  border: none;
+  font-size: 1.1rem;
+}
+
+#updateBtn {
+  background-color: #34314c;
+  color: white;
+}
+
+#deleteBtn {
+  background-color: #ff7473;
+  color: black;
+}
+
+h1 {
+  clear: both;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  line-height: 4;
+  border-bottom: 1px solid #34314c;
+}
+
+#paging {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#paging a {
+  display: inline-block;
+  width: 30px;
+  border-radius: 10%;
+  font-size: 1.2rem;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea[id^="reply"] {
+  border: none;
+  text-align: center;
+  width: 400px;
+  height: 40px;
+}
+
+.img {
+  text-align: center;
+}
+
+#boardLikeBtn {
+  width: 70px;
+}
+
+#boardLikeBtn:hover {
+  cursor: pointer;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button[id^="updateCommentBtn"],
+button[id^="deleteCommentBtn"] {
+  width: 50px;
+  height: 30px;
+  border-radius: 10%;
+  border: none;
+}
+
+img[id^="replyLikeBtn"] {
+	width: 30px;
+}
+
+img[id^="replyLikeBtn"]:hover {
+	cursor: pointer;
+}
+
+button[id^="updateCommentBtn"] {
+  background-color: #34314c;
+  color: white;
+}
+
+button[id^="deleteCommentBtn"] {
+  background-color: #ff7473;
+  color: black;
+}
