@@ -7,11 +7,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${!empty reviewError }">
-	<script>
-		alert('${reviewError}');
-	</script>
-</c:if>
 
 <!DOCTYPE html>
 <html>
@@ -151,9 +146,18 @@
 		session.removeAttribute("mesg");
 	  } 
 	
+	String reviewError = (String)request.getAttribute("reviewError");
+	System.out.println("reviewError" + reviewError);
+	if(reviewError == null) {
 %>
+	<script>
+     alert('<%= reviewError %>');
+   </script>
 
-
+<%
+	}
+	request.removeAttribute("reviewError");
+%>
 <script>
 	var game = '${topPageGame}';
 	console.log(game);
@@ -233,7 +237,7 @@
 		var login = '${login}';
 		console.log(login);
 		var mbrName = '${login.mbrName}';
-		console.log(mbrName);
+		console.log("중단부분 닉네임: " , mbrName);
 		var mbrId = '${login.mbrId}';
 		console.log(mbrId);
 	
@@ -344,6 +348,7 @@
 							for (int i = (p - 1) * 4; i < (p * perPage); i++) {
 								if (i == totalPage) break;
 								ReviewDTO review = rdto.get(i);
+								System.out.println("리뷰닉네임: " + review.getMbrName());
 					%>
 						
 						<table class="midTable">
@@ -374,7 +379,7 @@
 			    			<form action="../../loginCheck/reviewInsert">
 							<input type="hidden" name="gameNo" value="${gameNo}">
 							<input type="hidden" name="mbrId" value="${mbrId}">
-							<input type="hidden" name="mbrName" value="${mbrName}">
+							<input type="hidden" name="mbrName" value="${login.mbrName}">
 							
 							<table class="reviewTable">
 								<tr>
