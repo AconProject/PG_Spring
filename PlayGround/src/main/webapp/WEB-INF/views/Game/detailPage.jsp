@@ -168,6 +168,11 @@
 	var gameReleasedDate = '${topPageGame.gameReleasedDate}';
 	var gameScore = '${topPageScore.gameScore}';
 	console.log('gameScore: ' , gameScore);
+	var rateCount = '${topPageScore.rateCount}';
+	console.log('rateCount: ', rateCount);
+	// 게임평균점수
+	var avgScore =(gameScore / rateCount).toFixed(1);
+	
 	var discountRate = '${topPageGame.discountRate}';
 	var discountPrice = gamePrice - (gamePrice * (discountRate/100));
 	console.log(discountPrice);
@@ -218,7 +223,7 @@
 		if(gameScore === 0 && gameScore === 0.0){
 			gameScore = 0;
 		} 
-		document.getElementById("gameScore").innerHTML = gameScore;
+		document.getElementById("gameScore").innerHTML = avgScore;
 		
 		
 		// 중단부분 - (댓글삽입부분)
