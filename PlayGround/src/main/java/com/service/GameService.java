@@ -34,8 +34,8 @@ public class GameService {
 		return dto;
 	}
 
-	public List<GameDTO> relatedGameList(String gameCategory) {
-		return dao.relatedGameList(gameCategory);
+	public List<GameDTO> relatedGameList(HashMap <String, String> map) {
+		return dao.relatedGameList(map);
 	}
 
 	public List<GameDTO> gameSearch(String search) {
