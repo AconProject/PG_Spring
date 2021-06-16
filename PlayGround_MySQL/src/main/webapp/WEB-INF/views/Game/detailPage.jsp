@@ -422,7 +422,7 @@
 							String gamename = relate.getGameName();
 							String gameImage = relate.getGameImage();
 					%>
-							<td class="title"><a href="./<%= gameNum %>" class="gametitle" id="title1"><%= gamename %></a></td>
+							<td class="title" width="20%"><a href="./<%= gameNum %>" class="gametitle" id="title1"><%= gamename %></a></td>
 					<%
 						}
 					%> 
