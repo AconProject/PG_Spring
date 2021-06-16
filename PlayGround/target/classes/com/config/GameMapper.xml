@@ -75,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE game.gameNo = rate.gameNo
 		AND game.gameNo != #{gameNo}
 		AND game.gameCategory = #{gameCategory}
+		AND rownum &lt; 6
 		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
 	</select>
 	
