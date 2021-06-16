@@ -1,10 +1,7 @@
 package com.service;
 
 import java.util.HashMap;
-<<<<<<< HEAD
 import java.util.List;
-=======
->>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +47,6 @@ public class MemberService {
 		return dto;
 	}// end idCheck
 
-<<<<<<< HEAD
 	public List<MemberDTO> email_mypage(String mbrEmail) {
 		List<MemberDTO> list = dao.email_mypage(mbrEmail);
 		return list;
@@ -59,9 +55,6 @@ public class MemberService {
 		List<MemberDTO> list= dao.name_mypage(mbrName);
 		return list;
 	}
-=======
-
->>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 	public int memberDelete(String mbrId) {
 		int result = dao.memberDelete(mbrId);
 		return result;
@@ -83,10 +76,7 @@ public class MemberService {
 
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 	
 }// end class

@@ -55,7 +55,7 @@ public class ReviewController {
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
 		System.out.println("nameCheck: "+nameCheck);
-
+    
 		if(nameCheck==0) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
@@ -163,5 +163,3 @@ public class ReviewController {
 
 		}
 	}
-
-
