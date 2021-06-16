@@ -33,6 +33,10 @@ public class LoginController {
 	public String login(@RequestParam HashMap<String, String> map, Model model, HttpSession session) {
 		System.out.println("Map의 값입니다: " + map);
 		MemberDTO dbDTO = service.login(map.get("mbrId"));
+		if(dbDTO==null) {
+			model.addAttribute("mesg", "ID 혹은 PW를 확인하여 주십시오. "); 
+			return "LoginForm";
+		}
 		String dbPassword = dbDTO.getMbrPw();
 		System.out.println(dbPassword);
 		boolean pwdEqual = pwdEncoder.matches(map.get("mbrPw"), dbPassword);
