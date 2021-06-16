@@ -5,19 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="MemberMapper">
 	<!-- 최초 회원가입 -->
 	<insert id="memberAdd" parameterType="MemberDTO">
-		insert into member (mbrId,mbrPw,mbrName,mbrEmail,mbrGenre,mbrRegdate)
-		values(#{mbrId},#{mbrPw},#{mbrName},#{mbrEmail},#{mbrGenre},SYSDATE)
+		INSERT INTO member (mbrId,mbrPw,mbrName,mbrEmail,mbrGenre,mbrRegdate)
+		VALUES(#{mbrId},#{mbrPw},#{mbrName},#{mbrEmail},#{mbrGenre},NOW())
 	</insert>
 
 	<!-- 최초 회원가입 시 태그 설정 -->
 	<!-- 같은 화면에서 처리 시 위 insert문에 합치기 -->
 	<update id="memberGenreAdd" parameterType="MemberDTO">
-		update member
-		set mbrGenre =
+		UPDATE member
+		SET mbrGenre =
 		<foreach collection="mbrGenre" item="mbrGenre" separator=",">
 			#{mbrGenre}
 		</foreach>
-		where mbrId = #{mbrId}
+		WHERE mbrId = #{mbrId}
 	</update>
 
 	<!-- 마이페이지 - 정보 -->

@@ -3,51 +3,49 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="RateMapper">
-	
+
 	<select id="rateRecommendSelect" resultType="double">
 		SELECT rate.gameScore
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
-		AND rownum &lt; 6
 		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+		LIMIT 5
 	</select>
-	
+
 	<select id="rateTagSelect" resultType="double">
 		SELECT rate.gameScore
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
-		AND REGEXP_LIKE
-		  <foreach collection="list" item="item"
-	        open="(game.gameGenre, (select genre.gameCategory from genre where genreId = "
-	        close="))"
-	        separator=")||'|'||(select genre.gameCategory from genre where genreId = ">
-            #{item}
-        </foreach>
-		AND rownum &lt; 6
+		AND game.gameGenre REGEXP(
+		SELECT DISTINCT CONCAT(
+		<foreach collection="list" item="item" open="(SELECT genre.gameCategory FROM genre WHERE genreId = " close="))" separator="),'|',(SELECT genre.gameCategory FROM genre WHERE genreId = ">
+			#{item}
+		</foreach>
+		FROM genre)
 		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
+		LIMIT 5
 	</select>
 
-	
-	
-	<select id="getGameScore"  resultType="RateDTO">
+
+	<select id="getGameScore" resultType="RateDTO">
 		SELECT gameNo,gameScore,rateCount
 		FROM rate
 		WHERE gameNo = #{gameNo}
 	</select>
 
-	
-	
+
+
 	<insert id="scoreInsert" parameterType="rateDTO">
 		INSERT INTO rate (gameNo,gameScore,rateCount)
 		VALUES (#{gameNo},#{gameScore},#{rateCount})
 	</insert>
-	
+
 	<update id="scoreUpdate" parameterType="rateDTO">
 		UPDATE rate
 		SET gameScore=gameScore + #{gameScore},
-			rateCount=rateCount	+	1
+		rateCount=rateCount + 1
 		WHERE gameNo=#{gameNo}
-		
+
 	</update>
-	
+
 </mapper>
