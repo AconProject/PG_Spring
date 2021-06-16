@@ -8,7 +8,7 @@
 <title>MainPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-	<link href="<c:url value="/resources/CSS/Main.css?v10" />" rel="stylesheet">
+	<link href="<c:url value="/resources/CSS/Main.css?v=11" />" rel="stylesheet">
 	<script src="<c:url value="/resources/JS/main.js?v=6" />"></script>
 </head>
 <body>
@@ -52,12 +52,7 @@
 					<table class="midTable" id="midTable"></table>
 				</div>
 				<div>
-					<div class="flex">
-						<input type="text" id="tagSearch" placeholder="태그검색">
-						<button id="tagSearchBtn">
-							<img src="<c:url value="/resources/Image/search.png" />" alt="검색">
-						</button>
-					</div>
+					<input type="text" id="tagSearch" placeholder="태그검색">
 					<div class="tagScroll" id="tagScroll"></div>
 				</div>
 			</div>
