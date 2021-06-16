@@ -8,8 +8,13 @@
 <meta charset="UTF-8">
 <title>BoardPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
 	<link href="<c:url value="/resources/CSS/BoardPage.css?v=49" />" rel="stylesheet">
 	<script src="<c:url value="/resources/JS/boardPage.js?v=75" />"></script>
+=======
+	<link href="<c:url value="/resources/CSS/BoardPage.css?v=41" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/boardPage.js?v=73" />"></script>
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
@@ -58,11 +63,17 @@
 					document.getElementById('loginId').setAttribute('value', loginId);
 					document.getElementById('loginName').setAttribute('value', loginName);
 				</script>
+<<<<<<< HEAD
 				<div class="replyWrite">
 					<span class="userName"><%= loginName %></span>
 					<textarea id="comment"></textarea>
 					<button id="insertCommentBtn">작성</button>
 				</div>
+=======
+				<span><%= loginName %></span>
+				<textarea id="comment"></textarea>
+				<button id="insertCommentBtn">작성</button>
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 			<%
   			}
 			%>
