@@ -16,7 +16,8 @@ window.onload = function () {
 	document.getElementById('recommendedQnA').addEventListener('click', getRecommendedQnAEvent, false);
 	document.getElementById('mostViewQnA').addEventListener('click', getMostViewQnA, false);
 	document.getElementById('search').addEventListener('click', function () {
-		//location.href = 'write/insert';
+		let searchText = document.getElementById('searchText').value;
+		location.href = '/game/search/' + searchText;
 	}, false);
 };
 

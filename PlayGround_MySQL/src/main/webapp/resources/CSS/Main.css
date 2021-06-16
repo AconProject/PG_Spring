@@ -45,7 +45,7 @@ img {
   display: flex;
 }
 
-.searchBox img {
+button img {
   width: 20px;
 }
 
@@ -140,9 +140,21 @@ button {
   vertical-align: middle;
 }
 
+.flex {
+	display: flex;
+}
+
+#tagSearch {
+	width: 150px;
+	height: 30px;
+	background-color: white;
+	border: 2px solid lightgrey;
+	border-radius: 10px;
+}
+
 .tagScroll {
   width: 180px;
-  height: 800px;
+  height: 750px;
   overflow: scroll;
 }
 
