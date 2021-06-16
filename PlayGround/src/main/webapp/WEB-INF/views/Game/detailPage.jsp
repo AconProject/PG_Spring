@@ -155,7 +155,6 @@
 
 
 <script>
-	console.log('${topPageGame}');
 	var game = '${topPageGame}';
 	console.log(game);
 	
@@ -191,9 +190,9 @@
 		// 상단부분(게임설명)
 		if(discountRate != 0.0) {
 		// 게임이름
-		document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " ) &nbsp;&nbsp;  <span style='font-size:17px; color:red; text-decoration:line-through;'>\\" + gamePrice.toLocaleString() + "</span> <span style='font-size:17px; color:red;'>("+ discountRate + "% ) → \\" + discountPrice.toLocaleString() +"</span>";
+		document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " ) &nbsp;&nbsp;  <span style='font-size:17px; color:red; text-decoration:line-through;'>\\" + gamePrice.toLocaleString('en') + "</span> <span style='font-size:17px; color:red;'>("+ discountRate + "% ) → \\" + discountPrice.toLocaleString() +"</span>";
 		} else {
-			document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )  <span style='font-size:17px; color:yellow;'>&nbsp;&nbsp; \\" + gamePrice.toLocaleString();
+			document.getElementById("gameName").innerHTML = gameName + "   ( " + date + " )  <span style='font-size:17px; color:yellow;'>&nbsp;&nbsp; \\" + gamePrice.toLocaleString('en');
 		}
 		if(gamePrice == 0){
 			gamePrice = '무료';
