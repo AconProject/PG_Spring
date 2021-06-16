@@ -5,36 +5,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="MemberMapper">
 	<!-- 최초 회원가입 -->
 	<insert id="memberAdd" parameterType="MemberDTO">
-		INSERT INTO member (mbrId,mbrPw,mbrName,mbrEmail,mbrGenre,mbrRegdate)
-		VALUES(#{mbrId},#{mbrPw},#{mbrName},#{mbrEmail},#{mbrGenre},NOW())
+		insert into member (mbrId,mbrPw,mbrName,mbrEmail,mbrGenre,mbrRegdate)
+		values(#{mbrId},#{mbrPw},#{mbrName},#{mbrEmail},#{mbrGenre},SYSDATE)
 	</insert>
 
 	<!-- 최초 회원가입 시 태그 설정 -->
 	<!-- 같은 화면에서 처리 시 위 insert문에 합치기 -->
 	<update id="memberGenreAdd" parameterType="MemberDTO">
-		UPDATE member
-		SET mbrGenre =
+		update member
+		set mbrGenre =
 		<foreach collection="mbrGenre" item="mbrGenre" separator=",">
 			#{mbrGenre}
 		</foreach>
-		WHERE mbrId = #{mbrId}
+		where mbrId = #{mbrId}
 	</update>
 
 	<!-- 마이페이지 - 정보 -->
 	<select id="mypage" parameterType="string" resultType="MemberDTO">
-		SELECT *
-		FROM member
-		WHERE mbrId = #{mbrId}
+		select *
+		from member
+		where mbrId = #{mbrId}
+	</select>
+	<!-- 마이페이지 - 정보 -->
+	<select id="email_mypage" parameterType="string" resultType="MemberDTO">
+		select *
+		from member
+		where mbrEmail = #{mbrEmail}
+	</select>
+	<!-- 마이페이지 - 정보 -->
+	<select id="name_mypage" parameterType="string" resultType="MemberDTO">
+		select *
+		from member
+		where mbrName = #{mbrName}
 	</select>
 
 	<!-- 마이페이지 - 정보수정 -->
 	<update id="memberUpdate" parameterType="MemberDTO">
-		UPDATE member
-		SET	mbrPw = #{mbrPw},
-			mbrName = #{mbrName},
-			mbrEmail = #{mbrEmail},
-			mbrGenre = #{mbrGenre}
-		WHERE mbrId = #{mbrId}
+		update member
+		set
+		mbrPw = #{mbrPw},
+		mbrName = #{mbrName},
+		mbrEmail = #{mbrEmail},
+		mbrGenre = #{mbrGenre}
+		where mbrId = #{mbrId}
 	</update>
 
 	<!--회원 정보 삭제 -->
@@ -46,36 +59,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 아이디 찾기 -->
 	<select id="idSearch" resultType="string" parameterType="hashmap">
-		SELECT mbrId
-		FROM member
-		WHERE mbrName=#{mbrName} and mbrEmail=#{mbrEmail}
+		select mbrId
+		from member
+		where mbrName=#{mbrName} and mbrEmail=#{mbrEmail}
 	</select>
 
 	<!-- 비밀번호 찾기 -->
 	<select id="pwSearch" resultType="string" parameterType="hashmap" >
-		SELECT mbrPw
-		FROM member
-		WHERE mbrId=#{mbrId} and mbrEmail=#{mbrEmail}
+		select mbrPw
+		from member
+		where mbrId=#{mbrId} and mbrEmail=#{mbrEmail}
 	</select>
 
 	<!-- 아이디 존재여부 확인 -->
 	<select id="idCheck" parameterType="string" resultType="int">
-		SELECT COUNT(*)
-		FROM member
-		WHERE mbrId = #{mbrId}
+		select count(*)
+		from member
+		where mbrId = #{mbrId}
 	</select>
 
 	<!-- 로그인, 데이터 가져오기 -->
 	<select id="login" parameterType="hashmap" resultType="MemberDTO">
-		SELECT *
-		FROM member
-		WHERE mbrId = #{mbrId}
+		select *
+		from member
+		where mbrId = #{mbrId}
 	</select>
 	
 	<!--강제 비밀번호 변경  -->
 	<update id="changeMbrPw" parameterType="hashmap">
 		UPDATE member
 		SET mbrPw = #{mbrPw}
-		WHERE mbrId=#{mbrId} and mbrEmail=#{mbrEmail}
+		WHERE  mbrId=#{mbrId} and mbrEmail=#{mbrEmail}
 	</update>
 </mapper>
