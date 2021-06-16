@@ -14,25 +14,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!--댓글:삽입 -->
 	<insert id="reviewInsert" parameterType="ReviewDTO">
-		Insert
-		INTO review (reviewId, mbrId, mbrName, gameNo, reviewContent, reviewLiked, reviewScore, reviewDate)
-		VALUES (reviewseq.nextval,#{mbrId},#{mbrName},#{gameNo},#{reviewContent},0,#{reviewScore},SYSDATE)
+		INSERT INTO review (mbrId, mbrName, gameNo, reviewContent, reviewLiked, reviewScore, reviewDate)
+		VALUES (#{mbrId},#{mbrName},#{gameNo},#{reviewContent},0,#{reviewScore},NOW())
+
 	</insert>
 
 	<!--댓글:수정 -->
 	<update id="reviewUpdate" parameterType="hashmap">
 		UPDATE review
-		SET reviewContent = #{reviewContent} 
+		SET reviewContent = #{reviewContent}
 		WHERE reviewId=#{reviewId}
 	</update>
-	
+
 	<!--댓글:수정한 댓글content 찾기 -->
 	<select id="findContent" parameterType="int" resultType="String">
 		SELECT reviewContent
 		From review
 		Where reviewId = #{reviewId}
 	</select>
-	
+
 	<!--댓글:삭제 -->
 	<delete id="reviewDelete" parameterType="int">
 		DELETE
