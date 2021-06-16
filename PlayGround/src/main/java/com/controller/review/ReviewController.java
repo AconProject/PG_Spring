@@ -54,7 +54,7 @@ public class ReviewController {
 		if(nameCheck==1) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
-		}else {
+		}else if(nameCheck==0){
 			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
 			System.out.println("댓글삽입 실패: " + reviewResult);
 
