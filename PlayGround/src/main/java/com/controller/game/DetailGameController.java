@@ -57,7 +57,10 @@ public class DetailGameController {
 		
 		//3. 하단: 관련게임
 		String gameCategory = gameDTO.getGameCategory();
-		List<GameDTO> relatedGameList = gameService.relatedGameList(gameCategory); 
+		HashMap <String, String> map = new HashMap<String, String>();
+		map.put("gameCategory", gameCategory);
+		map.put("gameNo", gameNo);
+		List<GameDTO> relatedGameList = gameService.relatedGameList(map); 
 		System.out.println("관련게임: "+relatedGameList);
 		model.addObject("botPage",relatedGameList);
 		
