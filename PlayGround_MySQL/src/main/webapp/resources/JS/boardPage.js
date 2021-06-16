@@ -149,7 +149,7 @@ function jsonParserForBoardContents(data) {
 	insertElement('h1', 'boardHead', data.boardName);
 	insertElement('h3', 'boardHead', data.mbrName);
 	insertElement('span', 'boardHead', boardDate);
-	
+
 	document.getElementById('hits').innerHTML = data.boardCount;
 	document.getElementById('recommends').innerHTML = data.boardLiked;
 
@@ -171,7 +171,7 @@ function jsonParserForBoardReply(data, start, end) {
 	let conmmentNum = data.length;
 	let replyDate;
 
-	document.getElementById('comments').innerHTML= conmmentNum;
+	document.getElementById('comments').innerHTML = conmmentNum;
 
 	for (let i = start; i < data.length && i < end; i++) {
 
@@ -277,7 +277,7 @@ function checkBoardLiked() {
 			let boardLikeBtn = document.getElementById('boardLikeBtn');
 			if (isBoardLiked === 1)
 				boardLikeBtn.setAttribute('src', '../../resources/Image/thumb.png');
-			else	
+			else
 				boardLikeBtn.setAttribute('src', '../../resources/Image/emptyThumb.png');
 		})
 		.catch(err => {
@@ -375,7 +375,7 @@ function insertComment() {
 function updateComment() {
 	let eventId = this.value;
 	let replyTextArea = document.getElementById('reply' + eventId);
-	
+
 	replyTextArea.removeAttribute('readonly');
 	replyTextArea.style.border = '1px solid black';
 	replyTextArea.style.textAlign = 'left';
@@ -412,7 +412,7 @@ function updateCommentSubmit() {
 		.catch(err => {
 			console.log(err);
 		});
-	
+
 	replyTextArea.setAttribute('readonly', 'readonly');
 	replyTextArea.style.border = 'none';
 	replyTextArea.style.textAlign = 'center';
@@ -444,8 +444,8 @@ function deleteComment() {
 }
 
 /* 댓글 좋아요 클릭 */
-/*function replyLikeEvent() {
-	let eventId = this.id.slice(12, );
+function replyLikeEvent() {
+	let eventId = this.id.slice(12,);
 	let isReplyLiked = document.getElementById('isLiked' + eventId).value;
 	let replyLikeNum = document.getElementById('replyLike' + eventId).innerText;
 
@@ -496,4 +496,4 @@ function deleteComment() {
 				console.log(err);
 			});
 	}
-}*/
+}
