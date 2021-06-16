@@ -7,6 +7,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:if test="${!empty reviewError }">
+	<script>
+		alert('${reviewError}');
+	</script>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,28 +37,6 @@
 	
     $(function() {
 		
-    	// 수정버튼 누르기
- 	   $(".upBtn").on("click", function() {
- 		   console.log("클릭했다!");
- 		   var reviewId = $(this).attr("data-reviewId");
- 		   var reviewContent = $(this).attr("data-reviewContent");
- 		   console.log(reviewId + "\t" + reviewContent);
- 		   
- 		   var update = "#gameReviewContent" + reviewId;
- 		   console.log("u: ", update);
- 		   
- 		   var up = $(".upBtn");
- 		   console.log("up: ", up.id);
- 		   $(update).contents().unwrap().wrap( '<textarea class="review" id="reviewUpdate""></textarea>' );
- 		   $("#update").replaceWith('<button id="submit" onclick="submit();" data-reviewId="'+reviewId+'">확인</button>');
- 		   
- 		   console.log($("#reviewUpdate").id);
- 	  	}); // end upBtn 
- 	  
-	   $("#submit").on("click", function() {
-		console.log('클릭클릭클릭');
-	})
-	   
 	   // 삭제버튼 누르기
 		$(".delBtn").on("click", function() {
 			console.log("클릭했다!");
@@ -105,6 +89,24 @@
 		
 	});
     
+	// 
+	function reviewUpdate() {
+		console.log("수정 버튼 클릭!");
+		var upbtn = document.getElementById('update');
+		console.log(upbtn);
+		var reviewId = upbtn.getAttribute('data-reviewId');
+		var reviewContent = upbtn.getAttribute('data-reviewContent');
+		console.log(reviewId + "\t" + reviewContent);
+		
+		var update = "#gameReviewContent" + reviewId;
+		console.log("u: ", update);
+		   
+		$(update).contents().unwrap().wrap( '<textarea class="review" id="reviewUpdate""></textarea>' );
+		$("#update").replaceWith('<button id="submit" onclick="submit();" data-reviewId="'+reviewId+'">확인</button>');
+		   
+		console.log($("#reviewUpdate").id);
+	}
+    
     // 댓글수정하기
     function submit() {
 		const reviewContent = document.getElementById("reviewUpdate").value;
@@ -127,10 +129,10 @@
 				console.log("success");
 				console.log(Data);
 				
-				var update = "#gameReviewContent" + reviewId;
+				var update = "gameReviewContent" + reviewId;
 				console.log(update);
 				$("#reviewUpdate").replaceWith('<p id="'+update+'">'+Data+'</p>');
-				$("#submit").replaceWith(document.getElementById("update"));
+				$("#submit").replaceWith('<button type="submit" class="upBtn" id="update" onclick="reviewUpdate();" data-reviewContent="'+reviewContent+'" data-reviewId="' + reviewId + '" >수정</button>');
 			},
 			error : function(xhr, status, error) {
 				console.log("error");
@@ -167,6 +169,7 @@
 	var gameGenre = '${topPageGame.gameGenre}';
 	var gameReleasedDate = '${topPageGame.gameReleasedDate}';
 	var gameScore = '${topPageScore.gameScore}';
+	console.log('gameScore: ' , gameScore);
 	var discountRate = '${topPageGame.discountRate}';
 	var discountPrice = gamePrice - (gamePrice * (discountRate/100));
 	console.log(discountPrice);
@@ -214,6 +217,9 @@
 		// 게임설명
 		document.getElementById("gameContent").innerHTML = gameContent;
 		// 게임점수
+		if(gameScore === 0 && gameScore === 0.0){
+			gameScore = 0;
+		} 
 		document.getElementById("gameScore").innerHTML = gameScore;
 		
 		
@@ -316,7 +322,7 @@
 								if(login.getMbrName().equals(review.getMbrName())) {
 							%>
 							
-							<td><button type="submit" class="upBtn" id="update" data-reviewContent="<%= review.getReviewContent() %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">수정</button></td>
+							<td><button type="submit" class="upBtn" id="update" onclick="reviewUpdate();" data-reviewContent="<%= review.getReviewContent() %>" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">수정</button></td>
 							<td><button type="submit" class="delBtn" id="delete" data-reviewId="<%= review.getReviewId() %>" data-gameNo="<%= review.getGameNo() %>">삭제</button></td>
 							
 							<%
