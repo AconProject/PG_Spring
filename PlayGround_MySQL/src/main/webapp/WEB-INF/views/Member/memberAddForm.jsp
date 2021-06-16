@@ -9,14 +9,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-
 		// 아이디 ,비밀번호 체크
 		$("form").on("submit", function() {
-
 			var mbrId = $("#mbrId");
 			var mbrPw = $("#mbrPw");
 			var mbrPw2 = $("#mbrPw2");
-
 			if (mbrId.val().length == 0) {
 				swal("Oops!!", "ID를 다시 입력해주세요!", "error");
 				mbrId.focus();
@@ -33,7 +30,6 @@
 				mbrPw.focus();
 				event.preventDefault();
 			}
-
 		});
 		
 		
@@ -47,12 +43,10 @@
 				event.preventDefault();
 			}
 		});
-
 		// 비밀번호 확인
 		$("#mbrPw2").on("focusout", function() {
 			var mbrPw = $("#mbrPw").val();
 			var mbrPw2 = $("#mbrPw2").val();
-
 			if (mbrPw == mbrPw2) {
 				swal("Good!!", "비밀번호가 일치합니다!", "success");
 			} else {
@@ -60,18 +54,56 @@
 			}
 		});
 	});
-
 	// 아이디 중복체크
 	function idCheck() {
 		console.log("아이디췍!");
 		var mbrId = $("#mbrId");
-
 		$.ajax({
 			type:"get",
 			url:"idDuplicateCheck",
 			dataType: "text",
 			data:{
 				id : mbrId.val()
+			},
+			success : function(Data, status, xhr) {
+				swal(""+Data);
+			},
+			error : function(xhr, status, error) {
+				console.log("error");
+			}
+		});
+	};
+	
+	// 닉네임 중복체크
+	function nickCheck() {
+		console.log("닉네임췍!");
+		var mbrName = $("#mbrName");
+		$.ajax({
+			type:"get",
+			url:"nameDuplicateCheck",
+			dataType: "text",
+			data:{
+				mbrName : mbrName.val()
+			},
+			success : function(Data, status, xhr) {
+				swal(""+Data);
+			},
+			error : function(xhr, status, error) {
+				console.log("error");
+			}
+		});
+	};
+	
+	// 이메일 중복체크
+	function emailCheck() {
+		console.log("이메일췍!");
+		var mbrEmail = $("#mbrEmail");
+		$.ajax({
+			type:"get",
+			url:"emailDuplicateCheck",
+			dataType: "text",
+			data:{
+				mbrEmail : mbrEmail.val()
 			},
 			success : function(Data, status, xhr) {
 				swal(""+Data);
@@ -116,11 +148,15 @@
 		</div>
 
 		<div class="row">
-			<span class="title">닉네임 *</span> <input type="text" class="content" name="mbrName" id="mbrName">
+			<span class="title">닉네임 *
+				<button id="nickchk" class="nickchk" onclick="nickCheck(); return false;">중복체크</button>
+			</span> <input type="text" class="content" name="mbrName" id="mbrName">
 		</div>
 
 		<div class="row">
-			<span class="title">이메일 *</span> <input type="email" class="content" name="mbrEmail" id="mbrEmail">
+			<span class="title">이메일 *
+				<button id="emailchk" class="emailchk" onclick="emailCheck(); return false;">중복체크</button>
+			</span> <input type="email" class="content" name="mbrEmail" id="mbrEmail">
 		</div>
 
 		<div class="row">
@@ -136,8 +172,3 @@
 	</div>
 
 </form>
-
-
-
-
-
