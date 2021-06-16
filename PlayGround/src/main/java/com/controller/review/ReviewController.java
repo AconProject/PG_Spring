@@ -80,7 +80,9 @@ public class ReviewController {
         model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
         System.out.println("댓글삽입 실패: " + reviewResult);
 		}
+		}
 		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
+		
 	}
 	
 	@RequestMapping(value = "/loginCheck/reviewDelete")
