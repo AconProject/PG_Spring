@@ -128,4 +128,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBoardId" resultType="int">
 		SELECT MAX(boardId)+1 FROM board
 	</select>
+	
+	<update id="boardHitAdd" parameterType="int">
+		UPDATE board
+		SET boardCount = boardCount + 1
+		WHERE boardId = #{boardId}
+	</update>
 </mapper>
