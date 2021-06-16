@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="tagDetailSelect" parameterType="string" resultType="GameDTO">
 		select gameNo,gameName,gameImage,gameGenre,to_char(gameReleasedDate, 'YYYY-MM-DD') as gameReleasedDate
 		from game
-		where gameCategory = #{gameCategory}
+		where gameGenre LIKE '%'||#{gameCategory}||'%'
 	</select>
 	
 	<select id="gameSearch" parameterType="string" resultType="GameDTO">
