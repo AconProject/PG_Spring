@@ -90,6 +90,7 @@ public class MemberController {
 		String crytPass = pwdEncoder.encode(inputPass); // 기존패스워드 암호화 저장
 		dto.setMbrPw(crytPass);
 		int result = service.memberAdd(dto);
+		
 		if (result == 1) {
 			model.addAttribute("success", "환영합니다. 회원가입성공하셨습니다");
 		} else {
