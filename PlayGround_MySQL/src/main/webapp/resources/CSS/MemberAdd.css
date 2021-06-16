@@ -94,7 +94,7 @@ img{
 	border: 1px solid black;
 }
 
-#idchk {
+#idchk, #nickchk, #emailchk{
 	width:80px;
 	height:25px;
 	background:#FFA500;
