@@ -30,9 +30,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="getGameScore"  resultType="RateDTO">
-		SELECT *
+		SELECT gameNo,gameScore,rateCount
 		FROM rate
 		WHERE gameNo = #{gameNo}
 	</select>
+
+	
+	
+	<insert id="scoreInsert" parameterType="rateDTO">
+		INSERT INTO rate (gameNo,gameScore,rateCount)
+		VALUES (#{gameNo},#{gameScore},#{rateCount})
+	</insert>
+	
+	<update id="scoreUpdate" parameterType="rateDTO">
+		UPDATE rate
+		SET gameScore=gameScore + #{gameScore},
+			rateCount=rateCount	+	1
+		WHERE gameNo=#{gameNo}
+		
+	</update>
 	
 </mapper>

@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.LikeDTO;
 import com.dto.MemberDTO;
+import com.dto.RateDTO;
 import com.dto.ReviewDTO;
 import com.service.LikeService;
+import com.service.RateService;
 import com.service.ReviewService;
 
 @Controller
@@ -27,6 +29,8 @@ public class ReviewController {
 	ReviewService reviewService;
 	@Autowired
 	LikeService likeService;
+	@Autowired
+	RateService rateService;
 
 	@RequestMapping(value ="/loginCheck/reviewInsert")
 	public String cartAdd(@ModelAttribute ReviewDTO rDTO,Model model, HttpSession session) {
@@ -51,13 +55,30 @@ public class ReviewController {
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
 		System.out.println("nameCheck: "+nameCheck);
-		if(nameCheck==1) {
+    
+		if(nameCheck==0) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
-		}else {
-			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
-			System.out.println("댓글삽입 실패: " + reviewResult);
+			RateDTO rateResult=rateService.getGameScore(gameNo);
+			RateDTO rateDTO = new RateDTO();
+			rateDTO.setGameNo(String.valueOf(gameNo));
+			rateDTO.setGameScore(rDTO.getReviewScore());
+			rateDTO.setRateCount(1);
+			
+			if(rateResult==null) {// 아무런 정보 없으므로, 첫 데이터 insert
+				rateService.scoreInsert(rateDTO);
+			
+			}else if(rateResult!=null) { //데이터있으므로  update
+				rateService.scoreUpdate(rateDTO);
+			}
 
+		}else if(nameCheck==1){
+		  if(nameCheck==1) {
+        reviewResult = reviewService.reviewInsert(rDTO);
+        System.out.println("댓글삽입 성공: " + reviewResult);
+	  	}else {
+        model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
+        System.out.println("댓글삽입 실패: " + reviewResult);
 		}
 		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
 	}
