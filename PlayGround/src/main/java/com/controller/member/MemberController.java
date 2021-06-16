@@ -140,7 +140,7 @@ public class MemberController {
 		System.out.println(">>mbrName값: " + map.get("mbrName") + "\t" + "mbrEmail값: " + map.get("mbrEmail"));
 		String mbrId = service.idSearch(map);
 		if (mbrId != null) {
-			model.addAttribute("mbrId", mbrId);
+			model.addAttribute("mbrId", "회원님의 ID는 [ "+mbrId+" ] 입니다.");
 		} else {
 			model.addAttribute("mesg", "확인할 수 없습니다. 닉네임 혹은 Email을 확인해 주십시오");
 		}
