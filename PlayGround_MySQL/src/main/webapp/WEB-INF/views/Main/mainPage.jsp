@@ -8,7 +8,7 @@
 <title>MainPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-	<link href="<c:url value="/resources/CSS/Main.css?v=9" />" rel="stylesheet">
+	<link href="<c:url value="/resources/CSS/Main.css?v10" />" rel="stylesheet">
 	<script src="<c:url value="/resources/JS/main.js?v=6" />"></script>
 </head>
 <body>
@@ -21,7 +21,9 @@
 		<!-- 메인 상단 -->
 		<div class="searchBox">
 			<input type="text" id="searchText" placeholder="게임검색">
-			<button id="search"><img src="<c:url value="/resources/Image/search.png" />" alt="검색"></button>
+			<button id="search">
+				<img src="<c:url value="/resources/Image/search.png" />" alt="검색">
+			</button>
 		</div>
 
         <section class="main-contents">
@@ -49,7 +51,15 @@
 				<div>
 					<table class="midTable" id="midTable"></table>
 				</div>
-				<div class="tagScroll" id="tagScroll"></div>
+				<div>
+					<div class="flex">
+						<input type="text" id="tagSearch" placeholder="태그검색">
+						<button id="tagSearchBtn">
+							<img src="<c:url value="/resources/Image/search.png" />" alt="검색">
+						</button>
+					</div>
+					<div class="tagScroll" id="tagScroll"></div>
+				</div>
 			</div>
         </section>
 
