@@ -1,0 +1,5 @@
+*.class
+MANIFEST.MF
+pom.properties
+
+.metadata
