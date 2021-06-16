@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class GameService {
 		return dto;
 	}
 
-	public List<GameDTO> relatedGameList(String gameCategory) {
-		return dao.relatedGameList(gameCategory);
+	public List<GameDTO> relatedGameList(HashMap <String, String> map) {
+		return dao.relatedGameList(map);
 	}
 
 	public List<GameDTO> gameSearch(String search) {

@@ -24,4 +24,12 @@ public class RateService {
 	public RateDTO getGameScore(int gameNo) {
 		return dao.getGameScore(gameNo);
 	}
+
+	public int scoreInsert(RateDTO rateDTO) {
+		return dao.scoreInsert(rateDTO);
+	}
+
+	public int scoreUpdate(RateDTO rateDTO) {
+		return dao.scoreUpdate(rateDTO);		
+	}
 }

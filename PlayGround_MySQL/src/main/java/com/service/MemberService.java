@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,14 @@ public class MemberService {
 		return dto;
 	}// end idCheck
 
-
+	public List<MemberDTO> email_mypage(String mbrEmail) {
+		List<MemberDTO> list = dao.email_mypage(mbrEmail);
+		return list;
+	}
+	public List<MemberDTO> name_mypage(String mbrName) {
+		List<MemberDTO> list= dao.name_mypage(mbrName);
+		return list;
+	}
 	public int memberDelete(String mbrId) {
 		int result = dao.memberDelete(mbrId);
 		return result;
@@ -65,6 +73,8 @@ public class MemberService {
 		int result = dao.changeMbrPw(changedMap);
 		return result;
 	}
+
+
 
 
 

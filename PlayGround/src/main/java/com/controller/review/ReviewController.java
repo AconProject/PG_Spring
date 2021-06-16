@@ -32,136 +32,126 @@ public class ReviewController {
 	@Autowired
 	RateService rateService;
 
-	@RequestMapping(value ="/loginCheck/reviewInsert")
-	public String cartAdd(@ModelAttribute ReviewDTO rDTO,Model model, HttpSession session) {
+	@RequestMapping(value = "/loginCheck/reviewInsert")
+	public String cartAdd(@ModelAttribute ReviewDTO rDTO, Model model, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		System.out.println("댓글 입력값 확인: "+ rDTO);
-		int reviewResult=0;
+		System.out.println("댓글 입력값 확인: " + rDTO);
+		int reviewResult = 0;
 
 		rDTO.setMbrId(login.getMbrId());
-		rDTO.setMbrName(login.getMbrName());
-		String mbrName=rDTO.getMbrName();	
-		int gameNo=Integer.parseInt(rDTO.getGameNo());
-		
-		
-		System.out.println("여기는 rDTO 값: "+rDTO.toString());
-		
-		System.out.println("넘어온 정보: " + mbrName + "\t" + gameNo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("mbrName", mbrName);
-		map.put("gameNo", gameNo);
-		
-		System.out.println("map값 확인: "+map.toString());
-		//이미 입력했는지 확인
-		int nameCheck = reviewService.nameCheck(map);
-		System.out.println("nameCheck: "+nameCheck);
+		String mbrId = rDTO.getMbrId();
+		int gameNo = Integer.parseInt(rDTO.getGameNo());
 
-		if(nameCheck==0) {
+		System.out.println("여기는 rDTO 값: " + rDTO.toString());
+
+		System.out.println("넘어온 정보: " + mbrId+ "\t" + gameNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mbrId", mbrId);
+		map.put("gameNo", gameNo);
+
+		System.out.println("map값 확인: " + map.toString());
+		// 이미 입력했는지 확인
+		int nameCheck = reviewService.nameCheck(map);
+		System.out.println("nameCheck: " + nameCheck);
+
+		if (nameCheck == 0) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
-			RateDTO rateResult=rateService.getGameScore(gameNo);
+			RateDTO rateResult = rateService.getGameScore(gameNo);
 			RateDTO rateDTO = new RateDTO();
 			rateDTO.setGameNo(String.valueOf(gameNo));
 			rateDTO.setGameScore(rDTO.getReviewScore());
 			rateDTO.setRateCount(1);
-			
-			if(rateResult==null) {// 아무런 정보 없으므로, 첫 데이터 insert
+
+			if (rateResult == null) {// 아무런 정보 없으므로, 첫 데이터 insert
 				rateService.scoreInsert(rateDTO);
-			
-			}else if(rateResult!=null) { //데이터있으므로  update
+
+			} else if (rateResult != null) { // 데이터있으므로 update
 				rateService.scoreUpdate(rateDTO);
 			}
 
-		}else if(nameCheck==1){
-		  if(nameCheck==1) {
-        reviewResult = reviewService.reviewInsert(rDTO);
-        System.out.println("댓글삽입 성공: " + reviewResult);
-	  	}else {
-        model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
-        System.out.println("댓글삽입 실패: " + reviewResult);
+		} else if (nameCheck == 1) {
+			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
+			System.out.println("댓글삽입 실패: " + reviewResult);
 		}
-		}
-		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
-		
+
+		return "redirect:../Game/detailPage/" + rDTO.getGameNo();
+
 	}
-	
+
 	@RequestMapping(value = "/loginCheck/reviewDelete")
 	public String cartDelte(@RequestParam("reviewId") int reviewId, @ModelAttribute ReviewDTO rDTO) {
-		System.out.println("삭제할 reviewId: "+reviewId);
+		System.out.println("삭제할 reviewId: " + reviewId);
 		int result = reviewService.reviewDelete(reviewId);
-		System.out.println("댓글 삭제 성공 여부: "+result);
-		
-		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
-		
+		System.out.println("댓글 삭제 성공 여부: " + result);
+
+		return "redirect:../Game/detailPage/" + rDTO.getGameNo();
+
 	}
-	
-	@RequestMapping(value = "/loginCheck/reviewUpdate", produces="text/plain;charset=UTF-8")
+
+	@RequestMapping(value = "/loginCheck/reviewUpdate", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String cartUpdate(@RequestParam Map<String, String>map) {
-		System.out.println("댓글 수정값 확인: "+ map);
+	public String cartUpdate(@RequestParam Map<String, String> map) {
+		System.out.println("댓글 수정값 확인: " + map);
 		reviewService.reviewUpdate(map);
-		
+
 		int reviewId = Integer.parseInt(map.get("reviewId"));
 		System.out.println("reviewId: " + reviewId);
 		String content = reviewService.findContent(reviewId);
-		System.out.println("수정된 content: "+content);
+		System.out.println("수정된 content: " + content);
 		return content;
 	}
 
-	
-	@RequestMapping(value = "/loginCheck/reviewLike", produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "/loginCheck/reviewLike", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public Object reviewLike(@RequestParam("reviewId") String reviewId, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		String mbrId=login.getMbrId();
-		
+		String mbrId = login.getMbrId();
+
 		int likeNo = 0; // 추천
 		int boardId = 0; // 게번호시글 ID
 		int replyId = 0; // 게시판 댓글ID
 		LikeDTO ldto = new LikeDTO(likeNo, login.getMbrId(), boardId, Integer.parseInt(reviewId), replyId);
-		System.out.println("likeDTO 확인: "+ldto);
-		
+		System.out.println("likeDTO 확인: " + ldto);
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mbrId", mbrId);
 		map.put("reviewId", reviewId);
 		int likedCount = likeService.likeReviewCount(map);
-		System.out.println("LikeCountCheck: "+likedCount);
-		
-		String mesg="";
-	
-		//like 들어있는지 확인=> 들어있는경우
+		System.out.println("LikeCountCheck: " + likedCount);
+
+		String mesg = "";
+
+		// like 들어있는지 확인=> 들어있는경우
 		if (likedCount == 1) {
 			System.out.println("좋아요가 있어서, -1했습니다");
 			int reviewMinus = reviewService.reviewLikeMinus(Integer.parseInt(reviewId)); // review 댓글 -1
 			System.out.println("좋아요 빼기 여부: " + reviewMinus);
-			
+
 			int likedDel = likeService.likeReviewDelete(ldto); //
 			System.out.println("liked테이블 제거: " + likedDel);
-			
+
 			ReviewDTO rdto = reviewService.updatebtn(Integer.parseInt(reviewId));
 			System.out.println("찾기: " + rdto);
 			int liked = rdto.getReviewLiked();
 			mesg = Integer.toString(liked);
-			
-		}else if (likedCount==0){ //like 안들어있는 경우
+
+		} else if (likedCount == 0) { // like 안들어있는 경우
 			System.out.println("좋아요가 없어서, +1했습니다");
 
 			int plus = reviewService.reviewLikePlus(Integer.parseInt(reviewId));
 			System.out.println("좋아요 더하기 여부: " + plus);
-			
+
 			int likedAdd = likeService.likeReviewInsert(ldto);
 			System.out.println("liked테이블 추가: " + likedAdd);
 			ReviewDTO rdto = reviewService.updatebtn(Integer.parseInt(reviewId));
 			System.out.println("찾기: " + rdto);
 			int liked = rdto.getReviewLiked();
-			mesg=Integer.toString(liked);
-			
-			
-		} 
-
-		
-			return mesg;
-			
+			mesg = Integer.toString(liked);
 
 		}
+
+		return mesg;
+
 	}
+}

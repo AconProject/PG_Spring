@@ -26,4 +26,12 @@ public class RateDAO {
 		System.out.println("check gameNo in DAO: "+ gameNo);
 		return session.selectOne("RateMapper.getGameScore", gameNo);
 	}
+
+	public int scoreInsert(RateDTO rateDTO) {
+		return session.insert("RateMapper.scoreInsert",rateDTO);
+	}
+
+	public int scoreUpdate(RateDTO rateDTO) {
+		return session.update("RateMapper.scoreUpdate",rateDTO);
+	}
 }
