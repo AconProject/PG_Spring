@@ -38,8 +38,8 @@ public class GameDAO {
 		return dto;
 	}
 
-	public List<GameDTO> relatedGameList(String gameCategory) {
-		return session.selectList("GameMapper.relatedGameList", gameCategory);
+	public List<GameDTO> relatedGameList(HashMap <String, String> map) {
+		return session.selectList("GameMapper.relatedGameList", map);
 	}
 	
 	public List<GameDTO> gameSearch(String search) {
