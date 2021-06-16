@@ -55,10 +55,10 @@ public class ReviewController {
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
 		System.out.println("nameCheck: "+nameCheck);
+
 		if(nameCheck==0) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
-		
 			RateDTO rateResult=rateService.getGameScore(gameNo);
 			RateDTO rateDTO = new RateDTO();
 			rateDTO.setGameNo(String.valueOf(gameNo));
@@ -71,9 +71,14 @@ public class ReviewController {
 			}else if(rateResult!=null) { //데이터있으므로  update
 				rateService.scoreUpdate(rateDTO);
 			}
-		}else{
-			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
-			System.out.println("댓글삽입 실패: " + reviewResult);
+
+		}else if(nameCheck==1){
+		  if(nameCheck==1) {
+        reviewResult = reviewService.reviewInsert(rDTO);
+        System.out.println("댓글삽입 성공: " + reviewResult);
+	  	}else {
+        model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
+        System.out.println("댓글삽입 실패: " + reviewResult);
 		}
 		return "redirect:../Game/detailPage/"+rDTO.getGameNo();
 	}

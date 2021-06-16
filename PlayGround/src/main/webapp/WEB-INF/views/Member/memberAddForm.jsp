@@ -82,6 +82,51 @@
 		});
 	};
 	
+<<<<<<< HEAD
+	// 닉네임 중복체크
+	function nickCheck() {
+		console.log("닉네임췍!");
+		var mbrName = $("#mbrName");
+
+		$.ajax({
+			type:"get",
+			url:"nameDuplicateCheck",
+			dataType: "text",
+			data:{
+				mbrName : mbrName.val()
+			},
+			success : function(Data, status, xhr) {
+				swal(""+Data);
+			},
+			error : function(xhr, status, error) {
+				console.log("error");
+			}
+		});
+	};
+	
+	// 이메일 중복체크
+	function emailCheck() {
+		console.log("이메일췍!");
+		var mbrEmail = $("#mbrEmail");
+
+		$.ajax({
+			type:"get",
+			url:"emailDuplicateCheck",
+			dataType: "text",
+			data:{
+				mbrEmail : mbrEmail.val()
+			},
+			success : function(Data, status, xhr) {
+				swal(""+Data);
+			},
+			error : function(xhr, status, error) {
+				console.log("error");
+			}
+		});
+	};
+	
+=======
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 	// 태그페이지 넘어가기
 	var tagPage;
 	function tag() {
@@ -116,11 +161,23 @@
 		</div>
 
 		<div class="row">
+<<<<<<< HEAD
+			<span class="title">닉네임 *
+				<button id="nickchk" class="nickchk" onclick="nickCheck(); return false;">중복체크</button>
+			</span> <input type="text" class="content" name="mbrName" id="mbrName">
+		</div>
+
+		<div class="row">
+			<span class="title">이메일 *
+				<button id="emailchk" class="emailchk" onclick="emailCheck(); return false;">중복체크</button>
+			</span> <input type="email" class="content" name="mbrEmail" id="mbrEmail">
+=======
 			<span class="title">닉네임 *</span> <input type="text" class="content" name="mbrName" id="mbrName">
 		</div>
 
 		<div class="row">
 			<span class="title">이메일 *</span> <input type="email" class="content" name="mbrEmail" id="mbrEmail">
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 		</div>
 
 		<div class="row">
