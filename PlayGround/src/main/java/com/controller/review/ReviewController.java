@@ -51,10 +51,10 @@ public class ReviewController {
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
 		System.out.println("nameCheck: "+nameCheck);
-		if(nameCheck==1) {
+		if(nameCheck==0) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
-		}else if(nameCheck==0){
+		}else if(nameCheck==1){
 			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
 			System.out.println("댓글삽입 실패: " + reviewResult);
 
