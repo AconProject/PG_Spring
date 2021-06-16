@@ -39,8 +39,9 @@ public class MemberController {
 	@ResponseBody
 	public String emailDuplicatedCheck(@RequestParam("mbrEmail") String mbrEmail) {
 		List<MemberDTO> list = service.email_mypage(mbrEmail);
+		System.out.println("이메일 체크: " + list);
 		String mesg = "사용가능한 이메일입니다.";
-		if (list != null) {
+		if (!list.isEmpty()) {
 			mesg = "이미 사용 중인 이메일입니다.";
 		}
 		return mesg;
@@ -51,7 +52,7 @@ public class MemberController {
 	public String nameDuplicatedCheck(@RequestParam("mbrName") String mbrName) {
 		List<MemberDTO> list = service.name_mypage(mbrName);
 		String mesg = "사용가능한 닉네임입니다.";
-		if (list != null) {
+		if (!list.isEmpty()) {
 			mesg = "이미 사용 중인 닉네임입니다.";
 		}
 		return mesg;
