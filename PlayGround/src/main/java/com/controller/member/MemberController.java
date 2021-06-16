@@ -146,7 +146,8 @@ public class MemberController {
 		String mbrName = dto.getMbrName();
 		List<MemberDTO>  dbDTO1 = service.email_mypage(mbrEmail);
 		List<MemberDTO> dbDTO2 = service.name_mypage(mbrName);
-		if (dbDTO1 == null || dbDTO2 == null) { // mbrName & mbrEmail 중복 안되는 경우
+		System.out.println("Hi: "+dbDTO1 +"\t"+dbDTO2);
+		if (dbDTO1.isEmpty() && dbDTO2.isEmpty()) { // mbrName & mbrEmail 중복 안되는 경우
 			System.out.println("암호화되기 전 DTO: " + dto);
 			String inputPass = dto.getMbrPw(); // 바뀔 비밀번호
 			String crytPass = pwdEncoder.encode(inputPass); // 암호화된 비밀번호
