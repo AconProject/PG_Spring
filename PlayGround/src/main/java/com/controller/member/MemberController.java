@@ -27,9 +27,9 @@ public class MemberController {
 	@ResponseBody
 	public String idDuplicatedCheck(@RequestParam("id") String mbrId) {
 		MemberDTO dto= service.mypage(mbrId);
-		String mesg="아이디 사용가능";
+		String mesg="사용가능한 아이디입니다.";
 		if(dto != null) {
-			mesg="아이디 중복";
+			mesg="이미 사용 중인 아이디입니다.";
 		}
 		return mesg;
 	}

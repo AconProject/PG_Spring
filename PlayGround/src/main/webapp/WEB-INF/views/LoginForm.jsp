@@ -4,13 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:if test="${!empty mbrId }">
 	<script>
-		alert("회원님의 ID는  ["+'${mbrId}'+"] 입니다");
+		alert('${mbrId}');
 	</script>
 </c:if>
 
 <c:if test="${!empty mbrPw }">
 	<script>
-		alert("회원님의 PW는  ["+'${mbrPw}'+"] 입니다");
+		alert('${mbrPw}');
 	</script>
 </c:if>
 
