@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.LikeDTO;
 import com.dto.MemberDTO;
@@ -27,7 +29,7 @@ public class ReviewController {
 	LikeService likeService;
 
 	@RequestMapping(value ="/loginCheck/reviewInsert")
-	public String cartAdd(@ModelAttribute ReviewDTO rDTO, HttpSession session) {
+	public String cartAdd(@ModelAttribute ReviewDTO rDTO,Model model, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		System.out.println("댓글 입력값 확인: "+ rDTO);
 		int reviewResult=0;
@@ -48,10 +50,12 @@ public class ReviewController {
 		System.out.println("map값 확인: "+map.toString());
 		//이미 입력했는지 확인
 		int nameCheck = reviewService.nameCheck(map);
-		if(nameCheck==0) {
+		System.out.println("nameCheck: "+nameCheck);
+		if(nameCheck==1) {
 			reviewResult = reviewService.reviewInsert(rDTO);
 			System.out.println("댓글삽입 성공: " + reviewResult);
 		}else {
+			model.addAttribute("reviewError", "이미 댓글을 입력하셨습니다.");
 			System.out.println("댓글삽입 실패: " + reviewResult);
 
 		}
