@@ -69,7 +69,10 @@ hr {
   clear: both;
   margin-top: 150px;
   margin-bottom: 200px;
+<<<<<<< HEAD
   font-size: 1.3rem;
+=======
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 }
 
 #updateBtn,
@@ -130,7 +133,10 @@ textarea[id^="reply"] {
   text-align: center;
   width: 400px;
   height: 40px;
+<<<<<<< HEAD
   font-size: 1.2rem;
+=======
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 }
 
 .img {
@@ -158,11 +164,19 @@ button[id^="deleteCommentBtn"] {
 }
 
 img[id^="replyLikeBtn"] {
+<<<<<<< HEAD
   width: 30px;
 }
 
 img[id^="replyLikeBtn"]:hover {
   cursor: pointer;
+=======
+	width: 30px;
+}
+
+img[id^="replyLikeBtn"]:hover {
+	cursor: pointer;
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 }
 
 button[id^="updateCommentBtn"] {
@@ -174,6 +188,7 @@ button[id^="deleteCommentBtn"] {
   background-color: #ff7473;
   color: black;
 }
+<<<<<<< HEAD
 
 .replyWrite {
   margin-top: 50px;
@@ -203,3 +218,5 @@ button[id^="deleteCommentBtn"] {
   color: white;
   margin-left: 30px;
 }
+=======
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be

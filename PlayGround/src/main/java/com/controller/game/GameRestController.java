@@ -32,7 +32,11 @@ public class GameRestController {
 		else if (category.contentEquals("sales"))
 			gameList = gService.saleGameListSelect();
 		else if (login == null && category.contentEquals("recommend"))
+<<<<<<< HEAD
 			gameList = gService.recommendGameListSelect(10);
+=======
+			gameList = gService.recommendGameListSelect(11);
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 		else if (login != null && category.contentEquals("recommend"))
 			gameList = gService.recommendUserTagListSelect(login.getMbrId());
 		System.out.println(gameList);
@@ -53,7 +57,10 @@ public class GameRestController {
 				listTags.add(Integer.parseInt(t));
 			gameList = gService.tagGameListSelect(listTags);
 		}
+<<<<<<< HEAD
 		System.out.println(gameList);
+=======
+>>>>>>> 95ba9321f3f8b8d0f24e54a53bcc4473aaa157be
 		return gameList;
 	}
 	
