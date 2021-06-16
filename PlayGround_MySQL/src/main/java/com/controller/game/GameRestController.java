@@ -55,10 +55,5 @@ public class GameRestController {
 		}
 		return gameList;
 	}
-	
-	@GetMapping("/search/{search}")
-	public List<GameDTO> gameSearch(@PathVariable String search) {
-		System.out.println("검색어 : " + search);
-		return gService.gameSearch(search);
-	}
+
 }
