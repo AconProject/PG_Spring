@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,6 +46,14 @@ public class MemberDAO {
 		return n;
 	}
 
+	public List<MemberDTO> email_mypage(String mbrEmail) {
+		List<MemberDTO> n = template.selectList("MemberMapper.email_mypage", mbrEmail);
+		return n;
+	}
+	public List<MemberDTO> name_mypage(String mbrName) {
+		List<MemberDTO> n = template.selectList("MemberMapper.name_mypage", mbrName);
+		return n;
+	}
 	
 	public int memberDelete(String mbrId) {
 		System.out.println("DAO에서 찍어보는 MAP: "+mbrId);
@@ -54,6 +63,7 @@ public class MemberDAO {
 
 	public String idSearch(Map<String, String> map) {
 		String mbrId= template.selectOne("MemberMapper.idSearch",map);
+		System.out.println("과연 ID 는 나올것인가: "+mbrId);
 		return mbrId;
 	}
 	public String pwSearch(Map<String, String> map) {
@@ -65,6 +75,8 @@ public class MemberDAO {
 		int result = template.update("MemberMapper.changeMbrPw",changedMap);
 		return result;
 	}
+
+	
 
 
 	
