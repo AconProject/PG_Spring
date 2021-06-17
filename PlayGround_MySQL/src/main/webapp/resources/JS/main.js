@@ -12,7 +12,7 @@ window.onload = function () {
 	document.getElementById('newGame').addEventListener('click', getNewGameEvent, false);
 	document.getElementById('recommendedGame').addEventListener('click', getRecommendedGame, false);
 	document.getElementById('saleGame').addEventListener('click', getSaleGame, false);
-	document.getElementById('tagSearch').addEventListener('keydown', getSearchedTag, false);
+	document.getElementById('tagSearch').addEventListener('keyup', getSearchedTag, false);
 	document.getElementById('recommendedPost').addEventListener('click', getRecommendedPostEvent, false);
 	document.getElementById('mostViewPost').addEventListener('click', getMostViewPost, false);
 	document.getElementById('recommendedQnA').addEventListener('click', getRecommendedQnAEvent, false);
@@ -187,6 +187,7 @@ function getTag() {
 		.then(data => {
 			if (data.length !== 0) {
 				jsonParserForTags(data);
+
 				let tags = document.getElementsByName('tag');
 				tags.forEach((tag) => {
 					tag.addEventListener('click', getCheckboxValue, false);
@@ -198,8 +199,28 @@ function getTag() {
 		});
 }
 
-function getSearchedTag(event) {
-	console.log(event.keyCode);
+/* 중단 태그 불러오기 및 태그 클릭 이벤트 등록(태그 검색시) */
+function getSearchedTag() {
+	if (this.value === '')
+		getTag();
+	else {
+		fetch('genre/search/' + this.value)
+			.then(res => res.json())
+			.then(data => {
+				removeAllElements('.tagScroll p');
+				if (data.length !== 0) {
+					jsonParserForTags(data);
+
+					let tags = document.getElementsByName('tag');
+					tags.forEach((tag) => {
+						tag.addEventListener('click', getCheckboxValue, false);
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
 }
 
 /* 중단 태그별 게임 불러오기 (페이지 첫 로딩) */
@@ -241,11 +262,13 @@ function getTagGameRate(tagId) {
 			let gameScore;
 			let rateCount;
 			let rate;
-			for (let i = 0; i < data.length; i++){
+			for (let i = 0; i < data.length; i++) {
 				gameScore = parseFloat(data[i].gameScore);
 				rateCount = parseInt(data[i].rateCount);
-
-				rate = (gameScore / rateCount).toFixed(1);
+				if (rateCount === 0)
+					rate = 0;
+				else
+					rate = (gameScore / rateCount).toFixed(1);
 				insertElement('td', 'midTr' + i, '<div class="score"><span>'
 					+ rate + '</span></div>');
 			}
