@@ -19,7 +19,7 @@ public class GameDTO {
 	private String gameNo;
 	private String gameName;
 	private String gameImage;
-	private int gamePrice;
+	private String gamePrice;
 	private String gameContent;
 	private String gameCategory;
 	private String gameGenre;

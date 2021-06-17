@@ -14,11 +14,11 @@ public class RateDAO {
 	@Autowired
 	SqlSessionTemplate session;
 	
-	public List<Double> rateRecommendSelect() {
+	public List<RateDTO> rateRecommendSelect() {
 		return session.selectList("RateMapper.rateRecommendSelect");
 	}
 	
-	public List<Double> rateTagSelect(List<Integer> listTags) {
+	public List<RateDTO> rateTagSelect(List<Integer> listTags) {
 		return session.selectList("RateMapper.rateTagSelect", listTags);
 	}
 
