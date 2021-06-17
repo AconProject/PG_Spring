@@ -20,6 +20,10 @@ public class RateService {
 	public List<RateDTO> rateTagSelect(List<Integer> listTags) {
 		return dao.rateTagSelect(listTags);
 	}
+	
+	public RateDTO rateSelect(String gameNo) {
+		return dao.rateSelect(gameNo);
+	}
 
 	public RateDTO getGameScore(int gameNo) {
 		return dao.getGameScore(gameNo);

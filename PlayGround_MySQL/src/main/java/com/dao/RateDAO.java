@@ -20,6 +20,10 @@ public class RateDAO {
 	public List<RateDTO> rateTagSelect(List<Integer> listTags) {
 		return session.selectList("RateMapper.rateTagSelect", listTags);
 	}
+	
+	public RateDTO rateSelect(String gameNo) {
+		return session.selectOne("RateMapper.rateSelect", gameNo);
+	}
 
 	public RateDTO getGameScore(int gameNo) {
 		System.out.println("check gameNo in DAO: "+ gameNo);

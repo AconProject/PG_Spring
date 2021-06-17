@@ -32,7 +32,7 @@ public class GameRestController {
 		else if (category.contentEquals("sales"))
 			gameList = gService.saleGameListSelect();
 		else if (login == null && category.contentEquals("recommend"))
-			gameList = gService.recommendGameListSelect(11);
+			gameList = gService.recommendGameListSelect(10);
 		else if (login != null && category.contentEquals("recommend"))
 			gameList = gService.recommendUserTagListSelect(login.getMbrId());
 		System.out.println(gameList);
@@ -45,7 +45,7 @@ public class GameRestController {
 		System.out.println(tags);
 		List<GameDTO> gameList = null;
 		if (tags.contentEquals("noTag"))
-			gameList = gService.recommendGameListSelect(6);
+			gameList = gService.recommendGameListSelect(5);
 		else {
 			String[] tag_array = tags.split(",");
 			List<Integer> listTags = new ArrayList<Integer>();
