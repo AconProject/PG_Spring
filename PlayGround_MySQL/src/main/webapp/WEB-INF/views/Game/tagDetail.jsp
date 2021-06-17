@@ -57,7 +57,7 @@
 								</td>
 							</tr> -->
 							<tr>
-								<td colspan="2" class="td_gray" align ="left" height="55" style="border-top:1px solid black">
+								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="60">
 									장르 : <%= gameGenre%>
 								</td>
 							</tr>
