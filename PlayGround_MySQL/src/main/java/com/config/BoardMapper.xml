@@ -3,135 +3,135 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardMapper">
-	
-	<select id="recommendInfoBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE boardCategory = 'info'
-		ORDER BY boardLiked DESC, boardCount DESC
-		LIMIT 5
-	</select>
-	
-	<select id="hitInfoBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE boardCategory = 'info'
-		ORDER BY boardCount DESC, boardLiked DESC
-		LIMIT 5
-	</select>
-	
-	<select id="recommendQnaBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE boardCategory = 'QnA'
-		ORDER BY boardLiked DESC, boardCount DESC
-		LIMIT 5
-	</select>
-	
-	<select id="hitQnaBoardSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE boardCategory = 'QnA'
-		ORDER BY boardCount DESC, boardLiked DESC
-		LIMIT 5
-	</select>
-	
-	<!-- boardSelect에서 boardListSelect로 변환? -->
-	<select id="boardListSelect" parameterType="string" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE boardCategory = #{boardCategory}
-		ORDER BY boardDate DESC
-	</select>
-	
-	<select id="boardAllSelect" resultType="BoardDTO">
-		SELECT *
-		FROM board
-		ORDER BY boardDate DESC
-	</select>
+   
+   <select id="recommendInfoBoardSelect" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE boardCategory = 'info'
+      ORDER BY boardLiked DESC, boardCount DESC
+      LIMIT 5
+   </select>
+   
+   <select id="hitInfoBoardSelect" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE boardCategory = 'info'
+      ORDER BY boardCount DESC, boardLiked DESC
+      LIMIT 5
+   </select>
+   
+   <select id="recommendQnaBoardSelect" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE boardCategory = 'QnA'
+      ORDER BY boardLiked DESC, boardCount DESC
+      LIMIT 5
+   </select>
+   
+   <select id="hitQnaBoardSelect" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE boardCategory = 'QnA'
+      ORDER BY boardCount DESC, boardLiked DESC
+      LIMIT 5
+   </select>
+   
+   <!-- boardSelect에서 boardListSelect로 변환? -->
+   <select id="boardListSelect" parameterType="string" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE boardCategory = #{boardCategory}
+      ORDER BY boardDate DESC
+   </select>
+   
+   <select id="boardAllSelect" resultType="BoardDTO">
+      SELECT *
+      FROM board
+      ORDER BY boardDate DESC
+   </select>
 
-	<!-- %넣기 -->
-	<select id="boardTitleSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE <if test="boardCategory != 'all'">
-		boardCategory = #{boardCategory}
-		AND 
-		</if>boardName LIKE '%'||#{searchWord}||'%'
-		ORDER BY boardDate DESC
-	</select>
+   <!-- %넣기 -->
+   <select id="boardTitleSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE <if test="boardCategory != 'all'">
+      boardCategory = #{boardCategory}
+      AND 
+      </if>boardName LIKE CONCAT('%',#{searchWord},'%')
+      ORDER BY boardDate DESC
+   </select>
 
-	<!-- %넣기 -->
-	<select id="boardContentSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE 
-		<if test="boardCategory != 'all'">
-		boardCategory = #{boardCategory}
-		AND 
-		</if>(boardContent LIKE '%'||#{searchWord}||'%'
-		OR boardName LIKE '%'||#{searchWord}||'%')
-		ORDER BY boardDate DESC
-	</select>
-	
-	<select id="boardWriterSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
-		SELECT *
-		FROM board USE INDEX (board_category)
-		WHERE <if test="boardCategory != 'all'">
-		boardCategory = #{boardCategory}
-		AND 
-		</if> mbrName LIKE '%'||#{searchWord}||'%'
-		ORDER BY boardDate DESC
-	</select>
-	
-	<insert id="boardInsert" parameterType="BoardDTO">
-		INSERT INTO board(boardId,mbrId, mbrName, boardCategory,boardName,boardContent,boardCount,boardLiked,boardDate) 
-		VALUES(#{boardId},#{mbrId},#{mbrName},#{boardCategory},#{boardName},#{boardContent},0,0,NOW())
-	</insert>
-	
-	<update id="boardUpdate" parameterType="BoardDTO">
-		UPDATE board
-		SET boardCategory = #{boardCategory}, boardName = #{boardName}, boardContent = #{boardContent}
-		WHERE boardId = #{boardId}
-	</update>
-	
-	<delete id="boardDelete" parameterType="int">
-		DELETE FROM board
-		WHERE boardId = #{boardId}
-	</delete>
-	
-	<update id="boardLikeCount" parameterType="Hashmap">
-		SELECT count(*)
-		FROM liked
-       	WHERE boardId = #{boardId}
-       	AND mbrId = #{mbrId}
-	</update>
-	
-	<update id="boardLikePlus" parameterType="int">
-		UPDATE board
-		SET boardLiked = boardLiked + 1
-		WHERE boardId = #{boardId}
-	</update>
-	
-	<update id="boardLikeMinus" parameterType="int">
-		UPDATE board
-		SET boardLiked = boardLiked - 1
-		WHERE boardId = #{boardId}
-	</update>
-	
-	<select id="boardRead" parameterType="int" resultType="boardDTO">
-		SELECT *
-		FROM board
-		WHERE boardId = #{boardId}
-	</select>
-	
-	<select id="getBoardId" resultType="int">
-		SELECT MAX(boardId)+1 FROM board
-	</select>
-	
-	<update id="boardHitAdd" parameterType="int">
-		UPDATE board
-		SET boardCount = boardCount + 1
-		WHERE boardId = #{boardId}
-	</update>
+   <!-- %넣기 -->
+   <select id="boardContentSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE 
+      <if test="boardCategory != 'all'">
+      boardCategory = #{boardCategory}
+      AND
+      </if>(boardContent LIKE CONCAT('%',#{searchWord},'%')
+      OR boardName LIKE CONCAT('%',#{searchWord},'%'))
+      ORDER BY boardDate DESC
+   </select>
+   
+   <select id="boardWriterSearchSelect" parameterType="java.util.HashMap" resultType="BoardDTO">
+      SELECT *
+      FROM board USE INDEX (board_category)
+      WHERE <if test="boardCategory != 'all'">
+      boardCategory = #{boardCategory}
+      AND 
+      </if> mbrName LIKE CONCAT('%',#{searchWord},'%')
+      ORDER BY boardDate DESC
+   </select>
+   
+   <insert id="boardInsert" parameterType="BoardDTO">
+      INSERT INTO board(boardId,mbrId, mbrName, boardCategory,boardName,boardContent,boardCount,boardLiked,boardDate) 
+      VALUES(#{boardId},#{mbrId},#{mbrName},#{boardCategory},#{boardName},#{boardContent},0,0,NOW())
+   </insert>
+   
+   <update id="boardUpdate" parameterType="BoardDTO">
+      UPDATE board
+      SET boardCategory = #{boardCategory}, boardName = #{boardName}, boardContent = #{boardContent}
+      WHERE boardId = #{boardId}
+   </update>
+   
+   <delete id="boardDelete" parameterType="int">
+      DELETE FROM board
+      WHERE boardId = #{boardId}
+   </delete>
+   
+   <update id="boardLikeCount" parameterType="Hashmap">
+      SELECT count(*)
+      FROM liked
+          WHERE boardId = #{boardId}
+          AND mbrId = #{mbrId}
+   </update>
+   
+   <update id="boardLikePlus" parameterType="int">
+      UPDATE board
+      SET boardLiked = boardLiked + 1
+      WHERE boardId = #{boardId}
+   </update>
+   
+   <update id="boardLikeMinus" parameterType="int">
+      UPDATE board
+      SET boardLiked = boardLiked - 1
+      WHERE boardId = #{boardId}
+   </update>
+   
+   <select id="boardRead" parameterType="int" resultType="boardDTO">
+      SELECT *
+      FROM board
+      WHERE boardId = #{boardId}
+   </select>
+   
+   <select id="getBoardId" resultType="int">
+      SELECT MAX(boardId)+1 FROM board
+   </select>
+   
+   <update id="boardHitAdd" parameterType="int">
+      UPDATE board
+      SET boardCount = boardCount + 1
+      WHERE boardId = #{boardId}
+   </update>
 </mapper>
