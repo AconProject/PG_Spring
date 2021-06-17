@@ -11,6 +11,8 @@ window.onload = function () {
 	// 버튼 클릭 이벤트 등록
 	document.getElementById('newGame').addEventListener('click', getNewGameEvent, false);
 	document.getElementById('recommendedGame').addEventListener('click', getRecommendedGame, false);
+	document.getElementById('saleGame').addEventListener('click', getSaleGame, false);
+	document.getElementById('tagSearch').addEventListener('keydown', getSearchedTag, false);
 	document.getElementById('recommendedPost').addEventListener('click', getRecommendedPostEvent, false);
 	document.getElementById('mostViewPost').addEventListener('click', getMostViewPost, false);
 	document.getElementById('recommendedQnA').addEventListener('click', getRecommendedQnAEvent, false);
@@ -163,6 +165,21 @@ function getRecommendedGame() {
 		});
 }
 
+/* 상단 할인게임 불러오기 (버튼 클릭) */
+function getSaleGame() {
+	fetch('game/category/sales')
+		.then(res => res.json())
+		.then(data => {
+			removeAllElements('.topTable td');
+			removeAllElements('.topChart li');
+			if (data.length !== 0)
+				jsonParserForTop(data);
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
 /* 중단 태그 불러오기 및 태그 클릭 이벤트 등록 */
 function getTag() {
 	fetch('genre/genreList')
@@ -181,6 +198,10 @@ function getTag() {
 		});
 }
 
+function getSearchedTag(event) {
+	console.log(event.keyCode);
+}
+
 /* 중단 태그별 게임 불러오기 (페이지 첫 로딩) */
 function getTagGame() {
 	fetch('game/tag/noTag')
@@ -188,16 +209,7 @@ function getTagGame() {
 		.then(data => {
 			if (data.length !== 0) {
 				jsonParserForMiddle(data);
-
-				fetch('rate/tag/noTag')
-					.then(res => res.json())
-					.then(data => {
-						for (let i = 0; i < data.length; i++)
-							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-					})
-					.catch(err => {
-						console.log(err);
-					});
+				getTagGameRate('noTag');
 			}
 		})
 		.catch(err => {
@@ -213,16 +225,29 @@ function getTagGameEvent(tagId) {
 			removeAllElements('.midTable tr');
 			if (data.length !== 0) {
 				jsonParserForMiddle(data);
+				getTagGameRate(tagId);
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
 
-				fetch('rate/tag/' + tagId)
-					.then(res => res.json())
-					.then(data => {
-						for (let i = 0; i < data.length; i++)
-							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-					})
-					.catch(err => {
-						console.log(err);
-					});
+/* 중단 게임 평점 가져오기 */
+function getTagGameRate(tagId) {
+	fetch('rate/tag/' + tagId)
+		.then(res => res.json())
+		.then(data => {
+			let gameScore;
+			let rateCount;
+			let rate;
+			for (let i = 0; i < data.length; i++){
+				gameScore = parseFloat(data[i].gameScore);
+				rateCount = parseInt(data[i].rateCount);
+
+				rate = (gameScore / rateCount).toFixed(1);
+				insertElement('td', 'midTr' + i, '<div class="score"><span>'
+					+ rate + '</span></div>');
 			}
 		})
 		.catch(err => {
