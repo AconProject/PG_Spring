@@ -166,11 +166,6 @@
 	console.log('gameScore: ' , gameScore);
 	var rateCount = '${topPageScore.rateCount}';
 	console.log('rateCount: ', rateCount);
-	// 게임평균점수
-	var avgScore =(gameScore / rateCount).toFixed(1);
-	if(isNaN(avgScore)){
-		avgScore = 0.0;
-	}
 	
 	var discountRate = '${topPageGame.discountRate}';
 	var discountPrice = gamePrice - (gamePrice * (discountRate/100));
@@ -219,10 +214,10 @@
 		// 게임설명
 		document.getElementById("gameContent").innerHTML = gameContent;
 		// 게임점수
-		if(gameScore === 0 && gameScore === 0.0){
+		if(gameScore === 0 && isNanN(gameScore)){
 			gameScore = 0;
 		} 
-		document.getElementById("gameScore").innerHTML = avgScore;
+		document.getElementById("gameScore").innerHTML = gameScore;
 		
 		
 		// 중단부분 - (댓글삽입부분)
@@ -290,9 +285,6 @@
 	
 			List<ReviewDTO> rdto = (List<ReviewDTO>) request.getAttribute("midPage");
 			if (rdto != null) {
-				int totalPage = rdto.size();
-				int perPage = 4;
-				int p = 1;
 				
 		%>
 		
