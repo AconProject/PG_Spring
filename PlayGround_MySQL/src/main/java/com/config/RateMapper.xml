@@ -33,6 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE gameNo = #{gameNo}
 	</select>
 
+	<select id="rateSelect" parameterType="string" resultType="RateDTO">
+		SELECT *
+		FROM rate
+		WHERE gameNo = #{gameNo}
+	</select>
 
 
 	<insert id="scoreInsert" parameterType="rateDTO">
