@@ -42,7 +42,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="55">
+								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="65">
 									<a class= "a_black" href="../detailPage/<%=gameNo %>"> 
 										<strong><%= gameName%></strong><br>
 									</a>
@@ -57,7 +57,7 @@
 								</td>
 							</tr> -->
 							<tr>
-								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="60">
+								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="160">
 									장르 : <%= gameGenre%>
 								</td>
 							</tr>
