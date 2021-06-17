@@ -124,6 +124,13 @@ function jsonParserForNews(data) {
 
 /* 상단 최신게임 불러오기 (페이지 첫 로딩) */
 function getNewGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -137,6 +144,13 @@ function getNewGame() {
 
 /* 상단 최신게임 불러오기 (버튼 클릭) */
 function getNewGameEvent() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -153,11 +167,11 @@ function getNewGameEvent() {
 /* 상단 추천게임 불러오기 (버튼 클릭) */
 function getRecommendedGame() {
 	document.getElementById('newGame').style.backgroundColor
-		= 'rgba(171, 219, 252, 0.5)';
+		= 'rgba(171, 219, 252, 0.2)';
 	document.getElementById('recommendedGame').style.backgroundColor
 		= 'rgba(171, 219, 252, 0.5)';
 	document.getElementById('saleGame').style.backgroundColor
-		= 'rgba(171, 219, 252, 0.5)';
+		= 'rgba(171, 219, 252, 0.2)';
 
 	fetch('game/category/recommend')
 		.then(res => res.json())
@@ -174,6 +188,13 @@ function getRecommendedGame() {
 
 /* 상단 할인게임 불러오기 (버튼 클릭) */
 function getSaleGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+
 	fetch('game/category/sales')
 		.then(res => res.json())
 		.then(data => {
