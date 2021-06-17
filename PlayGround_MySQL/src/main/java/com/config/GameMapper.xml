@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		game.gamePrice, game.gameContent, game.gameContent, game.gameGenre, CONCAT('(',DATE_FORMAT(gameReleasedDate,'%Y'),')') as gameReleasedDate, game.gameCategory
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
-		ORDER BY (rate.gameScore / rate.rateCount) DESC, game.gameReleasedDate DESC
+		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
 		LIMIT #{limit}
 	</select>
 
