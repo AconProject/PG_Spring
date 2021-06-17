@@ -25,7 +25,7 @@ public class GameDAO {
 	}
 	
 	public List<GameDTO> recommendUserTagListSelect(String mbrId) {
-		List<GameDTO> list = session.selectList("GameMapper.recommendUserTagListSelect", mbrId);
+		List<GameDTO> list = session.selectList("GameMapper.recommendUserTagGameListSelect", mbrId);
 		return list;
 	}
 	
