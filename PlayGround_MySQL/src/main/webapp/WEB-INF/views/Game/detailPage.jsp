@@ -305,8 +305,7 @@
 				
 					<%
 						if(login != null) {
-						for (int i = (p - 1) * 4; i < (p * perPage); i++) {
-							if (i == totalPage) break;
+						for (int i = 0; i < rdto.size(); i++) {
 							ReviewDTO review = rdto.get(i);
 							String id = "gameReviewLiked" + i;
 							
@@ -342,8 +341,7 @@
 					<%				
 							}
 						} else {
-							for (int i = (p - 1) * 4; i < (p * perPage); i++) {
-								if (i == totalPage) break;
+							for (int i = 0; i < rdto.size(); i++) {
 								ReviewDTO review = rdto.get(i);
 								System.out.println("리뷰닉네임: " + review.getMbrName());
 					%>
