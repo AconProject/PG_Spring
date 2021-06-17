@@ -14,7 +14,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-
 		function result() {
 			var check = document.getElementsByName("tag");
 			var mesg ="";
@@ -74,7 +73,6 @@
 			}
 			
 		}
-
 		
 </script>
 </head>
@@ -210,24 +208,24 @@
 						
 						<tr>
 							<td>
-							<input type="checkbox" name="tag" id="tag19" value="협동" onclick="click()">
+							<input type="checkbox" name="tag" id="tag19" value="협동">
 							<label for="tag19">&nbsp;협동</label></td>
 							<td>
-							<input type="checkbox" name="tag" id="tag20" value="애니" onclick="click()">
+							<input type="checkbox" name="tag" id="tag20" value="애니">
 							<label for="tag20">&nbsp;애니</label></td>
 							<td>
-							<input type="checkbox" name="tag" id="tag21" value="어려움" onclick="click()">
+							<input type="checkbox" name="tag" id="tag21" value="어려움">
 							<label for="tag21">&nbsp;어려움</label></td>
 							<td>
-							<input type="checkbox" name="tag" id="tag22" value="카드배틀" onclick="click()">
+							<input type="checkbox" name="tag" id="tag22" value="카드배틀">
 							<label for="tag22">&nbsp;카드배틀</label>
 							</td>
 							<td>
-							<input type="checkbox" name="tag" id="tag23"value="인디게임" onclick="click()">
+							<input type="checkbox" name="tag" id="tag23"value="인디게임">
 							<label for="tag23">&nbsp;인디게임</label>
 							</td>
 							<td>
-							<input type="checkbox" name="tag" id="tag24" value="경영" onclick="click()">
+							<input type="checkbox" name="tag" id="tag24" value="경영">
 							<label for="tag24">&nbsp;경영</label>
 							</td>
 						</tr>
