@@ -152,6 +152,13 @@ function getNewGameEvent() {
 
 /* 상단 추천게임 불러오기 (버튼 클릭) */
 function getRecommendedGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+
 	fetch('game/category/recommend')
 		.then(res => res.json())
 		.then(data => {
