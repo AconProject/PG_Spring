@@ -136,7 +136,7 @@ public class BoardRestController {
 		LikeDTO like = new LikeDTO(0, login.getMbrId(), boardMap.get("boardId"), 0, 0);
 		boolean isComplete = false;
 		int cnt = lService.likeBoardCount(like);
-		boardLike += bService.boardLikeMinus(boardMap.get("boardId")) * -1;
+		boardLike += bService.boardLikeMinus(boardMap.get("boardId"));
 		isComplete = lService.likeBoardDelete(like);
 		System.out.println("좋아요 : " + boardLike + " , boardLiked 개수 : " + cnt + " , 삭제, 삽입 : " + isComplete);
 		return boardLike;
