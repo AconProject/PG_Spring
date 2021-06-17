@@ -287,18 +287,9 @@ function getTagGameRate(tagId) {
 	fetch('rate/tag/' + tagId)
 		.then(res => res.json())
 		.then(data => {
-			let gameScore;
-			let rateCount;
-			let rate;
 			for (let i = 0; i < data.length; i++) {
-				gameScore = parseFloat(data[i].gameScore);
-				rateCount = parseInt(data[i].rateCount);
-				if (rateCount === 0)
-					rate = 0;
-				else
-					rate = (gameScore / rateCount).toFixed(1);
 				insertElement('td', 'midTr' + i, '<div class="score"><span>'
-					+ rate + '</span></div>');
+					+ data[i].gameScore + '</span></div>');
 			}
 		})
 		.catch(err => {
