@@ -8,8 +8,8 @@
 <title>MainPage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-	<link href="<c:url value="/resources/CSS/Main.css?v=11" />" rel="stylesheet">
-	<script src="<c:url value="/resources/JS/main.js?v=10" />"></script>
+	<link href="<c:url value="/resources/CSS/Main.css?v=12" />" rel="stylesheet">
+	<script src="<c:url value="/resources/JS/main.js?v=11" />"></script>
 </head>
 <body>
 	<!-- 페이지 상단 로고 및 배너 -->
