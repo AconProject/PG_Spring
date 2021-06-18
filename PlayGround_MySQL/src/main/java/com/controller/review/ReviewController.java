@@ -67,7 +67,12 @@ public class ReviewController {
 				rateService.scoreInsert(rateDTO);
 
 			} else if (rateResult != null) { // 데이터있으므로 update
-				rateService.scoreUpdate(rateDTO);
+				RateDTO rate = rateService.rateSelect(Integer.toString(gameNo));
+				int newCount = rate.getRateCount() + 1;
+				double newScore = (rate.getGameScore() * rate.getRateCount() / newCount) + (rDTO.getReviewScore() / newCount);
+				System.out.println("new Score : " + newScore);
+				rate.setGameScore(newScore);
+				rateService.scoreUpdate(rate);
 			}
 
 		} else if (nameCheck == 1) {

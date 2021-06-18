@@ -4,16 +4,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="RateMapper">
 
-	<select id="rateRecommendSelect" resultType="double">
-		SELECT rate.gameScore
+	<select id="rateRecommendSelect" resultType="RateDTO">
+		SELECT rate.gameScore, rate.rateCount
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
 		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
 		LIMIT 5
 	</select>
 
-	<select id="rateTagSelect" resultType="double">
-		SELECT rate.gameScore
+	<select id="rateTagSelect" resultType="RateDTO">
+		SELECT rate.gameScore, rate.rateCount
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
 		AND game.gameGenre REGEXP(
@@ -33,6 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE gameNo = #{gameNo}
 	</select>
 
+	<select id="rateSelect" parameterType="string" resultType="RateDTO">
+		SELECT *
+		FROM rate
+		WHERE gameNo = #{gameNo}
+	</select>
 
 
 	<insert id="scoreInsert" parameterType="rateDTO">
@@ -42,10 +47,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="scoreUpdate" parameterType="rateDTO">
 		UPDATE rate
-		SET gameScore=gameScore + #{gameScore},
-		rateCount=rateCount + 1
+		SET gameScore= #{gameScore},
+			rateCount=rateCount	+ 1
 		WHERE gameNo=#{gameNo}
-
+		
 	</update>
 
 </mapper>

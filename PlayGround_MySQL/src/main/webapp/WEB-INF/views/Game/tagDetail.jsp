@@ -36,14 +36,14 @@
 						<table style="border:1px solid black; padding:10px" width="300">
 							<tr>
 								<td colspan="2" align="center" style="border-bottom:1px solid black">
-									<a href="../detailPage/<%=gameNo %>"><!-- 이미지링크 --> 
+									<a href="/app/Game/detailPage/<%=gameNo %>"><!-- 이미지링크 --> 
 										<img src="<%=gameImage %>" border="0" width="290" height="130">
 									</a>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="55">
-									<a class= "a_black" href="../detailPage/<%=gameNo %>"> 
+								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="65">
+									<a class= "a_black" href="/app/Game/detailPage/<%=gameNo %>"> 
 										<strong><%= gameName%></strong><br>
 									</a>
 								</td>
@@ -57,7 +57,7 @@
 								</td>
 							</tr> -->
 							<tr>
-								<td colspan="2" class="td_gray" align ="left" height="55" style="border-top:1px solid black">
+								<td colspan="2" class= "td_default" style="text-align:left;vertical-align:top;border-bottom:1px solid black" height="160">
 									장르 : <%= gameGenre%>
 								</td>
 							</tr>

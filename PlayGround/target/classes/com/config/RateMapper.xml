@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="scoreUpdate" parameterType="rateDTO">
 		UPDATE rate
-		SET gameScore=gameScore + #{gameScore},
-			rateCount=rateCount	+	1
+		SET gameScore= #{gameScore},
+			rateCount=rateCount	+ 1
 		WHERE gameNo=#{gameNo}
 		
 	</update>

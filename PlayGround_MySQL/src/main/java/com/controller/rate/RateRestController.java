@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dto.RateDTO;
 import com.service.RateService;
 
 @RestController
@@ -18,9 +19,9 @@ public class RateRestController {
 	RateService rService;
 	
 	@GetMapping("/tag/{tags}")
-	public List<Double> rateMainMidList(@PathVariable String tags) {
+	public List<RateDTO> rateMainMidList(@PathVariable String tags) {
 		System.out.println(tags);
-		List<Double> rateList = null;
+		List<RateDTO> rateList = null;
 		if (tags.contentEquals("noTag"))
 			rateList = rService.rateRecommendSelect();
 		else {

@@ -13,12 +13,16 @@ public class RateService {
 	@Autowired
 	RateDAO dao;
 	
-	public List<Double> rateRecommendSelect() {
+	public List<RateDTO> rateRecommendSelect() {
 		return dao.rateRecommendSelect();
 	}
 	
-	public List<Double> rateTagSelect(List<Integer> listTags) {
+	public List<RateDTO> rateTagSelect(List<Integer> listTags) {
 		return dao.rateTagSelect(listTags);
+	}
+	
+	public RateDTO rateSelect(String gameNo) {
+		return dao.rateSelect(gameNo);
 	}
 
 	public RateDTO getGameScore(int gameNo) {

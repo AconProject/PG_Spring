@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM game, rate
 		WHERE game.gameNo = rate.gameNo
 		ORDER BY rate.gameScore DESC, game.gameReleasedDate DESC
-		LIMIT 5
+		LIMIT #{limit}
 	</select>
 
 	<select id="recommendUserTagGameListSelect" parameterType="string" resultType="GameDTO">
@@ -90,5 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT gameNo,gameName,gameImage,gameGenre,DATE_FORMAT(gameReleasedDate,'%Y-%m-%d') as gameReleasedDate
 		FROM game USE INDEX (game_name)
 		WHERE gameName LIKE CONCAT('%',#{search},'%');
+	</select>
+	
+	<select id="rateSelect" parameterType="string" resultType="RateDTO">
+		SELECT *
+		FROM rate
+		WHERE gameNo = #{gameNo}
 	</select>
 </mapper>

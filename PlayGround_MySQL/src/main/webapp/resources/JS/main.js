@@ -11,6 +11,8 @@ window.onload = function () {
 	// 버튼 클릭 이벤트 등록
 	document.getElementById('newGame').addEventListener('click', getNewGameEvent, false);
 	document.getElementById('recommendedGame').addEventListener('click', getRecommendedGame, false);
+	document.getElementById('saleGame').addEventListener('click', getSaleGame, false);
+	document.getElementById('tagSearch').addEventListener('keyup', getSearchedTag, false);
 	document.getElementById('recommendedPost').addEventListener('click', getRecommendedPostEvent, false);
 	document.getElementById('mostViewPost').addEventListener('click', getMostViewPost, false);
 	document.getElementById('recommendedQnA').addEventListener('click', getRecommendedQnAEvent, false);
@@ -122,6 +124,13 @@ function jsonParserForNews(data) {
 
 /* 상단 최신게임 불러오기 (페이지 첫 로딩) */
 function getNewGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -135,6 +144,13 @@ function getNewGame() {
 
 /* 상단 최신게임 불러오기 (버튼 클릭) */
 function getNewGameEvent() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+
 	fetch('game/category/new')
 		.then(res => res.json())
 		.then(data => {
@@ -150,7 +166,36 @@ function getNewGameEvent() {
 
 /* 상단 추천게임 불러오기 (버튼 클릭) */
 function getRecommendedGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+
 	fetch('game/category/recommend')
+		.then(res => res.json())
+		.then(data => {
+			removeAllElements('.topTable td');
+			removeAllElements('.topChart li');
+			if (data.length !== 0)
+				jsonParserForTop(data);
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+/* 상단 할인게임 불러오기 (버튼 클릭) */
+function getSaleGame() {
+	document.getElementById('newGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('recommendedGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.2)';
+	document.getElementById('saleGame').style.backgroundColor
+		= 'rgba(171, 219, 252, 0.5)';
+
+	fetch('game/category/sales')
 		.then(res => res.json())
 		.then(data => {
 			removeAllElements('.topTable td');
@@ -170,6 +215,7 @@ function getTag() {
 		.then(data => {
 			if (data.length !== 0) {
 				jsonParserForTags(data);
+
 				let tags = document.getElementsByName('tag');
 				tags.forEach((tag) => {
 					tag.addEventListener('click', getCheckboxValue, false);
@@ -181,6 +227,30 @@ function getTag() {
 		});
 }
 
+/* 중단 태그 불러오기 및 태그 클릭 이벤트 등록(태그 검색시) */
+function getSearchedTag() {
+	if (this.value === '')
+		getTag();
+	else {
+		fetch('genre/search/' + this.value)
+			.then(res => res.json())
+			.then(data => {
+				removeAllElements('.tagScroll p');
+				if (data.length !== 0) {
+					jsonParserForTags(data);
+
+					let tags = document.getElementsByName('tag');
+					tags.forEach((tag) => {
+						tag.addEventListener('click', getCheckboxValue, false);
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+}
+
 /* 중단 태그별 게임 불러오기 (페이지 첫 로딩) */
 function getTagGame() {
 	fetch('game/tag/noTag')
@@ -188,16 +258,7 @@ function getTagGame() {
 		.then(data => {
 			if (data.length !== 0) {
 				jsonParserForMiddle(data);
-
-				fetch('rate/tag/noTag')
-					.then(res => res.json())
-					.then(data => {
-						for (let i = 0; i < data.length; i++)
-							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-					})
-					.catch(err => {
-						console.log(err);
-					});
+				getTagGameRate('noTag');
 			}
 		})
 		.catch(err => {
@@ -213,16 +274,22 @@ function getTagGameEvent(tagId) {
 			removeAllElements('.midTable tr');
 			if (data.length !== 0) {
 				jsonParserForMiddle(data);
+				getTagGameRate(tagId);
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
 
-				fetch('rate/tag/' + tagId)
-					.then(res => res.json())
-					.then(data => {
-						for (let i = 0; i < data.length; i++)
-							insertElement('td', 'midTr' + i, '<div class="score"><span>' + data[i] + '</span></div>');
-					})
-					.catch(err => {
-						console.log(err);
-					});
+/* 중단 게임 평점 가져오기 */
+function getTagGameRate(tagId) {
+	fetch('rate/tag/' + tagId)
+		.then(res => res.json())
+		.then(data => {
+			for (let i = 0; i < data.length; i++) {
+				insertElement('td', 'midTr' + i, '<div class="score"><span>'
+					+ data[i].gameScore + '</span></div>');
 			}
 		})
 		.catch(err => {
